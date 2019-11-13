@@ -1,6 +1,6 @@
 Promise.all([ 
-    d3.json('/data/mining_algos.csv')   
+    d3.csv('/data/mining_algorithms.csv')   
 ]).then(data=>{ 
-    miningData = data[0]
+    miningData = data
     console.log(miningData);
 })
