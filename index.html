@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Home</title>
+
+	<!-- Load CSS files -->
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+	<!-- <link rel="stylesheet" href="css/style.css"> -->
+	<link rel="stylesheet" href="css/fontawesome.min.css">
+	<link rel="stylesheet" href="css/milligram.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<script type="module" src="js/main.js"></script>
+	<!-- <script type="text/javascript" src = "js/scatter_chart.js"></script> -->
+</head>
+<body>
+	<script src="js/topojson.min.js"></script>
+	<script type="module" src="js/main.js"></script>
+	<!-- <script type="text/javascript" src = "js/scatter_chart.js"></script> -->
+
+	<div class="header">
+		<div class = "center">Final Project</div>
+		<div class = "center">Edward Cramer, Helen Nazarenko, Michelle Youn, & Linda Chen</div>
+		<br>
+		<h1 class = "center"><b>Cryptocurrency</b></h1>
+	</div>
+
+	<div class="secondcontainer">
+		<!-- below is the option to select data by year: -->
+			<div class="user-control">
+					Select year:
+					<form id="dimensions" onchange="re_render()">
+						<input type="radio" name="stack" value="2005" checked>2005        
+						<input type="radio" name="stack" value="2010" >2010
+						<input type="radio" name="stack" value="2015">2015
+						</form>
+				</div>
+		<!-- tooltip: -->
+		<p id="tooltip"></p>
+
+		<div class="row">
+			<div class="column">
+				
+				<!-- Visualization placeholders -->
+				<div id="stacked-area-chart"></div>
+				<!-- <div id="timeline"></div> -->
+			
+			</div>
+			<div class="column" id="map">
+				<div id="timeline"></div>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- Load JS libraries: D3 -->
+	<script src="js/d3.min.js"></script>
+	<script src = "js/legend.js"></script>
+
+	<!-- Your implementation -->
+	<!-- <script src="js/main.js"></script> -->
+
+</body>
+</html>
