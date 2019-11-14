@@ -1,3 +1,19 @@
+body {
+  background-color: #fff;
+}
+
+.title {
+  font-family: 'Roboto Slab', serif;
+  font-size: 30px;
+  padding: 20px;
+  color: black;
+}
+
+.names {
+  font-family: 'Roboto Slab', serif;
+  padding: 20px;
+  color: black
+}
 
 .container{
     width: 800px;
