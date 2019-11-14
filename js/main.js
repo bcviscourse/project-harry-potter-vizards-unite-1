@@ -6,6 +6,24 @@
 //     console.log(miningData);
 // })
 
+$( document ).click(function() {
+    $( ".balloon" ).toggle( "explode", {pieces: 81});
+  });
+
+// $(window).scroll(function () {
+//     $('.animation-test').each(function () {
+//         var imagePos = $(this).offset().top;
+//         var imageHeight = $(this).height();
+//         var topOfWindow = $(window).scrollTop();
+
+//         if (imagePos < topOfWindow + imageHeight && imagePos + imageHeight > topOfWindow) {
+//             $(this).addClass("slideRight");
+//         } else {
+//             $(this).removeClass("slideRight");
+//         }
+//     });
+// });
+
 window.createGraphic = function(graphicSelector){
 	var graphicEl = d3.select('.graphic')
 	var graphicVisEl = graphicEl.select('.graphic__vis')
