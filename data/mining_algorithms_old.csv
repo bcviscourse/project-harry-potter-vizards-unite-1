@@ -1,0 +1,740 @@
+﻿Сryptocurrency,Abbreviation,Algorithm,Year
+Bitcoin,BTC,SHA-256,2009
+Ethereum,ETH,Dagger-Hashimoto,2015
+Litecoin,LTC,Scrypt,2011
+Ripple,XRP,ECDSA,2013
+Siacoin,SC,blake2b,2015
+EthereumClassic,ETC,Dagger-Hashimoto,2015
+Dash,DASH,X11,2014
+BitShares,BTS,Transaction fee,2014
+Monero,XMR,CPU mining; CryptoNight,2014
+Augur,REP,Smart contract,2015
+Stratis,STRAT,,2016
+Zcash,ZEC,Equihash,2016
+Factom,FCT,Transaction fee,2015
+NEM,XEM,blockchain,2015
+DigiByte,DGB,SHA-256;Scrypt;Qubit;Skein;Groestl,2014
+Dogecoin,DOGE,Scrypt,2013
+Nxt,NXT,Transaction fee,2013
+Dashcoin,DSH,CPU mining; CryptoNight,2014
+Decred,DCR,Blake256,2015
+Steemit,STEEM,SHA-256,2016
+MaidSafeCoin,MAID,Transaction fee,2014
+lbryCoin,LBC,LBRY,2016
+Syscoin,SYS,Scrypt,2014
+Potcoin,POT,Scrypt,2014
+BlackCoin,BLK,Scrypt,2014
+ByteCoin,BCN,CPU mining; CryptoNight,2012
+BURST,BURST,Transaction fee,2014
+Clams,CLAM,Transaction fee,2014
+ViaCoin,VIA,Scrypt,2014
+VeriCoin,VRC,Scrypt,2014
+BelaCoin,BELA,Scrypt,2014
+VertCoin,VTC,Lyra2RE,2014
+NeosCoin,NEOS,SHA-256,2014
+BitcoinPlus,XBC,X13,2015
+Nautiluscoin,NAUT,NXT,2014
+Peercoin,PPC,SHA-256,2012
+Myriad-Scrypt,MYR,Scrypt; SHA-256D; Qubit; Skein; Groestl,2014
+Nexium,NXC,blockchain Ethereum,
+FoldingCoin,FLDC,Stanford Folding,2014
+Namecoin,NMC,SHA-256; Merged mining,2011
+Counterparty,XCP,Transaction fee,2014
+Expanse,EXP,Dagger-Hashimoto,2015
+Florin,FLO,Scrypt,2013
+Gridcoin,GRC,BOINC,2013
+PascalCoin,PASC,SHA-256,2016
+Navcoin,NAV,X13,2014
+BitcoinDark,BTCD,SHA-256,2014
+Primecoin,XPM,CPU mining; Cunningham,2013
+BitConnect,BCC,Scrypt,2016
+BitCrystals,BCY,base Counterparty,2015
+PinkCoin,PINK,X11,2014
+Radium,RADS,Smartchain,2015
+DNotes,NOTE,Scrypt,2014
+EmerCoin,EMC,SHA-256,2013
+Cloakcoin,CLOAK,X13,2014
+ElCoin,EL,Base Ethereum,2015
+Huntercoin,HUC,SHA-256; Scrypt,2014
+RieCoin,RIC,CPU mining,2014
+Sibcoin,SIB,X11gost,2015
+LEOcoin,LEO,Scrypt-jane,2014
+Bitmark,BTM,Scrypt,2014
+Polybius,PLBT,Smart contract,2017
+Vcash,XVC,Blake256,2014
+Novacoin,NVC,Scrypt,2012
+Fastcoin,FST,Scrypt,2013
+Waves,WAVES,Transaction fee,2016
+CureCoin,CURE,SHA-256,2014
+EDinar,EDR,,2015
+Voxels,VOX,Scrypt,2015
+Iconomi,ICN,Smart contract,2015
+Transfercoin,TX,X11,2015
+BitSend,BSD,X11,2014
+ArcticCoin,ARC,Scrypt,2015?
+Sexcoin,SXC,Scrypt,2013
+MonaCoin,MONA,Lyra2RE,2013
+Craftcoin,CRC,Scrypt,2013
+Yocoin,YOC,Smart contract,2016
+Bata,BTA,Scrypt,2015
+UNCoin,UNC,X11,2014
+Solarcoin,SLR,Scrypt,2014
+TrumpCoin,TRUMP,Blake256,2016
+PostCoin,POST,,2016
+CrevaCoin,CREVA,Scrypt,2015
+HellenicCoin,HNC,Scrypt,2015
+AdzCoin,ADZ,X11,2015
+Dimecoin,DIME,base Quark,2013
+Leadcoin,LDC,Scrypt,2014
+BlueCoin,BLU,X11,2014
+DaMaCoin,DMC,Scrypt,2014
+BitcoinUnlimited,BCU,SHA-256,
+DrCoin,ISK,Scrypt,2013
+10kCoin,10K,SHA-256; Scrypt; X11,2015
+1Credit,1CR,Scrypt,2014
+2GiveCoin,2GIVE,Scrypt,2016
+365coin,365,Keccak,2014
+42Coin,42,Scrypt,2014
+66Coin,66,Scrypt,2014
+Achilles,ACH,X11,2014
+Acoin,ACOIN,SHA-256,2014
+AeonCoin,AEON,CPU mining; CryptoNight,2014
+AeroCoin,AERO,X13,2014
+AidBit,AID,Groestl,2014
+Aiden,ADN,Scrypt-OG,2014
+AIRcoin,AIR,Scrypt,2014
+AlexiumCoin,AUM,Scrypt,2015
+AlienCoin,ALN,Scrypt,2014
+Alipaycoin,ALI,X14,2014
+Alphacoin,ALF,Scrypt,2013
+AmberCoin,AMBER,X13,2014
+AmericanCoin,AMC,Scrypt,2013
+Amygws,AMY,Scrypt,2017
+AndroidsTokens,ADT,Transaction fee,2013
+AnimeCoin,ANI,base Quark,2014
+Anoncoin,ANC,Scrypt,2013
+AntimatterCoin,ANT,Scrypt,2014
+ApexCoin,APEX,X13,2014
+AphroditeCoin,APH,Scrypt,2014
+AppCoin,APP,Scrypt,2014
+AppleBytes,ABY,Scrypt,2014
+ArbitCoin,ARB,SHA-256,2015
+ARCHcoin,ARCH,Scrypt,2014
+Argentum,ARG,Scrypt,2013
+Aricoin,ARI,Scrypt,2014
+Arkhash,ARK,SHA-256,2014
+AsiaCoin,AC,Scrypt,2014
+Asiadigicoin,ADCN,Scrypt,2016
+AsicCoin,ASC,SHA-256,2013
+Astrocoin,ASR,Scrypt,2014
+AtheistCoin,ATH,Groestl,2014
+AuroraCoin,AUR,SHA-256;Scrypt;Qubit;Skein;Groestl,2014
+AurumCoin,AU,SHA-256,2014
+Axiom,AXIOM,Axiom,2015
+AXIScoin,AXIS,X13,2014
+Badgercoin,BDG,X11,2014
+BancorCoin,BNCR,SHA-256,2014
+BankCoin,BANK,X11,2014
+Bantam,BNT,X11,2015
+BanxShares,BANX,Transaction fee,2014
+BatCoin,BAT,Scrypt,2014
+Battlecoin,BCX,SHA-256,2013
+BBQCoin,BQC,Scrypt,2012
+BCTCoin,BCT,Keccak,2014
+BeaoCoin,BEC,Scrypt,2013
+BeatleCoin,BEA,Scrypt,2014
+BeaverCoin,BVC,Scrypt,2014
+BeeCoin,BEE,Scrypt,2014
+BeerCoin,BEER,Scrypt,2014
+BeliCoin,BELI,Scrypt,2014
+Bells,BEL,Scrypt,2013
+Benjamins,BEN,SHA-256,2014
+Betacoin,BET,SHA-256,2013
+BigBullion,BIG,SHA-256,2014
+BigCoin,HUGE,Blake256,2014
+BigUp,BIGUP,Transaction fee,2016
+Bikercoin,BIC,CPU mining; CryptoNight,2016
+BillionCoin,BIL,Scrypt,2013
+BilShares,BILS,Transaction fee,2013
+BiosCrypto,BIOS,base Quark,2015
+BipCoin,BIP,CPU mining; CryptoNight,2016
+Bitbar,BTB,Scrypt,2013
+BitBean,BITB,SHA-256,2015
+BitBlock,BBL,X15,2014
+BitcoinCore,BCc,SHA-256,
+BitcoinScrypt,BTCS,Scrypt,2013
+BitcoinTX,BTX,X11,2015
+BitcoinUnlimited,BTU,SHA-256,
+BitCredit,BCR,Momentum; SHA-512,2014
+Bitgem,BTG,Scrypt,2013
+Bithire,HIRE,blockchain Bitcoin,2015
+Bitinum,BTN,SHA-256,2014
+Bitleu,BTL,Scrypt-jane,2014
+BitLion,XBL,X13,2014
+BitQuark,BTQ,base Quark,2014
+BitStar,BITS,Scrypt,2014
+BitZeny,ZNY,YeScrypt,2014
+BlackDragonCoin,BDC,Scrypt-jane,2014
+Blakecoin,BLC,Blake256,2013
+BlitzCoin,BLTZ,Scrypt,2014
+Blocknet,BLOCK,,2014
+BolivarCoin,BOLI,X11,2015
+BONESCryptoCoin,BONES,Scrypt,2014
+BonusCoin,BNS,SHA-256,2014
+Boolberry,BBR,CPU mining; Wild keccak,2014
+BoomCoin,BOOM,X13,2014
+Bottlecaps,CAP,Scrypt,2013
+Brigadecoin,BRIG,X11,2014
+BTCtalkcoin,TALK,Scrypt,2014
+BurbuCoin,BUR,Scrypt,2014
+ButterflyCoin,BFC,SHA-256,2013
+Bytecoin2,BTE,SHA-256,2013
+CACHeCoin,CACH,Scrypt-jane,2014
+CageCoin,CAGE,Scrypt,2014
+Caishen,CAI,Scrypt-N,2014
+CanadaeCoin,CDN,Scrypt,2014
+CannabisCoin,CANN,X11,2014
+Cannacoin,CCN,Scrypt,2014
+Capricoin,CPC,X11,2015
+CarbonCoin,CARB,Scrypt,
+CarbonCoin,CARB,Scrypt,2014
+CarpeDiemCoin,DIEM,SHA-256,2014
+CashCoin,CASH,Scrypt,2014
+Casinocoin,CSC,Scrypt,2013
+Cataloniacoin,CATC,Scrypt-N,2014
+Catcoin,CAT,Scrypt,2013
+CereiPayCoin,CRPC,X11,2016
+CharityCoin,CHA,Scrypt,2014
+Checkcoin,CKC,X11,2014
+CherryNote,CRR,CPU mining; CryptoNight,2014
+ChipCoin,CHIP,X11,
+CHNCoin,CNC,Scrypt,2013
+Chococoin,CCC,SHA-256,2013
+Cinnamoncoin,CIN,Scrypt,2013
+CinniCoin,CINNI,Scrypt,2014
+CleanWaterCoin,WATER,Scrypt,2014
+CloudCoin,CDC,Scrypt,2013
+ClubCoin,CLUB,Scrypt,2015
+CNOTEcoin,CNOTE,base Quark,2014
+CoCoCoin,COCO,X13,2014
+COIN,COIN,Scrypt,2014
+Coin2,C2,Transaction fee,2014
+CoinmarketsCoin,JBS,Scrypt,2014
+Coino,CNO,Scrypt,2014
+CoinoIndex,INDEX,NXT,2015
+Coinomat1,CNMT,NXT,2014
+CoinyeCoin,COYE,Scrypt,2014
+ColossusCoin,COL,Scrypt,2013
+CommunityCoin,COMM,Scrypt,2014
+Conspiracycoin,CYC,X11,2014
+Continuumcoin,CTM,SHA-256,2014
+CopperBars,CPR,Scrypt-jane,2013
+CopperLark,CLR,Keccak,2013
+CorgiCoin,CORG,Scrypt,2014
+Cosmoscoin,CMC,Scrypt,2013
+Credit,CR,Scrypt,2014
+Credits,CRD,Scrypt,2014
+CREDS,XXC,SHA-256,2014
+CrownCoin,CRW,SHA-256,2014
+CRTcoin,CRT,Scrypt,2014
+CryptCoin,CRYPT,X11,2014
+CryptoBuck,BUK,Scrypt,2013
+CryptoBullion,CBX,Scrypt,2013
+CryptoEagle,CREA,SHA-256,2014
+CryptoEscudo,CESC,Scrypt,2014
+CryptographicAnomaly,CGA,Scrypt,2014
+CryptoMeth,METH,Keccak,2014
+Cryptonite,XCN,M7,2014
+CrystalCoin,CRYST,X15,2014
+Cthulhu,OFF,base Quark,2013
+CzechCrownCoin,CZC,Scrypt-N,
+DarkCash,DRKC,X11,2014
+Darknet,DNET,Quark,2016
+DarkNetCoin,DNC,CPU mining; Wild keccak,2014
+DarkNote,XDN,CPU mining; CryptoNight,2014
+DataCoin,DTC,CPU mining; Cunningham,2013
+Denarius,DRS,Scrypt,2014
+Devcoin,DVC,SHA-256,2013
+Diamond,DMD,Groestl,2013
+Diggits,DIGS,Scrypt,2015
+Digieuro,DEUR,SHA-256; Scrypt,2015
+Digit,DIG,X13,2014
+Digitalcoin,DGC,SHA-256; Scrypt; X11,2013
+DigitalPrice,DP,X11,2014
+DigixDAO,DGD,Smart contract,2015
+DinarCoin,IQD,SHA-256,2014
+DogecoinDark,DOGED,Scrypt,2014
+DopeCoin,DOPE,Scrypt,2014
+DosCoin,DOS,X13,2014
+Doubloons,DBL,Scrypt,2013
+DougCoin,DOUG,base Quark,2014
+DuckDuckCoin,DUCK,Scrypt,2014
+DvoraKoinGroestl,DVK,SHA-256; Scrypt; Groestl,2014
+DvoraKoinScrypt,DVK,SHA-256; Scrypt; Groestl,2014
+DvoraKoinSHA256,DVK,SHA-256; Scrypt; Groestl,2014
+EarthCoin,EAC,Scrypt,2013
+EasyLCoin,ELCO,Scrypt,2016
+eBoost,EBST,Scrypt,
+EBTcoin,EBT,Scrypt,2014
+ECCoin,ECC,Scrypt,2014
+Eclipse,EC,SHA-256,2016
+EDRcoin,EDRC,SHA-256,2016
+EduCoin,EDU,Scrypt,2014
+Einsteinium,EMC2,Scrypt,2014
+Ekita,EKITA,,2014
+Ekrona,KRN,Scrypt,2014
+Elacoin,ELC,Scrypt-N,2013
+Electric,VOLT,Scrypt,
+ElectronicGulden,EFL,Scrypt,2014
+Elementrem,ELE,Dagger-Hashimoto,2016
+Elephantcoin,ELP,Scrypt,2013
+eMark,DEM,SHA-256,2013
+Emerald,EMD,Scrypt,2013
+EmotiCoin,EMO,Scrypt,2014
+EmuCoin,EMU,Scrypt-N,2014
+EntropyCoin,ENC,Scrypt-N,2014
+ESportsCoin,ESC,X11,2014
+Ethercoin,ETCC,Transaction fee,2014
+eToken,ETOK,Scrypt,2014
+Eurokoin,EUK,Scrypt,2014
+EuropeCoin,ERC,X11,2014
+eUtopium,UPM,NIST5,2014
+Evotion,EVO,SHA-256,2015
+Execoin,EXE,Scrypt-N,2014
+Experiencecoin,EPC,Scrypt,2015
+Extremecoin,EXC,Scrypt,2013
+EZCoin,EZC,Scrypt,2013
+FailCoin,FAIL,Scrypt,2014
+FairCoin,FAC,Scrypt,2014
+FairQuark,FRQ,base Quark,2014
+Fantom,FCX,Velvet,2015
+Fantomcoin,FCN,CPU mining; CryptoNight,2014
+Feathercoin,FTC,NeoScrypt,2013
+FedoraCoin,TIPS,Scrypt,2013
+Fermat,IOP,SHA-256,2016
+FibreCoin,FIBRE,NIST5,2014
+Fireflycoin,FFC,SHA-256,2013
+FlappyCoin,FLAP,Scrypt,2014
+Floripacoin,FLN,Scrypt,2014
+Fluttercoin,FLT,Scrypt,2014
+Forexcoin,FRX,Scrypt,2014
+FoxCoin,FOX,Scrypt,2014
+Fractalcoin,FRAC,X11,2014
+Franko,FRK,Scrypt,2013
+FreeCoin,FRE,Scrypt-jane,2013
+Freicoin,FRC,SHA-256,2012
+FreshCoin,FRSH,Fresh,2014
+FriendshipCoin,FSC,Scrypt,2014
+Frozen,FZ,base Quark,2013
+FryCoin,FRY,Scrypt,2014
+FUDCoin,FUD,SHA-256,2014
+FuelCoin,FUEL,SHA-256,2014
+Fuguecoin,FC,Fugue256,2014
+Gaelcoin,GAC,Scrypt,
+Galaxycoin,GLX,Scrypt,2013
+Galleon,GLN,Keccak,2014
+Gambit,GAM,Scrypt,2015
+Gamecoins,GME,Scrypt,2013
+Gamecredits,GMC,Scrypt,2014
+GameleagueCoin,GML,,2014
+Gapcoin,GAP,,2014
+GenesisCoin,GNS,Scrypt-N,2014
+Geocoin,GEO,Qubit,2015
+GermanyCoin,GER,Scrypt,2014
+GetGems,GEMZ,Counterparty,2014
+Ghostcoin,GHC,Scrypt,2014
+GiarCoin,GIAR,Scrypt-N,2014
+GiveBackCoin,GIV,Scrypt; SHA-256; Qubit; Skein; Groestl,2014
+Givecoin,GIVE,X11,2014
+GlobalBoost,BST,Scrypt,2014
+GlobalBoostY,BSTY,YeScrypt,2014
+Globalcoin,GLC,Scrypt,2013
+GlobalCurrencyReserve,GCR,Scrypt,2015
+GlobalDenomination,GDN,X11,2014
+Globe,GLB,SHA-256,2013
+GlyphCoin,GLYPH,X11,2014
+Goalcoin,GOAL,Scrypt,2014
+Goldcoin,GLD,Scrypt,2013
+Goldcoin,GBC,Scrypt,2016
+GoldReserve,XGR,X11,2014
+GPUCoin,GPUC,Scrypt-N,2014
+Graincoin,GRA,Scrypt,2013
+Grandcoin,GDC,Scrypt,2013
+GraniteCoin,GRN,X11,2014
+Grantcoin,GRT,SHA-256,2015
+Greececoin,GRCE,Scrypt,2014
+GridPay,GRID,Transaction fee,2015
+GroestlCoin,GRS,Groestl,2014
+GrowthCoin,GRW,Scrypt,2013
+GrumpyCoin,GRUMP,Scrypt,2014
+GSMcoin,GSM,X11,2015
+GuarantCoin,GTC,Scrypt-N,2014
+Guldencoin,NLG,Scrypt,2014
+Guncoin,GUN,Scrypt,2014
+H2Ocoin,H2O,Scrypt-N,2014
+Halcyon,HAL,X15,2014
+HamRadioCoin,HAM,SHA-256,2014
+Hashcoin,HASH,X11,2014
+Heavycoin,HVC,HEFTY1,2014
+Heisenberg,HEX,Scrypt,2014
+HelixCoin,HXC,Keccak,2014
+HighFiveCoin,H5C,X11,2014
+Hirocoin,HIRO,X11,2014
+HispaCoin,HPC,SHA-256,2014
+HoboNickels,HBN,Scrypt,2013
+HOdlcoin,HODL,AES,2016
+HongKongCoin,HKC,SHA-256,2014
+Honorcoin,XHC,X13,2014
+Horizon,HZ,NXT,2014
+Hotcoin,HOT,Scrypt,2013
+HouseofCoins,HOC,Scrypt,2014
+HTML5coin,HTML5,X15,2014
+Hypercoin,HYC,Scrypt,2013
+HyperStake,HYP,X11,2014
+I0Coin,I0C,SHA-256,2011
+IcebergCoin,ICB,NIST5,2014
+ImperialCoin,IPC,Scrypt,2014
+Incakoin,NKA,SHA-256,2013
+Infinitecoin,IFC,Scrypt,2013
+Influxcoin,INFX,X11,2015
+InformationCoin,ITC,Scrypt,2014
+InsanityCoin,WOLF,Scrypt,2014
+Intellect,INT,2Skein,2015
+IOCoin,IOC,X11,2014
+Isracoin,ISR,Scrypt,2014
+Iticoin,iTi,Scrypt,2016
+IvugeoEvolutionCoin,IEC,Scrypt,2015
+IXCoin,IXC,SHA-256,2011
+JackpotCoin,JPC,JHA,2014
+JiffyCoin,JIF,SHA-256,2016
+JoinCoin,J,Multiple,2014
+Joulecoin,XJO,SHA-256,2013
+JudgeCoin,JUDGE,X13,2014
+JuggaloCoin,JUG,X11,2014
+Junkcoin,JKC,Scrypt,
+KarmaCoin,KARM,X11,2014
+Kazcoin,KZC,Scrypt,2014
+KeyCoin,KEY,X13,2014
+KhanCOIN,KNC,X11,2015
+KiloCoin,KLC,,
+KimotoCoin,KMC,Scrypt-N,2014
+KittehCoin,MEOW,Scrypt,2013
+KlondikeCoin,KDC,Scrypt,2014
+Komodo,KMD,Equilhash,2016
+Krugercoin,KGC,Scrypt,2013
+Kryptohash,KHC,KSHAKE320,2014
+Krypton,KR,Dagger-Hashimoto,2016
+Kumacoin,KUMA,base Quark,2014
+LabourHour,LH,blockchain,2016
+Latium,LAT,Transaction fee,2014
+Leafcoin,LEAF,Scrypt,2014
+LeagueCoin,LOL,X11,2014
+Lebowskis,LBW,Scrypt,2013
+LegendaryCoin,LGD,Scrypt,2014
+Leprocoin,LPC,Scrypt,2014
+LetsTalkBitcoin,LTBC,Counterparty,2014
+Levocoin,LEVO,X11,2016
+LGBTQoin,LGBTQ,X11,2015
+Libertycoin,XLB,X11,2014
+LibrexCoin,LXC,X11,2014
+LightCoin,LIT,X11,2014
+LimeCoinX,LIMX,X11,2014
+LinkedCoin,LKC,X11,
+Lisk,LISK,Sidechain,2016
+Litebar,LTB,Scrypt,2014
+LitecoinDark,LTCD,Scrypt,2014
+LiteCoinX,LTCX,X11,2014
+Logicoin,LGC,X11,2014
+Lottocoin,LOT,Scrypt,2013
+Lovecoin,LOVE,Scrypt,2014
+Luckycoin,LKY,Scrypt,2013
+LycanCoin,LYC,Scrypt,2014
+Lyrabar,LYB,Lyra2RE,2015
+MagicInternetMoney,MIM,Scrypt,2014
+MagiCoin,MAGI,Scrypt,2014
+MammothCoin,MAMM,X13,2014
+MangoCoinz,,,2014
+MantisCoin,MNS,X11,2014
+MapleCoin,MPL,Scrypt,2013
+Marinecoin,MTC,Scrypt,
+Marscoin,MRS,Scrypt,2014
+MarteXcoin,MXT,Scrypt,2014
+MaruCoin,MARU,X13,2014
+MasterCoin,MSC,,
+MastiffCoin,MAST,X11,2014
+Mavro,MVR,,2016
+Maxcoin,MAX,Keccak,2014
+Mazacoin,MZC,SHA-256,2014
+MediterraneanCoin,MED,HybridScryptHash256,2014
+Megacoin,MEC,Scrypt,2013
+MemeCoin,MEM,Scrypt,2013
+MemoryCoin,MMC,Momentum; SHA-512,2013
+Metiscoin,MTS,CPU mining,2014
+microCoin,MRC,Scrypt-jane,2014
+Millionaire,MIL,X11,2014
+Mincoin,MNC,Scrypt,2013
+Mineralscoin,MIN,X11,2014
+Mintcoin,MINT,Scrypt,2014
+Mjollnircoin,MNR,HEFTY1,2014
+MMXIV,MMXIV,SHA-256,2014
+Moneta,MONETA,Scrypt,2015
+MonetaryUnit,MUE,base Quark,2014
+MonetaVerde,MCN,CPU mining; CryptoNight,2014
+Monocle,MON,Scrypt-N; Merged mining,2014
+Mooncoin,MOON,Scrypt,2013
+Motocoin,MOTO,,2014
+Mountcoin,MNT,CPU mining; CryptoNight,2014
+Moviecoin,MVC,Scrypt,2014
+MozzShare,MLS,HEFTY1,2014
+MtGoxCoin,GOX,Scrypt,2014
+MultiWalletCoin,MWC,X11,2014
+Muniti,MUN,X11,2014
+Murraycoin,MRY,Scrypt-N,2014
+NaanaYaM,NYM,SHA-256,2013
+Nanotoken,NAN,Scrypt,
+Neocoin,NEC,Scrypt,2013
+NeptuneCoin,NTC,Scrypt,2016
+Neptunium,NPT,CPU mining; CryptoNight,2016
+Netcoin,NET,Scrypt,2013
+Networkcoin,NWC,Scrypt,
+NeuCoin,NEU,Scrypt,2015
+NeutrinoCoin,NTR,Scrypt,2014
+Nexus,NXS,SHA-3,2014
+Nibble,NIB,Scrypt,2013
+NigeriaCoin,NGC,Skein-SHA2,2014
+Nimbus,NMB,X15,2014
+NoahCoin,NOAH,X13,2014
+NobleCoin,NOBL,Scrypt,2014
+Noirbits,NRB,Scrypt,2013
+NoirShares,NRS,Momentum; SHA-512,2014
+NPCcoin,NPC,SHA-256,2015
+NuBits,NBT,Transaction fee,2014
+NuShares,NSR,Transaction fee,2014
+NyanCoin,NYAN,Scrypt,2014
+Nybble,NBL,Scrypt,2013
+o2ocoin,O2O,CPU mining,2014
+OctoCoin,888,Scrypt,2014
+OilCoin,OIL,Scrypt,2014
+OKCash,OK,Scrypt,2014
+Omnicoin,OMC,Scrypt,2015
+Onecoin,ONC,Scrypt-jane,2013
+OneEvilCoin,OEC,CPU mining; CryptoNight,2014
+OnlineGamingCoin,OGC,Scrypt,2013
+OpenSourcecoin,OSC,SHA-256,2013
+Operand,OP,Scrypt,2016
+Orangecoin,OC,Scrypt,2014
+Orbitcoin,ORB,NeoScrypt,2013
+ORObit,ORO,SHA-256,2014
+P7Coin,P7C,Scrypt,2015
+Panda,PANDA,Scrypt-N,
+PandaCoin,PND,Scrypt,
+Pandacoin,PAND,Scrypt,2014
+Par1Coin,PAR1,X13,
+Par25Coin,PAR25,X13,
+ParallaxCoin,PLX,Scrypt-N; Merged mining,2014
+ParkByte,PKB,SHA-256,2015
+Particle,PRT,base Quark,2013
+PawnCoin,PAWN,Scrypt,2014
+PayCoin,XPY,SHA-256,2014
+PayPro,PRO,SHA-256,2014
+Payzor,PZR,Scrypt,2014
+Peacecoin,PEC,Scrypt,2016
+Pebblecoin,XPB,CPU mining; Boulderhash,2015
+Peerplays,PEERPLAYS,blockchain,
+PenguinCoin,PENG,Scrypt,2014
+Pennies,CENT,Scrypt-jane,
+PeopleCoin,PPL,Scrypt,2013
+PesetaCoin,PTC,Scrypt,2014
+Philosopherstone,PHS,Scrypt,2013
+Phoenixcoin,PXC,Scrypt,2013
+Photoncoin,PHO,base Quark,2014
+piCoin,PI,Scrypt,2014
+Piggycoin,PIGGY,X11,2014
+PioneerCoin,PER,X13,2014
+Platinum,PT,SHA-256,2014
+PLNcoin,PLNC,Scrypt,2014
+Polcoin,PLC,SHA-256,2014
+PolishCoin,PCC,Scrypt,2014
+PopulaceCoin,POC,,2014
+PosEx,PEX,SHA-256,2016
+PowerCoin,PWC,Scrypt,2013
+PremineCoin,PMC,SHA-256 Transaction fee,2014
+Prime-XI,PXI,X11,2014
+ProCoin,PCN,Scrypt,2014
+ProfitCoin,PFC,X13,2014
+ProsperCoin,PRC,Scrypt,2014
+ProtoShares,PTS,Momentum; SHA-512,2013
+Prototanium,PR,SHA-256,2016
+PseudoCoin,PSEUD,X13,2014
+PWNYCOIN,PWNY,SHA-256,2014
+Pxlcoin,PXL,Scrypt,2014
+Pyramids,PYRA,X11,2014
+Qora,QORA,Transaction fee,2014
+QQcoin,QQC,Scrypt-Jane,2013
+Quark,QRK,Quark,2013
+Quarkbar,QB,base Quark,2014
+Quatloo,QTL,Scrypt,2014
+QuazarCoin,QCN,CPU mining; CryptoNight,2014
+QubitCoin,Q2C,Qubit,2014
+Quebecoin,QBC,X11,2014
+QuidCoin,QUID,X11,2014
+Rabbitcoin,RBBT,Scrypt,2014
+RainbowGoldCoin,RAIN,Scrypt,2014
+RandomQuark,RQC,base Quark,2014
+RapidCoin,RPD,Scrypt,2014
+RateCoin,XRA,X11,2015
+Razor,RZR,Scrypt,2014
+RCoin,RCN,,
+RealCoin,REC,,
+Redcoin,RED,Scrypt,
+ReddCoin,RDD,Scrypt,2014
+RhinoCoin,RHC,Scrypt,2015
+Richcoin,RCH,,
+RipoffCoin,RIPO,Scrypt,2014
+RonPaulcoin,RPC,Scrypt,2013
+RootCoin,ROOT,Scrypt,2014
+rotoCoin,RT2,Scrypt-N,2014
+RoyalCoin,RYC,Scrypt,2013
+RubleBit,Rubit,Scrypt,2015
+RubyCoin,RUBY,Scrypt,2014
+SaffronCoin,SFR,SHA-256; Scrypt; Groestl; X11; Blake,2014
+SambaCoin,SMB,Scrypt,2014
+Sapphire,SPH,Scrypt,2014
+Saturn2coin,SAT2,Scrypt,2014
+SaturnCoin,SAT,Scrypt,2014
+SaveCoin,SPC,SHA-256,2014
+Scorecoin,SCORE,Scrypt,2017
+SecretCoin,SCRT,X11,2015
+SecureCoin,SRC,base Quark,2013
+SelenCoin,SEL,,2016
+SembroToken,SMBR,Scrypt,2014
+ServX,XSX,Scrypt,2014
+ShadeCoin,SHADE,Scrypt,2014
+ShadowCash,SDC,Scrypt,2014
+SharkCoin,SAK,base Quark,2014
+ShellCoin,SHELL,X11,2015
+ShibeCoin,SHIBE,Scrypt,2014
+ShiftCoin,SHF,Dagger-Hashimoto,2015
+SiameseCoin,SIS,X11,2014
+SignatureCoin,SIGN,X11,2014
+SiliconValleyCoin,XSV,Scrypt-N,2014
+SkeinCoin,SKC,Skein-SHA2,2013
+SkyNetCoin,SNET,X11,2014
+Slothcoin,SLOTH,Keccak,2014
+SmartCoin,SMC,X11,2014
+Snowballs,BALLS,SHA-256,2014
+SocialCoin,SOC,Scrypt,2014
+SocialxBot,XBOT,Scrypt,2014
+SOILcoin,SOIL,Dagger-Hashimoto,2015
+SolarFarmAsset,CELL,Transaction fee,2015
+Solaris,XLR,Nist5,2017
+SongCoin,SONG,Scrypt,2014
+SonicScrewdriver,SSD,SHA-256,2014
+Sovereigncoin,SVC,Scrypt,2014
+SpainCoin,SPA,Scrypt-N,2014
+SpartanCoin,SPN,Scrypt,2014
+Spec,SPEC,Scrypt,2015
+SpeedCoin,SPD,Scrypt-N,2014
+Spots,SPT,Scrypt,2013
+SpreadCoin,SPR,SpreadX11,2014
+Sprouts,SPRTS,SHA-256,2015
+SSVCoin,SSV,X13,2014
+Stablecoin,SBC,Scrypt,2013
+Stackedcoin,STC,SHA-256,2014
+StartCoin,START,X11,2014
+StarTrek,UFC,Blake256,2013
+Stashcoin,STA,SHA-256,2014
+Stealthcoin,XST,X13,2014
+Stellar,XLM,Transaction fee,2014
+Sterlingcoin,SLG,X13,2014
+StoriesCoin,STY,SHA-256,2014
+SunCoin,SUN,Scrypt,2014
+Supcoin,SUP,Pluck,2015
+SuperCoin,SUPER,X11,2014
+SuperNet,UNITY,NXT,2014
+Surge,SRG,Scrypt,2014
+Swiscoin,SCN,Scrypt,2016
+SynCoin,SYN,Scrypt,2014
+TacoCoin,TCO,Scrypt,2014
+Tagcoin,TAG,Scrypt,2013
+Takeicoin,TAK,SHA-256,2014
+TalkCoin,TAC,NIST5,2014
+Teacoin,TEA,SHA-256,2014
+TEKcoin,TEK,SHA-256,2013
+TenfiveCoin,5-Oct,Scrypt-N,2014
+Terracoin,TRC,SHA-256,2012
+TeslaCoin,TESLA,Scrypt,2014
+TheCypherfunks,FUNK,Scrypt,2014
+ThorCoin,THOR,Scrypt-jane,2014
+Ticketcoin,TKT,X11,2015
+Tickets,TIX,Scrypt,2013
+Tigercoin,TGC,SHA-256,2013
+Titcoin,TIT,SHA-256,2014
+TittieCoin,TTC,Scrypt,2014
+Tlascoin,TLS,CPU mining,2014
+TMCoin,TMC,base Quark,2015
+TongYongCoin,TYC,base Quark,2015
+TopCoin,TOP,Scrypt,
+TRMB,TRMB,ABC,
+Trollcoin2,TROLL,Scrypt,2015
+TWEcoin,TWE,Fugue256,2014
+TwilightCoin,TWC,X11,2014
+Ufocoin,UFO,NeoScrypt,2014
+UltraCoin,UTC,Scrypt-jane,2014
+Unattainium,UNAT,SHA-256,2014
+Unbreakablecoin,UNB,SHA-256,2014
+Unicoin,UNIC,SHA-256,2013
+UniteCoin,UNI,Scrypt,2013
+UnitedScryptCoin,USC,Scrypt,2013
+UniversalCurrency,UNIT,SHA-256,2015
+UniverseCoin,UNVC,X11,2014
+Unobtanium,UNO,SHA-256,2013
+Urocoin,URO,X11,2014
+USDeCoin,USDE,Scrypt,2014
+UseCoin,USE,X13,2014
+ValueCoin,VLC,Scrypt,2013
+VegasCoin,VGC,Scrypt,2014
+Veilcoin,VEIL,X13,2014
+Velocitycoin,VEL,Scrypt-jane,2013
+Verge,XVG,Scrypt;X17;Groestl;Blake2s;Lyra2rev2,2014
+VirtaCoin,VTA,Scrypt,2014
+VirtualCoin,VC,X11,2014
+VirtualMiningCoin,VMC,Scrypt-N,2014
+VolatilityCoin,VLTY,X15,2014
+VorteX,VTX,X13,2014
+Voyacoin,VOYA,Pluck,2015
+VpnCoin,VPN,Scrypt,2014
+WankCoin,WKC,SHA-256,2014
+Wecoin,WEC,Keccak,2014
+WhirlCoin,WHRL,Whirlpool,2014
+WhiteCoin,WC,Scrypt,2014
+WikiCoin,WIKI,CPU mining,2014
+WildBeastBitcoin,WBB,Scrypt,2015
+WildWestCoin,WEST,X11,2014
+WorldAidCoin,WAC,Scrypt-N,2014
+Worldcoin,WDC,Scrypt,2013
+X-Children,CHILD,X11,2014
+Xaurum,XAU,Transaction fee,2015
+XCICOIN,XCI,CPU mining; CryptoNight,2016
+XCurrency,XC,X11,2014
+Xedoscoin,XDC,Skein-SHA2,2014
+XenCoin,XNC,Scrypt,2013
+XiaoMiCoin,MI,Scrypt,2015
+Xivra,XIV,Scrypt,2013
+XuroCoin,XURO,X11,2014
+XXLcoin,XXL,Scrypt,2014
+YACCoin,YACC,Scrypt,2014
+Yacoin,YAC,Scrypt-jane,2013
+YBCoin,YBC,Scrypt-jane,2013
+YellowCoin,YC,Scrypt,2014
+YinYangCoin,YANG,Scrypt,2014
+YoshiCoin,YSH,Scrypt,2016
+ZcCoin,ZCC,Scrypt-jane,2013
+ZClassic,ZCL,Equihash,2016
+Zcoin,XZC,Argon2,2016
+Zedcoin,ZED,Scrypt,2014
+Zeitcoin,ZEIT,Scrypt,
+Zetacoin,ZET,SHA-256,2013
+ZipCoin,ZIPC,X13,2014
+ZombieCoin,ZMB,Scrypt,2014
+Zoom,ZOOM,Lyra2RE2,2015

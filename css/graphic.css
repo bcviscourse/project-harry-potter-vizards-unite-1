@@ -5,10 +5,11 @@
 }
 
 .graphic__prose {
-	width: 24rem;
+	/* width: 24rem; */
 	font-family: 'Roboto Slab', serif;
 	color: #000000;
 	padding: 20px;
+	text-align: center;
 }
 
 .graphic__prose .trigger {
@@ -21,11 +22,18 @@
 .graphic__vis {
 	position: absolute;
 	top: 0;
-	margin-left: 30rem;
+	/* margin-left: 30rem; */
+	margin-top: 120px;
 	-webkit-transform: translate3d(0, 0, 0);
 	-moz-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
 	height: 100vh;
+
+	display: block;
+    margin-left: auto;
+	margin-right: auto;
+	align-self: center;
+    text-align: center;
 }
 
 .graphic__vis.is-fixed {

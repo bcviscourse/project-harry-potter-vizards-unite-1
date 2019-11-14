@@ -6,82 +6,144 @@
 //     console.log(miningData);
 // })
 
-$( document ).click(function() {
-    $( ".balloon" ).toggle( "explode", {pieces: 81});
-  });
 
-// $(window).scroll(function () {
-//     $('.animation-test').each(function () {
-//         var imagePos = $(this).offset().top;
-//         var imageHeight = $(this).height();
-//         var topOfWindow = $(window).scrollTop();
+// function getData()
+// {
+//     let dataset = []
+//     d3.csv('data/mining_algorithms.csv', function(data){
+//         console.log(data)
+//         dataset.push(data)
+//         console.log(dataset.size)
+//     })
+//     console.log(dataset)
+//     return dataset
 
-//         if (imagePos < topOfWindow + imageHeight && imagePos + imageHeight > topOfWindow) {
-//             $(this).addClass("slideRight");
-//         } else {
-//             $(this).removeClass("slideRight");
-//         }
-//     });
-// });
+// }
 
-window.createGraphic = function(graphicSelector){
+window.createGraphic = function(graphicSelector, newdata){
 	var graphicEl = d3.select('.graphic')
 	var graphicVisEl = graphicEl.select('.graphic__vis')
 	var graphicProseEl = graphicEl.select('.graphic__prose')
 
 	var margin = 20
-	var size = 400
+	var size = 1200
 	var chartSize = size - margin * 2
 	var scaleX = null
 	var scaleR = null
-	var data = [8, 6, 7, 5, 3, 0, 9]
-	var extent = d3.extent(data)
-	var minR = 10
-	var maxR = 24
+    newdata = newdata.concat( ["Coins"] );
+    var numberData = [8, 6, 7, 5, 3, 0, 9, 4, 5, 6, 7, 8, 5, 4]
+    console.log(newdata)
+    // console.log(withCoins)
+	// var extent = d3.extent(data) // WE WILL HAVE TO COME BACK TO THIS
+	var minR = 25
+    var maxR = 200
+    var xAxis = null
+    var svg
 	
 	// actions to take on each step of our scroll-driven story
 	var steps = [
 		function step0() {
-			// circles are centered and small
+            // circles are centered and small
 			var t = d3.transition()
-				.duration(800)
+                .duration(400)
 				.ease(d3.easeQuadInOut)
-			    
-
-			var item = graphicVisEl.selectAll('.item')
 			
+            var item = graphicVisEl.selectAll('.item')
+            
+            var axis = graphicVisEl.selectAll('.x-axis')
+            
+            var scaleSize = (chartSize/2 + margin)
+
+            axis
+            .transition(t)
+            .call(xAxis)
+            .attr("class", "x-axis")
+            .attr("transform", "translate(" + margin + "," + scaleSize + ")")
+            .style("opacity", 0)
+
 			item.transition(t)
-				.attr('transform', translate(chartSize / 2, chartSize / 2))
+                .attr('transform', function(d){
+                        return translate(chartSize / 2, chartSize / 2)
+                })
 
 			item.select('circle')
 				.transition(t)
-				.attr('r', minR)
+                .attr('r', function(d)
+                {
+                    if (d=="Coins")
+                        return maxR
+                    return minR
+                })
+                .style('opacity', function(d)
+                {
+                    if (d == "Coins")
+                        return 1;
+                    return 0;
+                })
 
 			item.select('text')
 				.transition(t)
-				.style('opacity', 0)
+                .style('opacity', function(d)
+                {
+                    if (d == "Coins")
+                        return 1;
+                    return 0;
+                })
 		},
 
 		function step1() {
 			var t = d3.transition()
-				.duration(800)
+				.duration(600)
 				.ease(d3.easeQuadInOut)
 			
 			// circles are positioned
-			var item = graphicVisEl.selectAll('.item')
+            var item = graphicVisEl.selectAll('.item')
+            
+            var axis = graphicVisEl.selectAll('.x-axis')
+            axis
+            .transition(t)
+            .call(xAxis)
+            .attr("class", "x-axis")
+            .attr("transform", "translate(" + margin + "," + scaleSize + ")")
+            .style("opacity", 1)
 			
 			item.transition(t)
 				.attr('transform', function(d, i) {
-					return translate(scaleX(i), chartSize / 2)
+                    if (d == "Coins")
+                    {
+                        return translate(chartSize/2, chartSize/2 - margin)
+                    }
+					return translate(scaleX(d.Year), chartSize / 2 -margin - 10*i)
 				})
 
 			item.select('circle')
 				.transition(t)
-				.attr('r', minR)
+                .attr('r', function(d)
+                {
+                    if (d!="Coins")
+                    {
+                        return minR
+                    }
+                    return 0
+                })
+                .style('opacity', function(d)
+                {
+                    if (d == "Coins")
+                        return 0;
+                    return 1;
+                })
 
 			item.select('text')
 				.transition(t)
-				.style('opacity', 0)
+                .style('opacity', 0)
+            
+            var scaleSize = (chartSize/2 + margin)
+            axis
+            .transition(t)
+            .call(xAxis)
+            .attr("class", "x-axis")
+            .attr("transform", "translate(" + margin + "," + scaleSize + ")")
+            .style("opacity", 1)
 		},
 
 		function step2() {
@@ -96,13 +158,29 @@ window.createGraphic = function(graphicSelector){
 				.transition(t)
 				.delay(function(d, i) { return i * 200 })
 				.attr('r', function(d, i) {
-					return scaleR(d)
+					return minR
 				})
 
 			item.select('text')
 				.transition(t)
-				.delay(function(d, i) { return i * 200 })
-				.style('opacity', 1)
+				.delay(function(d, i) { return i * 100 })
+                .style('opacity', function(d)
+                {
+                    if (d=="Coins")
+                        return 0
+                    return 1
+                })
+            
+                
+            var scaleSize = (chartSize/2 + margin)
+
+            var axis = graphicVisEl.selectAll('.x-axis')
+            axis
+            .transition(t)
+            .call(xAxis)
+            .attr("class", "x-axis")
+            .attr("transform", "translate(" + margin + "," + scaleSize + ")")
+            .style("opacity", 1)
 		},
 	]
 
@@ -117,30 +195,50 @@ window.createGraphic = function(graphicSelector){
 	}
 
 	function setupCharts() {
-		var svg = graphicVisEl.append('svg')
-			.attr('width', size + 'px')
-			.attr('height', size + 'px')
+
+		svg = graphicVisEl.append('svg')
+			.attr('width', size + 2*margin)
+			.attr('height', size + 2*margin)
 		
 		var chart = svg.append('g')
 			.classed('chart', true)
 			.attr('transform', 'translate(' + margin + ',' + margin + ')')
 
 		scaleR = d3.scaleLinear()
-		scaleX = d3.scaleBand()
+		scaleX = d3.scaleLinear()
 
-		var domainX = d3.range(data.length)
 
+		console.log(d3.max(numberData))
+		console.log(newdata)
+        var lowestVal = d3.min(newdata, d=>d.Year)
+        var highestVal = d3.max(newdata, d=>d.Year)
+        console.log(lowestVal)
+        // d3.min(data,d=>d.Income)
+
+        console.log(chartSize)
 		scaleX
-			.domain(domainX)
-			.range([0, chartSize])
-			.padding(1)
+			.domain([lowestVal, highestVal])
+            .range([margin, size-margin]);
+			// .padding(1)
 
-		scaleR
-			.domain(extent)
-			.range([minR, maxR])
+		// scaleR
+		// 	.domain(extent)
+        //     .range([minR, maxR])
+
+        var scaleSize = chartSize/2 + margin
+        
+        console.log(scaleX)
+        xAxis = d3.axisBottom().scale(scaleX);
+        //add x-axis to group xg:
+        var xg = svg.append("g")
+        .call(xAxis)
+        .attr("class", "x-axis")
+        .attr("transform", "translate(" + margin + "," + scaleSize + ")")
+
+        console.log(scaleX(2012))
 
 		var item = chart.selectAll('.item')
-			.data(data)
+			.data(newdata)
 			.enter().append('g')
 				.classed('item', true)
 				.attr('transform', translate(chartSize / 2, chartSize / 2))
@@ -150,7 +248,10 @@ window.createGraphic = function(graphicSelector){
 			.attr('cy', 0)
 
 		item.append('text')
-			.text(function(d) { return d })
+			.text(function(d) { 
+                if (d == "Coins")
+                    return d
+                return d.Abbreviation })
 			.attr('y', 1)
 			.style('opacity', 0)
 	}
@@ -163,9 +264,10 @@ window.createGraphic = function(graphicSelector){
 
 	function init() {
 		setupCharts()
-		setupProse()
+        setupProse()
 		update(0)
-	}
+    }
+    
 	
 	init()
 	
