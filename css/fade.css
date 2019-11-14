@@ -1,0 +1,11 @@
+section {
+    opacity: 0;
+    transform: translate(0, 20px); 
+    transition: all 0.2s;
+    position: relative;
+}
+    
+section.visible {
+    opacity: 1;
+    transform: translate(0, 0); 
+}

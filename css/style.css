@@ -6,13 +6,26 @@ body {
   font-family: 'Roboto Slab', serif;
   font-size: 30px;
   padding: 20px;
+  margin-top: 200px;
   color: black;
+  text-align: center;
 }
 
 .names {
   font-family: 'Roboto Slab', serif;
   padding: 20px;
-  color: black
+  color: black;
+  text-align: center;
+  margin-bottom: 200px;
+}
+
+.footer {
+  font-family: 'Roboto Slab', serif;
+  font-size: 30px;
+  padding: 20px;
+  margin: 400px;
+  color: black;
+  text-align: center;
 }
 
 .container{

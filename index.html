@@ -12,16 +12,21 @@
 	<link rel="stylesheet" href="css/fontawesome.min.css">
 	<link rel="stylesheet" href="css/milligram.min.css">
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/fade.css">
 	<link rel="stylesheet" href="css/graphic.css">
 	<script type="module" src="js/main.js"></script>
 	<!-- <script type="text/javascript" src = "js/scatter_chart.js"></script> -->
 
-	<!-- fonts -->
+	<!-- Fonts and scripts -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet"><body>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="jquery.js"></script> 
+	<script src="fadein.js"></script> 
+	<script type="module" src="js/fade.js"></script>
 	<script type="module" src="js/main.js"></script>
 	<!-- <script type="text/javascript" src = "js/scatter_chart.js"></script> -->
 
-	<div class="header">
+	<div class=" center header">
 		<div class = "center title">Final Project: Cryptocurrency</div>
 		<div class = "center names">Edward Cramer, Helen Nazarenko, Michelle Youn, & Linda Chen</div>
 		<br>
@@ -56,25 +61,47 @@
 			
 			<div class='library__graphic graphic'>
 				<div class='graphic__prose'>
-					<p class='trigger' data-step='0'>Step 1 in the graphic. It triggers in the middle of the viewport. For this graphic, it is the same as the initial state so the reader doesn&rsquo;t miss anything.
-						<br>
-						<br> Step 1 in our project: we show a single circle representing the nature of centralized currency.
-					</p>
-					<p class='trigger' data-step='1'>Step 2 arrives. The graphic should be locking into a fixed position right about now. We could have a whole bunch of these &ldquo;fixed&rdquo; steps.
-						<br>
-						<br> Step 2 in our project: the bubble pops, and splits into circles representing different cryptocurrencies. They lay out horizontally along a timeline.
-					</p>
-					<p class='trigger' data-step='2'>Step 3 concludes our brief tour. The graphic should now go back to its original in-flow position, elegantly snapping back into place.
-						<br>
-						<br> Step 3 in our project: the bubbles change color to show different hashing algorithms.
-						<br> Step 4 in our project: the bubbles grow in size to represent market cap.
-						<br> Step 5 in our project: the colors turn neutral to show the shift from an engineering approach to a financial one.
 
-					</p>
+					<!-- Section 1 -->
+					<section>
+						<p class='trigger' data-step='0'>Step 1 in the graphic. It triggers in the middle of the viewport. For this graphic, it is the same as the initial state so the reader doesn&rsquo;t miss anything.
+							<br>
+							<br> Step 1 in our project: we show a single circle representing the nature of centralized currency.
+						</p>
+					</section>
+		
+					<!-- Section 2 -->
+					<section>
+						<p class='trigger' data-step='1'>Step 2 arrives. The graphic should be locking into a fixed position right about now. We could have a whole bunch of these &ldquo;fixed&rdquo; steps.
+							<br>
+							<br> Step 2 in our project: the bubble pops, and splits into circles representing different cryptocurrencies. They lay out horizontally along a timeline.
+						</p>
+					</section>
+					
+					<!-- Section 3 -->
+					<section>
+						<p class='trigger' data-step='2'>
+							<br>
+							<br> Step 3 in our project: the bubbles change color to show different hashing algorithms.
+							<br>
+							<br> Step 4 in our project: the bubbles grow in size to represent market cap.
+							<br>
+							<br> Step 5 in our project: the colors turn neutral to show the shift from an engineering approach to a financial one.
+							<br>
+							<br> Next: Dynamic dataset to visualize real time changes
+	
+						</p>
+					</section>
+					
 				</div>
 				<div class='graphic__vis'></div>
+
+				<div class = "footer">
+					Thank you.
+				</div>
+
 			</div>
-			
+
 			<!-- <p class='back-to-blog'><a href='../../#scrollstory'>&larr; Scrollstory Blog</a></p> -->
 	</div>
 
