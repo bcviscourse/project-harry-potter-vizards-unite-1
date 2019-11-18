@@ -23,7 +23,7 @@ body {
   font-family: 'Roboto Slab', serif;
   font-size: 30px;
   padding: 20px;
-  margin: 400px;
+  margin: 0px;
   color: black;
   text-align: center;
 }
@@ -203,4 +203,8 @@ div.tooltip {
 .tooltip{
   color: black;
   background-color: red;
+}
+
+svg{
+  margin:0;
 }

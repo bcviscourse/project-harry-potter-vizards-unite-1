@@ -100,21 +100,29 @@
 				</section>
 
 				<section>
-					<p class='trigger' data-step='4'>
-					<div class='tooltip' ></div>
-					<br>
-					<br> Next: Dynamic dataset to visualize real time changes
-					<br>
+					<p class='trigger' data-step='5'>
+					<!-- <div class='tooltip' ></div> -->
+					<!-- <div id='my_dataviz'></div> -->
+				</section>
+
+				<section>
+					<p class='trigger' data-step='6'>
+					<!-- <div class='tooltip' ></div> -->
+					<!-- <div id="my_dataviz"></div> -->
 				</section>
 
 
 
 			</div>
+			
 			<div class='graphic__vis'></div>
+			<div id="my_dataviz"></div>
+			
+			
 
-			<div class="footer">
+			<footer class="footer">
 				Thank you.
-			</div>
+			</footer>
 
 		</div>
 
@@ -216,6 +224,7 @@
 					$graphicEl.scrollStory({
 						contentSelector: '.trigger',
 						triggerOffset: halfViewportHeight,
+						scrollOffset: -100,
 						itemfocus: handleItemFocus,
 						containerscroll: handleContainerScroll,
 					})

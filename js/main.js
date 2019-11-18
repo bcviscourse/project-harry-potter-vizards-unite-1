@@ -1,6 +1,7 @@
 //next:
+//next vis (almost done, depends on if we want zooming)
+//fix weird scroll behavior pertaining to second vis.
 //add transition to next vis.
-//next vis.
 
 window.createGraphic = function(graphicSelector, newdata){
 	var graphicEl = d3.select('.graphic')
@@ -288,6 +289,8 @@ window.createGraphic = function(graphicSelector, newdata){
         function step4() {
             //bubbles return to neutral colors:
             console.log('step  4');
+
+            d3.selectAll('svg').style('opacity',1)
         
             var t = d3.transition()
 				.ease(d3.easeLinear)
@@ -298,6 +301,121 @@ window.createGraphic = function(graphicSelector, newdata){
 			item.select('circle')
 				.transition(t)
                 .style('fill','pink')
+        },
+        
+        function step5() {
+            console.log('step 5')
+            d3.selectAll('svg').style('opacity',0)
+            d3.selectAll('.tooltip').style('opacity',0)
+
+            var margin = {top: 10, right: 10, bottom: 10, left: 10},
+            width = 1000 - margin.left - margin.right,
+            height = 700 - margin.top - margin.bottom;
+            let size= 1000;
+
+            // // append the svg object to the body of the page
+            // var svg = d3.select("#my_dataviz")
+            // .append("svg")
+            // .attr("width", width + margin.left + margin.right)
+            // .attr("height", height + margin.top + margin.bottom)
+            // .append("g")
+            // .attr("transform",
+            //     "translate(" + margin.left + "," + margin.top + ")")
+            //graphicVisEl
+            svg = d3.select("#my_dataviz").append('svg')
+			.attr('width', size + 2*margin.left)
+            .attr('height', size + 2*margin.left)
+            .attr('margin-left', '50px')
+
+            //edit the data in order to make it compatible with making treemap:
+            let sample={"children":
+            [{"name":"boss1",
+            "children":[{"name":"mister_a","group":"A","value":28,"colname":"level3"},
+            {"name":"mister_b","group":"A","value":19,"colname":"level3"},
+            {"name":"mister_c","group":"C","value":18,"colname":"level3"},
+            {"name":"mister_d","group":"C","value":19,"colname":"level3"}],
+            "colname":"level2"},
+            {"name":"boss2",
+            "children":[{"name":"mister_e","group":"C","value":14,"colname":"level3"},
+            {"name":"mister_f","group":"A","value":11,"colname":"level3"},
+            {"name":"mister_g","group":"B","value":15,"colname":"level3"},
+            {"name":"mister_h","group":"B","value":16,"colname":"level3"}],
+            "colname":"level2"},
+            {"name":"boss3",
+            "children":[{"name":"mister_i","group":"B","value":10,"colname":"level3"},
+            {"name":"mister_j","group":"A","value":13,"colname":"level3"},
+            {"name":"mister_k","group":"A","value":13,"colname":"level3"},
+            {"name":"mister_l","group":"D","value":25,"colname":"level3"},
+            {"name":"mister_m","group":"D","value":16,"colname":"level3"},
+            {"name":"mister_n","group":"D","value":28,"colname":"level3"}],
+            "colname":"level2"}],"name":"CEO"};
+            var treedata={"children":[]};
+            var algos=[];
+            for (let i=0;i<newdata.length;i++){
+                if (!algos.includes(newdata[i].algo)) algos.push(newdata[i].algo);
+            }
+            for (let i=0;i<algos.length;i++){
+                let children=[];
+                for (let j=0;j<newdata.length;j++){
+                    if (newdata[j].algo== algos[i]){
+                        children.push({name: newdata[j].name, marketcap: newdata[j].marketcap});
+                    }
+                }
+                let j= {name: algos[i], children: children};
+                treedata['children'].push(j);
+            }
+            console.log('sample:',sample);
+            console.log('treedata:',treedata);
+
+            var root = d3.hierarchy(treedata).sum(function(d){ return d.marketcap}) // Here the size of each leave is given in the 'value' field in input data
+            console.log('descendants',root.descendants());
+            console.log(root.links());
+            // Then d3.treemap computes the position of each element of the hierarchy
+            d3.treemap()
+                .size([width, height])
+                .padding(2)
+                (root)
+            
+            console.log('root', root);
+            // use this information to add rectangles:
+            svg
+                .selectAll("rect")
+                .attr('class','treemap')
+                .data(root.leaves())
+                .enter()
+                .append("rect")
+                .attr('x', function (d) { return d.x0; })
+                .attr('y', function (d) { return d.y0; })
+                .attr('width', function (d) { return d.x1 - d.x0; })
+                .attr('height', function (d) { return d.y1 - d.y0; })
+                .style("stroke", "black")
+                .style("fill", "slateblue")
+
+             // and to add the text labels
+            svg
+            .selectAll("text")
+            .data(root.leaves())
+            .enter()
+            .append("text")
+                .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+                .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+                .text(function(d){ return d.data.name })
+                .attr("font-size", "15px")
+                .attr("fill", "white")
+            
+            d3.select('.treemap').style('opacity',1)
+            
+        },
+
+        function step6()
+        {
+            d3.selectAll('.treemap').exit().remove()
+            d3.selectAll('rect').exit().remove()
+        },
+
+        function step7()
+        {
+            d3.selectAll('svg').exit().remove()
         }
 
 	]
@@ -317,7 +435,8 @@ window.createGraphic = function(graphicSelector, newdata){
 
 		svg = graphicVisEl.append('svg')
 			.attr('width', size + 2*margin)
-			.attr('height', size + 2*margin)
+            .attr('height', size + 2*margin)
+            .attr('class','firstvis')
 		
 		var chart = svg.append('g')
 			.classed('chart', true)
