@@ -206,5 +206,14 @@ div.tooltip {
 }
 
 svg{
-  margin:0;
+  margin:100px;
+  /* background-color: purple; */
+}
+
+.treemap{
+  margin: 50px;
+}
+
+.circle:hover{
+  background-color:blue;
 }

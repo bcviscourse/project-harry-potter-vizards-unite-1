@@ -1,7 +1,7 @@
 //next:
 //next vis (almost done, depends on if we want zooming)
-//fix weird scroll behavior pertaining to second vis.
 //add transition to next vis.
+//dynamic data vis?
 
 window.createGraphic = function(graphicSelector, newdata){
 	var graphicEl = d3.select('.graphic')
@@ -22,6 +22,9 @@ window.createGraphic = function(graphicSelector, newdata){
     var maxR = 200
     var xAxis = null
     var svg
+    var marketScale = d3.scaleLinear()
+    .domain(d3.extent(newdata,function(d){return d.marketcap;}) )
+    .range([15,35]);
 	
 	// actions to take on each step of our scroll-driven story
 	var steps = [
@@ -85,6 +88,8 @@ window.createGraphic = function(graphicSelector, newdata){
                 .html("Coins")
                 .style('opacity',1)
 		},
+
+
 
 		function step1() {
             console.log('step  1');
@@ -152,6 +157,7 @@ window.createGraphic = function(graphicSelector, newdata){
 
             let circles = item.select('circle')
                 .on('mouseover', function(d){
+                    d3.select(this).style('fill','red');
                     let res = d3.select('.tooltip');
                     res.transition().duration(50)
                         .style('opacity',1)
@@ -162,6 +168,7 @@ window.createGraphic = function(graphicSelector, newdata){
                     console.log(d.name)
                 })
                 .on('mouseout', function(){
+                    d3.select(this).style('fill','pink');
                     let res = d3.select('.tooltip');
                     res.style('opacity',0);
                 })
@@ -182,6 +189,9 @@ window.createGraphic = function(graphicSelector, newdata){
             .attr("transform", "translate(" + margin + "," + scaleSize + ")")
             .style("opacity", 1)
 		},
+
+
+
 
 		function step2() {
             //this one colors the bubbles according to algo.
@@ -230,7 +240,7 @@ window.createGraphic = function(graphicSelector, newdata){
             })
             circles = item.selectAll('circle')
             .on('mouseover', function(d){
-                // d3.selectAll('.tooltip').remove();
+                d3.select(this).style('fill','red')
                 let res = d3.selectAll('.tooltip')
                 res.transition().duration(50)
                     .style('opacity',1)
@@ -243,11 +253,15 @@ window.createGraphic = function(graphicSelector, newdata){
                 // div.style('top', (d3.event.pageY) + "px");
                 console.log(d.name)
             })
-            .on('mouseout', function(){
+            .on('mouseout', function(d){
+                d3.select(this).style('fill', colorScale(d.algo))
                 let res = d3.select('.tooltip');
                 res.style('opacity',0);
             })
         },
+
+
+
 
 
         function step3() {
@@ -264,11 +278,8 @@ window.createGraphic = function(graphicSelector, newdata){
                 .domain(algos)
 
             //remove symbol titles from circles:
-            d3.selectAll('.circleText').style('opacity',0);
+            d3.selectAll('.circleText').remove();
 
-            var marketScale = d3.scaleLinear()
-                .domain(d3.extent(newdata,function(d){return d.marketcap;}) )
-                .range([10,30]);
         
             var t = d3.transition()
 				.ease(d3.easeLinear)
@@ -286,11 +297,22 @@ window.createGraphic = function(graphicSelector, newdata){
 					return colorScale(d.algo);
                 })
         },
+
+
+
+
         function step4() {
             //bubbles return to neutral colors:
             console.log('step  4');
 
-            d3.selectAll('svg').style('opacity',1)
+            d3.selectAll('rect').style('opacity',0);
+
+            d3.selectAll('circle').style('opacity',1)
+            d3.selectAll('.x-axis').style('opacity',1)
+            d3.selectAll('item text').style('opacity',1)
+            // d3.selectAll('.tooltip').style('opacity',1)
+            
+            svg  = d3.selectAll('svg')
         
             var t = d3.transition()
 				.ease(d3.easeLinear)
@@ -301,11 +323,43 @@ window.createGraphic = function(graphicSelector, newdata){
 			item.select('circle')
 				.transition(t)
                 .style('fill','pink')
+
+
+            //tooltips:
+            let circles = item.selectAll('circle')
+            .on('mouseover', function(d){
+                d3.select(this).attr('r',marketScale(d.marketcap)*1.5);
+                let res = d3.selectAll('.tooltip')
+                res.transition().duration(50)
+                    .style('opacity',1)
+                res.html('<strong>'+d.name+'</strong>'+
+                '<br>Algorithm: '+d.algo+'<br>Market Cap: '+d.marketcap);
+                // console.log((d3.event.pageX), d3.event.pageY-1400);
+                res.style('right', 50 + "px");
+                res.style('top', 100 + "px");
+                // div.style('left', (d3.event.pageX) + "px")
+                // div.style('top', (d3.event.pageY) + "px");
+                console.log(d.name)
+            })
+            .on('mouseout', function(d){
+                d3.select(this).attr('r',marketScale(d.marketcap))
+                let res = d3.select('.tooltip');
+                res.style('opacity',0);
+            })
+
+            
         },
+
+
+
+
         
         function step5() {
             console.log('step 5')
-            d3.selectAll('svg').style('opacity',0)
+            //appends new svg to another html element. 
+            d3.selectAll('circle').style('opacity',0)
+            d3.selectAll('.x-axis').style('opacity',0)
+            d3.selectAll('item text').style('opacity',0)
             d3.selectAll('.tooltip').style('opacity',0)
 
             var margin = {top: 10, right: 10, bottom: 10, left: 10},
@@ -322,10 +376,16 @@ window.createGraphic = function(graphicSelector, newdata){
             // .attr("transform",
             //     "translate(" + margin.left + "," + margin.top + ")")
             //graphicVisEl
-            svg = d3.select("#my_dataviz").append('svg')
+            
+            svg  = d3.selectAll('svg').append('svg')
+            svg
+            .append('svg')
 			.attr('width', size + 2*margin.left)
             .attr('height', size + 2*margin.left)
+            .attr('left', '100px')
+            .attr('top','300px')
             .attr('margin-left', '50px')
+            .attr('class','treemap')
 
             //edit the data in order to make it compatible with making treemap:
             let sample={"children":
@@ -403,19 +463,19 @@ window.createGraphic = function(graphicSelector, newdata){
                 .attr("font-size", "15px")
                 .attr("fill", "white")
             
-            d3.select('.treemap').style('opacity',1)
             
         },
 
         function step6()
         {
-            d3.selectAll('.treemap').exit().remove()
-            d3.selectAll('rect').exit().remove()
+            // d3.selectAll('rect').exit().remove()
+            d3.selectAll('rect').style('opacity',0);
         },
 
         function step7()
         {
-            d3.selectAll('svg').exit().remove()
+            
+            // d3.selectAll('svg').exit().remove()
         }
 
 	]
