@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 	<link rel="stylesheet" href="css/fontawesome.min.css">
 	<link rel="stylesheet" href="css/milligram.min.css">
-	<link rel="stylesheet" href="css/style.css">
+	
 	<link rel="stylesheet" href="css/fade.css">
 	<link rel="stylesheet" href="css/graphic.css">
 	<script type="module" src="js/main.js"></script>
@@ -28,6 +28,7 @@
 	<script src="fadein.js"></script>
 	<script type="module" src="js/fade.js"></script>
 	<script type="module" src="js/main.js"></script>
+	<link rel="stylesheet" href="css/style.css">
 	<!-- <script type="text/javascript" src = "js/scatter_chart.js"></script> -->
 
 	<div class=" center header">
@@ -36,9 +37,9 @@
 		<br>
 	</div>
 
-	<div class="balloon_container">
+	<!-- <div class="balloon_container"> -->
 		<div class="balloon"></div>
-	</div>
+	<!-- </div> -->
 
 	<div class='library'>
 
@@ -59,6 +60,7 @@
 				<!-- Section 2 -->
 				<section>
 					<p class='trigger' data-step='1'>
+						<div class='tooltip' ></div>
 						<br>
 						<br> Step 1:
 						<br> The bubble pops, and splits into circles representing different cryptocurrencies.
@@ -69,6 +71,7 @@
 				<!-- Section 3 -->
 				<section>
 					<p class='trigger' data-step='2'>
+						<div class='tooltip' ></div>
 						<br>
 						<br> Step 2:
 						<br> The bubbles change color to show different hashing algorithms.
@@ -78,6 +81,7 @@
 
 				<section>
 					<p class='trigger' data-step='3'>
+						<div class='tooltip' ></div>
 						<br>
 						<br> Step 3:
 						<br> The bubbles grow in size to represent market cap.
@@ -88,6 +92,7 @@
 
 				<section>
 					<p class='trigger' data-step='4'>
+					<div class='tooltip' ></div>
 					<br>
 					<br> Step 4:
 					<br> The colors turn neutral to show the shift from an engineering approach to a financial one.
@@ -95,6 +100,8 @@
 				</section>
 
 				<section>
+					<p class='trigger' data-step='4'>
+					<div class='tooltip' ></div>
 					<br>
 					<br> Next: Dynamic dataset to visualize real time changes
 					<br>

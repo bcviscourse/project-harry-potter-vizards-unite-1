@@ -67,7 +67,7 @@ body {
   border-radius: 50%;
   position: absolute;
   top: 100px;
-  left: 140px;
+  left: 500px;
   animation: float 2.5s infinite;
 }
 /* 
@@ -185,3 +185,22 @@ body {
     vertical-align: baseline;
   }
 
+
+div.tooltip {	
+    position: absolute;			
+    text-align: center;			
+    width: 300px;					
+    height: 100px;		
+    opacity: 0;
+    padding: 2px;				
+    font: 14px sans-serif;		
+    background: pink;	
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;			
+}
+
+.tooltip{
+  color: black;
+  background-color: red;
+}
