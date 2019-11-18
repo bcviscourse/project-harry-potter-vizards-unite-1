@@ -3,7 +3,7 @@
 // ]).then(data=>{ 
 //     let miningData = data
 //     window.miningData = min
-//     console.log(miningData);
+//     console.log('mining data:', miningData);
 // })
 
 
@@ -43,6 +43,7 @@ window.createGraphic = function(graphicSelector, newdata){
 	// actions to take on each step of our scroll-driven story
 	var steps = [
 		function step0() {
+            console.log('step  0');
             // circles are centered and small
 			var t = d3.transition()
                 .duration(400)
@@ -66,7 +67,8 @@ window.createGraphic = function(graphicSelector, newdata){
                         return translate(chartSize / 2, chartSize / 2)
                 })
 
-			item.select('circle')
+            item.select('circle')
+                .style('fill','pink')
 				.transition(t)
                 .attr('r', function(d)
                 {
@@ -92,6 +94,7 @@ window.createGraphic = function(graphicSelector, newdata){
 		},
 
 		function step1() {
+            console.log('step  1');
 			var t = d3.transition()
 				.duration(600)
 				.ease(d3.easeQuadInOut)
@@ -113,10 +116,11 @@ window.createGraphic = function(graphicSelector, newdata){
                     {
                         return translate(chartSize/2, chartSize/2 - margin)
                     }
-					return translate(scaleX(d.Year), chartSize / 2 -margin - 10*i)
+					return translate(scaleX(d.year), chartSize / 2 -margin - 10*i)
 				})
 
-			item.select('circle')
+            item.select('circle')
+                .style('fill', 'pink')
 				.transition(t)
                 .attr('r', function(d)
                 {
@@ -147,46 +151,74 @@ window.createGraphic = function(graphicSelector, newdata){
 		},
 
 		function step2() {
+            //this one colors the bubbles according to algo.
+            console.log('step  2');
+
+            var algos=[];
+            for (let i=0;i<newdata.length;i++){
+                if (!algos.includes(newdata[i].algo)) algos.push(newdata[i].algo);
+            }
+            console.log(algos);
+            var colorScale = d3.scaleOrdinal(d3.schemeAccent) 
+                .domain(algos)
+            console.log('testing color scale:', colorScale('Scrypt'))
+                // .range();
 			var t = d3.transition()
 				.duration(800)
-				.ease(d3.easeQuadInOut)
+                .ease(d3.easeQuadInOut)
+                
+
+			// circles are colored:
+			var item = graphicVisEl.selectAll('.item')
+			
+			item.select('circle')
+				.transition(t)
+				.style('fill', function(d, i) {
+					return colorScale(d.algo);
+				})
+        },
+        function step3() {
+            //bubbles grow in size to represent market cap.
+            console.log('step  3');
+
+            var marketScale = d3.scaleLinear()
+                .domain(d3.extent(newdata,function(d){return d.marketcap;}) )
+                .range([20,70]);
+        
+            var t = d3.transition()
+				.ease(d3.easeLinear)
 
 			// circles are sized
 			var item = graphicVisEl.selectAll('.item')
 			
 			item.select('circle')
 				.transition(t)
-				.delay(function(d, i) { return i * 200 })
+				.delay(50)
 				.attr('r', function(d, i) {
-					return minR
-				})
-
-			item.select('text')
-				.transition(t)
-				.delay(function(d, i) { return i * 100 })
-                .style('opacity', function(d)
-                {
-                    if (d=="Coins")
-                        return 0
-                    return 1
+					return marketScale(d.marketcap);
                 })
-            
-                
-            var scaleSize = (chartSize/2 + margin)
+        },
+        function step4() {
+            //bubbles return to neutral colors:
+            console.log('step  4');
+        
+            var t = d3.transition()
+				.ease(d3.easeLinear)
 
-            var axis = graphicVisEl.selectAll('.x-axis')
-            axis
-            .transition(t)
-            .call(xAxis)
-            .attr("class", "x-axis")
-            .attr("transform", "translate(" + margin + "," + scaleSize + ")")
-            .style("opacity", 1)
-		},
+			// circles are sized
+			var item = graphicVisEl.selectAll('.item')
+			
+			item.select('circle')
+				.transition(t)
+                .style('fill','pink')
+        }
+
 	]
 
 	// update our chart
 	function update(step) {
-		steps[step].call()
+        let k= steps[step];
+        k.call();
 	}
 	
 	// little helper for string concat if using es5
@@ -209,9 +241,9 @@ window.createGraphic = function(graphicSelector, newdata){
 
 
 		console.log(d3.max(numberData))
-		console.log(newdata)
-        var lowestVal = d3.min(newdata, d=>d.Year)
-        var highestVal = d3.max(newdata, d=>d.Year)
+		console.log('newdata:',newdata)
+        var lowestVal = d3.min(newdata, d=>d.year)
+        var highestVal = d3.max(newdata, d=>d.year)
         console.log(lowestVal)
         // d3.min(data,d=>d.Income)
 

@@ -51,7 +51,7 @@
 				<section>
 					<p class='trigger' data-step='0'>
 						<br>
-						<br> Step 1
+						<br> Step 0:
 						<br> We show a single circle representing the nature of centralized currency.
 					</p>
 				</section>
@@ -60,7 +60,7 @@
 				<section>
 					<p class='trigger' data-step='1'>
 						<br>
-						<br> Step 2
+						<br> Step 1:
 						<br> The bubble pops, and splits into circles representing different cryptocurrencies.
 						<br> They lay out horizontally along a timeline.
 					</p>
@@ -70,7 +70,7 @@
 				<section>
 					<p class='trigger' data-step='2'>
 						<br>
-						<br> Step 3:
+						<br> Step 2:
 						<br> The bubbles change color to show different hashing algorithms.
 						<br>
 					</p>
@@ -79,7 +79,7 @@
 				<section>
 					<p class='trigger' data-step='3'>
 						<br>
-						<br> Step 4:
+						<br> Step 3:
 						<br> The bubbles grow in size to represent market cap.
 						<br>
 					</p>
@@ -87,8 +87,9 @@
 				</section>
 
 				<section>
+					<p class='trigger' data-step='4'>
 					<br>
-					<br> Step 5
+					<br> Step 4:
 					<br> The colors turn neutral to show the shift from an engineering approach to a financial one.
 					<br>
 				</section>
@@ -129,13 +130,30 @@
 
 			function scrollstory() {
 				Promise.all([
-					d3.csv('data/mining_algorithms_old.csv')
+					d3.csv('data/out.csv')
 					// d3.csv('data/mining_algorithms.csv')
 				]).then(data => {
 					let miningData = data[0]
-					miningData.filter(entry => entry.year != 0 && entry.year != "");
-					let smallMine = miningData.slice(1, 20)
-					setScrollStory(smallMine)
+					console.log(miningData);
+					var TOTDATA =[];
+					let i=0;
+					//formatting the data:
+					let count=0;
+					for (i=0;i<miningData.length;i++){
+						if (miningData[i].name2 !='' ){
+							TOTDATA[count] = {name: miningData[i].name,
+											symbol: miningData[i].symbol,
+											algo: miningData[i].algo,
+											year: +miningData[i].year,
+											marketcap: +miningData[i].marketcap,
+											circulatingsupply: + miningData[i].circulatingsupply,
+											price: +miningData[i].price};
+							count++;
+						}
+					}
+					// miningData.filter(entry => entry.year != 0 && entry.year != "");
+					// let smallMine = miningData.slice(1, 20)
+					setScrollStory(TOTDATA)
 				})
 
 				function setScrollStory(data) {
@@ -164,6 +182,7 @@
 					var handleItemFocus = function (event, item) {
 						var step = item.data.step
 						graphic.update(step)
+						console.log('STEP:',step)
 					}
 
 					// callback on scrollStory scroll event
