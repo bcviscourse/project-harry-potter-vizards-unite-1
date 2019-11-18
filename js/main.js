@@ -306,7 +306,7 @@ window.createGraphic = function(graphicSelector, newdata){
             console.log('step  4');
 
             d3.selectAll('rect').style('opacity',0);
-
+            d3.selectAll('.treemap-text').remove()
             d3.selectAll('circle').style('opacity',1)
             d3.selectAll('.x-axis').style('opacity',1)
             d3.selectAll('item text').style('opacity',1)
@@ -462,6 +462,7 @@ window.createGraphic = function(graphicSelector, newdata){
                 .text(function(d){ return d.data.name })
                 .attr("font-size", "15px")
                 .attr("fill", "white")
+                .attr('class','treemap-text')
             
             
         },
