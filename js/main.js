@@ -1,5 +1,4 @@
 //next:
-//scrollstory runtime optimization?
 //tooltips: treemap and fix vis1 tooltip on upscroll. 
 //dynamic data vis?
 
@@ -610,6 +609,7 @@ function updateTree2(width,height,margin){
                     .attr("font-size", "15px")
                     .attr("fill", "white")
                     .attr('class','treemap-text')
+
         },
 
 
