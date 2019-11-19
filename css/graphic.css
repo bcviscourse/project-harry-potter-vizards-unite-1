@@ -20,10 +20,11 @@
 }
 
 .graphic__vis {
+	padding: 20px;
 	position: absolute;
 	top: 0;
 	/* margin-left: 30rem; */
-	margin-top: 120px;
+	margin-top: 60px;
 	-webkit-transform: translate3d(0, 0, 0);
 	-moz-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
@@ -32,6 +33,7 @@
 	display: block;
     margin-left: auto;
 	margin-right: auto;
+  	/* width: 50%; */
 	align-self: center;
     text-align: center;
 }

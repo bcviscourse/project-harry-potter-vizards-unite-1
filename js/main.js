@@ -7,7 +7,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
  }
 
-window.createGraphic = function(graphicSelector, newdata){
+window.createGraphic = function(graphicSelector, newdata, parent_height, parent_width){
 	var graphicEl = d3.select('.graphic')
 	var graphicVisEl = graphicEl.select('.graphic__vis')
     var graphicProseEl = graphicEl.select('.graphic__prose')
@@ -39,9 +39,10 @@ window.createGraphic = function(graphicSelector, newdata){
         if (newdata[i].name == "Lisk" | newdata[i].name== "DigiByte" | newdata[i].name=="Siacoin" | newdata[i] == "Verge" | newdata[i] == "MonaCoin") sumforupdatetree1= sumforupdatetree1+ newdata[i].marketcap;
     }
 
-	var margin = 20
-	var size = 1200
-	var chartSize = size - margin * 2
+	var margin = 100
+    var sizeX = parent_width
+    var sizeY = parent_height
+	var chartSize = sizeX - margin * 2
 	var scaleX = null
 	var minR = 25
     var maxR = 200
@@ -256,17 +257,26 @@ function updateTree2(width,height,margin){
 
             //transition for the giant circle:
             var item = graphicVisEl.selectAll('.item')
+            item.classed('balloon', true)
+            // item.attr('class', 'balloon')
 			item.transition(t)
                 .attr('transform', function(d){
-                        return translate(chartSize / 2, chartSize / 2)
+                        return translate(0,0)
                 })
+            
+            // Functions to center the first "balloon" under the text correctly
+            var center_header_location = document.getElementsByClassName("graphic__prose")[0];
+            console.log(center_header_location)
+            var padding = window.getComputedStyle(center_header_location, null).getPropertyValue('padding')
+            var center_balloon_x = center_header_location.clientWidth/2 - margin - parseInt(padding);
+            console.log(center_balloon_x)
             
             //add the giant circle:
             item.select('circle')
                 .style('fill','pink')
-                .attr('class','balloon')
-                .attr('cx', size/6)
-                .attr('cy',-350)
+                // .attr('class','balloon')
+                .attr('cx', center_balloon_x)
+                .attr('cy',chartSize/4)
 				.transition(t)
                 .attr('r', maxR)
                 .style('opacity', 1)
@@ -274,19 +284,26 @@ function updateTree2(width,height,margin){
             //remove text from scrollup:
             d3.selectAll('.item text').remove()
 
+            console.log(d3.selectAll('.balloon'))
             //add new text containing just "Coins":
             var circleText = d3.selectAll(".item").append("text")
-                .attr("class", "circleText")	
-                .style('opacity',0)		
-                .style('fill','white')
-                .html("Coins")
-                .style('opacity',1)
-		},
+            .attr("class", "circleText")	
+            .style('opacity',0)		
+            .style('fill','white')
+            .html("Coins")
+            .style('opacity',1)
+            .attr("x", center_balloon_x)
+            .attr("y", chartSize/4);
+    },
 
 
 
 		function step1() {
             console.log('step  1');
+            
+            // Remove balloon animation
+            var item = graphicVisEl.selectAll('.item')
+            item.classed('balloon', false)
 
             //hide treemap (in case someone scrolls really fast):
             d3.selectAll('rect').style('opacity',0);
@@ -314,7 +331,7 @@ function updateTree2(width,height,margin){
             .transition(t)
             .call(xAxis)
             .attr("class", "x-axis")
-            .attr("transform", "translate(" + size/6 + "," + scaleSize + ")")
+            .attr("transform", "translate(" + sizeX/6 + "," + scaleSize + ")")
             .style("opacity", 1)
 
 
@@ -543,7 +560,7 @@ function updateTree2(width,height,margin){
             
 
             //now define stuff for treemap:
-            var margin = {top: 10, right: 10, bottom: 10, left: 10}
+            var margin = {top: 10, right: 0, bottom: 10, left: 0}
             let size= 1000;
 
             var width = 1300 - margin.left - margin.right;
@@ -645,8 +662,8 @@ function updateTree2(width,height,margin){
 	function setupCharts() {
         //append svg for our first vis:
 		svg = graphicVisEl.append('svg')
-			.attr('width', size + 2*margin)
-            .attr('height', size + 2*margin)
+			.attr('width', sizeX + 2*margin)
+            .attr('height', sizeY + 2*margin)
             .attr('class','firstvis')
         
         //group element for our first vis:
@@ -668,7 +685,7 @@ function updateTree2(width,height,margin){
         //define scaleX:
 		scaleX
 			.domain([parseTime(lowestVal), parseTime(highestVal)])
-            .range([margin, size-margin]);
+            .range([margin, sizeX-margin]);
 
         var scaleSize = chartSize/2 + margin
 
