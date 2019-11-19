@@ -20,9 +20,26 @@ window.createGraphic = function(graphicSelector, newdata){
     for (let i=0;i<newdata.length;i++){
         if (!algos.includes(newdata[i].algo) && newdata[i].algo !=undefined) algos.push(newdata[i].algo);
     }
+    algos.push("Other")
     console.log('algos:', algos);
-    var colorScale = d3.scaleOrdinal(d3.schemeAccent) 
+    var colorScale = d3.scaleOrdinal(["sienna","maroon", "olive",'green','teal','lime','fuchsia','silver', 'hotpink',"orange","tan","green","brown","grey","purple","blue","aqua"]) 
         .domain(algos)
+    for (let i=0;i<17;i++){
+        this.console.log(colorScale(algos[i]));
+    }
+
+    var sumforstep5=0 ;
+    for (let i=0;i<algos.length;i++){
+        if (newdata[i].name !="Bitcoin" & newdata[i].name !="Ethereum"){
+            // console.log(newdata[i].marketcap)
+            sumforstep5= sumforstep5+ newdata[i].marketcap;
+        }
+    }
+
+    var sumforupdatetree1 = 0;
+    for (let i=0;i<algos.length;i++){
+        if (newdata[i].name == "Lisk" | newdata[i].name== "DigiByte" | newdata[i].name=="Siacoin" | newdata[i] == "Verge" | newdata[i] == "MonaCoin") sumforupdatetree1= sumforupdatetree1+ newdata[i].marketcap;
+    }
 
 	var margin = 20
 	var size = 1200
@@ -33,8 +50,186 @@ window.createGraphic = function(graphicSelector, newdata){
     var xAxis = null
     var svg
     var parseTime = d3.timeParse("%Y");
+
+//our treemap-strucutred data: 
+// var treedata={"children":[]};
+// for (let i=0;i<algos.length;i++){
+//     let children=[];
+//     for (let j=0;j<newdata.length;j++){
+//         if (newdata[j].algo== algos[i]){
+//             children.push({name: newdata[j].name, marketcap: newdata[j].marketcap});
+//         }
+//     }
+//     let j= {name: algos[i], children: children};
+//     treedata['children'].push(j);
+// }
+var treedata1 = {"children": [
+    {"name":"SHA-256","children":
+        [{"name":"Bitcoin","marketcap":157000000000}] },
+    {"name":"Dagger-Hashimoto","children":
+        [{"name":"Ethereum","marketcap":20256946583}] },
+    {"name":"Other","children":
+        [{"name":"Other", "marketcap": sumforstep5}] }
+]}
+
+var treedata2 = {"children":[
+    {"name":"Scrypt","children":
+        [{"name":"Litecoin","marketcap":3836414728},
+            {"name":"Dogecoin","marketcap":328051591.5}]},
+    {"name":"Transaction fee","children":
+        [{"name":"Stellar","marketcap":1459172668},
+        {"name":"Waves","marketcap":78217357.51},
+        {"name":"BitShares","marketcap":73893904.53},
+        {"name":"MaidSafeCoin","marketcap":61514780.16}]},
+    {"name":"CPU mining; CryptoNight","children":
+        [{"name":"Monero","marketcap":1090476909}]},
+    {"name":"X11","children":
+        [{"name":"Dash","marketcap":631552497.2}]},
+    {"name":"blockchain","children":
+        [{"name":"NEM","marketcap":378860292.4}]},
+    {"name":"Equihash","children":
+        [{"name":"Zcash","marketcap":288109779.9}]},
+    {"name":"Blake256","children":
+        [{"name":"Decred","marketcap":251853300.9}]},
+    {"name":"Smart contract","children":
+        [{"name":"Augur","marketcap":127941720.7}]},
+    {"name":"Equilhash","children":
+        [{"name":"Komodo","marketcap":121105885.6}]},
+    {"name":"Other", "children":
+        [{"name":"Other", "marketcap": sumforupdatetree1} ] }
+
+    // {"name":"Sidechain","children":
+    //     [{"name":"Lisk","marketcap":97313663.16}]},
+    // {"name":"SHA-256;Scrypt;Qubit;Skein;Groestl","children":
+    //     [{"name":"DigiByte","marketcap":87731409.07}]},
+    // {"name":"blake2b","children":
+    //     [{"name":"Siacoin","marketcap":84616061.08}]},
+    // {"name":"Scrypt;X17;Groestl;Blake2s;Lyra2rev2","children":
+    //     [{"name":"Verge","marketcap":74185162.88}]},
+    // {"name":"Lyra2RE","children":
+    //     [{"name":"MonaCoin","marketcap":69801518}]}
+]};
+var root2 = d3.hierarchy(treedata2).sum(function(d){ return d.marketcap});
+
+var treedata3 = {"children":[
+    {"name":"Sidechain","children":
+        [{"name":"Lisk","marketcap":97313663.16}]},
+    {"name":"SHA-256;Scrypt;Qubit;Skein;Groestl","children":
+        [{"name":"DigiByte","marketcap":87731409.07}]},
+    {"name":"blake2b","children":
+        [{"name":"Siacoin","marketcap":84616061.08}]},
+    {"name":"Scrypt;X17;Groestl;Blake2s;Lyra2rev2","children":
+        [{"name":"Verge","marketcap":74185162.88}]},
+    {"name":"Lyra2RE","children":
+        [{"name":"MonaCoin","marketcap":69801518}]}
+]};
+var root3 = d3.hierarchy(treedata3).sum(function(d){ return d.marketcap})
+
+// console.log(JSON.stringify(treedata));
     
-	
+
+
+function updateTree1(width,height,margin){
+    // console.log('descendants',root.descendants());
+    // console.log('links:', root.links());
+    // Then d3.treemap computes the position of each element of the hierarchy
+    d3.treemap()
+        .size([width, height])
+        .padding(2)
+        (root2)
+
+    d3.selectAll('rect').remove();
+
+    svg  = d3.selectAll('svg').append('svg')
+    svg
+    .selectAll("rect")
+    .attr('class','treemap')
+    .data(root2.leaves())
+    .enter()
+    .append("rect")
+    .attr('x', function (d) { return d.x0; })
+    .attr('y', function (d) { return d.y0; })
+    .attr('width', function (d) { return d.x1 - d.x0; })
+    .attr('height', function (d) { return d.y1 - d.y0; })
+    .style("stroke", "black")
+    .style("fill", function(d){return colorScale(d.parent.data.name);})
+    .on("click",function(d){
+        let n= d.data.name;
+        if (n!= "Ethereum" &n!= "Bitcoin"){
+            updateTree2(width,height,margin); //EDIT THIS
+        }
+    })
+
+    svg.selectAll('text').remove();
+
+                // and to add the text labels
+                svg
+                .selectAll("text")
+                .data(root2.leaves())
+                .enter()
+                .append("text")
+                    .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+                    .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+                    .text(function(d){ return d.data.name })
+                    .attr("font-size", "15px")
+                    .attr("fill", "white")
+                    .attr('class','treemap-text')
+
+
+
+            //HERE ENDS TREE1
+}
+
+
+function updateTree2(width,height,margin){
+    // console.log('descendants',root.descendants());
+    // console.log('links:', root.links());
+    // Then d3.treemap computes the position of each element of the hierarchy
+    d3.treemap()
+        .size([width, height])
+        .padding(2)
+        (root3)
+
+    d3.selectAll('rect').remove();
+
+    svg  = d3.selectAll('svg').append('svg')
+    svg
+    .selectAll("rect")
+    .attr('class','treemap')
+    .data(root3.leaves())
+    .enter()
+    .append("rect")
+    .attr('x', function (d) { return d.x0; })
+    .attr('y', function (d) { return d.y0; })
+    .attr('width', function (d) { return d.x1 - d.x0; })
+    .attr('height', function (d) { return d.y1 - d.y0; })
+    .style("stroke", "black")
+    .style("fill", function(d){return colorScale(d.parent.data.name);})
+    .on("click",function(d){
+    })
+
+    svg.selectAll('text').remove();
+
+                // and to add the text labels
+                svg
+                .selectAll("text")
+                .data(root3.leaves())
+                .enter()
+                .append("text")
+                    .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+                    .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+                    .text(function(d){ return d.data.name })
+                    .attr("font-size", "15px")
+                    .attr("fill", "white")
+                    .attr('class','treemap-text')
+}
+
+
+
+
+
+
+
 	// actions to take on each step of our scroll-driven story
 	var steps = [
 		function step0() {
@@ -155,7 +350,7 @@ window.createGraphic = function(graphicSelector, newdata){
                         '<br>Algorithm: '+d.algo+'<br>Market Cap: '+d.marketcap);
                     res.style('right', 50 + "px");
                     res.style('top', 100 + "px");
-                    console.log(d.name)
+                    // console.log(d.name)
                 })
                 .on('mouseout', function(){
                     d3.select(this).style('fill','pink');
@@ -236,7 +431,7 @@ window.createGraphic = function(graphicSelector, newdata){
                 res.style('top', 100 + "px");
                 // div.style('left', (d3.event.pageX) + "px")
                 // div.style('top', (d3.event.pageY) + "px");
-                console.log(d.name)
+                // console.log(d.name)
             })
             .on('mouseout', function(d){
                 d3.select(this).style('fill', colorScale(d.algo))
@@ -318,7 +513,7 @@ window.createGraphic = function(graphicSelector, newdata){
                     res.style('top', 100 + "px");
                     // div.style('left', (d3.event.pageX) + "px")
                     // div.style('top', (d3.event.pageY) + "px");
-                    console.log(d.name)
+                    // console.log(d.name)
                 })
                 .on('mouseout', function(d){
                     d3.select(this).attr('r',marketScale(d.marketcap))
@@ -330,7 +525,7 @@ window.createGraphic = function(graphicSelector, newdata){
 
         
         function step5() {
-            console.log('step 6')
+            console.log('step 5')
 
 
             //hide the first vis: 
@@ -343,10 +538,23 @@ window.createGraphic = function(graphicSelector, newdata){
             
 
             //now define stuff for treemap:
-            var margin = {top: 10, right: 10, bottom: 10, left: 10},
-            width = 1000 - margin.left - margin.right,
-            height = 700 - margin.top - margin.bottom;
+            var margin = {top: 10, right: 10, bottom: 10, left: 10}
             let size= 1000;
+
+            var width = 1300 - margin.left - margin.right;
+            var height = 700 - margin.top - margin.bottom;
+            //this automatically calculates x and y coordinates based on our 
+            // treemap data: 
+
+            
+            var root = d3.hierarchy(treedata1).sum(function(d){ return d.marketcap}) // Here the size of each leave is given in the 'value' field in input data
+            // console.log('descendants',root.descendants());
+            // console.log('links:', root.links());
+            // Then d3.treemap computes the position of each element of the hierarchy
+            d3.treemap()
+                .size([width, height])
+                .padding(2)
+                (root)
             
             //add a new svg: 
             svg  = d3.selectAll('svg').append('svg')
@@ -359,57 +567,9 @@ window.createGraphic = function(graphicSelector, newdata){
                 .attr('margin-left', '50px')
                 .attr('class','treemap')
 
-            //some sample data for treemap so we don't forget how our data 
-            //should be structured:
-                        let sample={"children":
-                        [{"name":"boss1",
-                        "children":[{"name":"mister_a","group":"A","value":28,"colname":"level3"},
-                        {"name":"mister_b","group":"A","value":19,"colname":"level3"},
-                        {"name":"mister_c","group":"C","value":18,"colname":"level3"},
-                        {"name":"mister_d","group":"C","value":19,"colname":"level3"}],
-                        "colname":"level2"},
-                        {"name":"boss2",
-                        "children":[{"name":"mister_e","group":"C","value":14,"colname":"level3"},
-                        {"name":"mister_f","group":"A","value":11,"colname":"level3"},
-                        {"name":"mister_g","group":"B","value":15,"colname":"level3"},
-                        {"name":"mister_h","group":"B","value":16,"colname":"level3"}],
-                        "colname":"level2"},
-                        {"name":"boss3",
-                        "children":[{"name":"mister_i","group":"B","value":10,"colname":"level3"},
-                        {"name":"mister_j","group":"A","value":13,"colname":"level3"},
-                        {"name":"mister_k","group":"A","value":13,"colname":"level3"},
-                        {"name":"mister_l","group":"D","value":25,"colname":"level3"},
-                        {"name":"mister_m","group":"D","value":16,"colname":"level3"},
-                        {"name":"mister_n","group":"D","value":28,"colname":"level3"}],
-                        "colname":"level2"}],"name":"CEO"};
 
-            //our treemap-strucutred data: 
-            var treedata={"children":[]};
-            for (let i=0;i<algos.length;i++){
-                let children=[];
-                for (let j=0;j<newdata.length;j++){
-                    if (newdata[j].algo== algos[i]){
-                        children.push({name: newdata[j].name, marketcap: newdata[j].marketcap});
-                    }
-                }
-                let j= {name: algos[i], children: children};
-                treedata['children'].push(j);
-            }
-            // console.log('sample:',sample);
-            // console.log('treedata:',treedata);
-
-            //this automatically calculates x and y coordinates based on our 
-            // treemap data: 
-            var root = d3.hierarchy(treedata).sum(function(d){ return d.marketcap}) // Here the size of each leave is given in the 'value' field in input data
-            // console.log('descendants',root.descendants());
-            // console.log('links:', root.links());
-            // Then d3.treemap computes the position of each element of the hierarchy
-            d3.treemap()
-                .size([width, height])
-                .padding(2)
-                (root)
             
-            console.log('root', root);
+            // console.log('root', root);
             // use this information to add rectangles:
             svg
                 .selectAll("rect")
@@ -422,7 +582,15 @@ window.createGraphic = function(graphicSelector, newdata){
                 .attr('width', function (d) { return d.x1 - d.x0; })
                 .attr('height', function (d) { return d.y1 - d.y0; })
                 .style("stroke", "black")
-                .style("fill", "slateblue")
+                .style("fill", function(d){return colorScale(d.parent.data.name);})
+                .on("click",function(d){
+                    let n= d.data.name;
+                    // console.log(d.parent.data.name);
+                    // console.log(colorScale(d.parent.data.name))
+                    if (n!= "Ethereum" &n!= "Bitcoin"){
+                        updateTree1(width,height,margin);
+                    }
+                })
 
             // and to add the text labels
             svg
@@ -444,8 +612,8 @@ window.createGraphic = function(graphicSelector, newdata){
             //hide treemap:
             d3.selectAll('rect').style('opacity',0);
             d3.selectAll('.treemap-text').remove()
-            d3.selectAll('circle').style('opacity',0)
-        },
+            // d3.selectAll('circle').style('opacity',0)
+        }
 
         // function step7()
         // {
@@ -485,7 +653,7 @@ window.createGraphic = function(graphicSelector, newdata){
 
 
         //testing input data:
-		console.log('newdata:',newdata)
+		// console.log('newdata:',newdata)
         var lowestVal = d3.min(newdata, d=>d.year)
         var highestVal = d3.max(newdata, d=>d.year)
         // console.log(lowestVal)
