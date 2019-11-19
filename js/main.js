@@ -6,81 +6,72 @@
 window.createGraphic = function(graphicSelector, newdata){
 	var graphicEl = d3.select('.graphic')
 	var graphicVisEl = graphicEl.select('.graphic__vis')
-	var graphicProseEl = graphicEl.select('.graphic__prose')
+    var graphicProseEl = graphicEl.select('.graphic__prose')
+
+    var marketScale = d3.scaleLinear()
+        .domain(d3.extent(newdata,function(d){return d.marketcap;}) )
+        .range([15,35]);
+    var algos=[];
+    for (let i=0;i<newdata.length;i++){
+        if (!algos.includes(newdata[i].algo) && newdata[i].algo !=undefined) algos.push(newdata[i].algo);
+    }
+    console.log('algos:', algos);
+    var colorScale = d3.scaleOrdinal(d3.schemeAccent) 
+        .domain(algos)
 
 	var margin = 20
 	var size = 1200
 	var chartSize = size - margin * 2
 	var scaleX = null
-	var scaleR = null
-    newdata = newdata.concat( ["Coins"] );
-    var numberData = [8, 6, 7, 5, 3, 0, 9, 4, 5, 6, 7, 8, 5, 4]
-    console.log(newdata)
-    // console.log(withCoins)
-	// var extent = d3.extent(data) // WE WILL HAVE TO COME BACK TO THIS
 	var minR = 25
     var maxR = 200
     var xAxis = null
     var svg
-    var marketScale = d3.scaleLinear()
-    .domain(d3.extent(newdata,function(d){return d.marketcap;}) )
-    .range([15,35]);
+    
 	
 	// actions to take on each step of our scroll-driven story
 	var steps = [
 		function step0() {
             console.log('step  0');
-            // circles are centered and small
+
+            // define a general transition:
 			var t = d3.transition()
                 .duration(400)
 				.ease(d3.easeQuadInOut)
 			
-            var item = graphicVisEl.selectAll('.item')
             
+            //hide x-axis (on scrollup):
             var axis = graphicVisEl.selectAll('.x-axis')
-            
             var scaleSize = (chartSize/2 + margin)
-
             axis
-            .transition(t)
-            .call(xAxis)
-            .attr("class", "x-axis")
-            .attr("transform", "translate(" + margin + "," + scaleSize + ")")
-            .style("opacity", 0)
+                .transition(t)
+                .call(xAxis)
+                .attr("class", "x-axis")
+                .attr("transform", "translate(" + margin + "," + scaleSize + ")")
+                .style("opacity", 0)
 
+
+            //transition for the giant circle:
+            var item = graphicVisEl.selectAll('.item')
 			item.transition(t)
                 .attr('transform', function(d){
                         return translate(chartSize / 2, chartSize / 2)
                 })
             
-
+            //add the giant circle:
             item.select('circle')
                 .style('fill','pink')
                 .attr('class','balloon')
+                .attr('cx', -100)
+                .attr('cy',-100)
 				.transition(t)
-                .attr('r', function(d)
-                {
-                    if (d=="Coins")
-                        return maxR
-                    return minR
-                })
-                .style('opacity', function(d)
-                {
-                    if (d == "Coins")
-                        return 1;
-                    return 0;
-                })
+                .attr('r', maxR)
+                .style('opacity', 1)
 
-			item.select('text')
-				.transition(t)
-                .style('opacity', function(d)
-                {
-                    if (d == "Coins")
-                        return 1;
-                    return 0;
-                })
-
+            //remove text from scrollup:
             d3.selectAll('.item text').remove()
+
+            //add new text containing just "Coins":
             var circleText = d3.selectAll(".item").append("text")
                 .attr("class", "circleText")	
                 .style('opacity',0)		
@@ -94,16 +85,23 @@ window.createGraphic = function(graphicSelector, newdata){
 		function step1() {
             console.log('step  1');
 
+            //return circles center to 0,0:
+            var item = graphicVisEl.selectAll('.item')
+            item.select('circle').attr('cx',0).attr('cy',0);
+
+
+            //for the tooltip. best to just fix a position since 
+            //varying based on mouseover location is clumsy: 
             let res = d3.select('.tooltip');
             res.style('opacity',0);
 
+            //define a general transition:
 			var t = d3.transition()
-				.duration(600)
+				.duration(400)
                 .ease(d3.easeQuadInOut)
                 	
-			// circles are positioned
-            var item = graphicVisEl.selectAll('.item')
             
+            //show the x-axis:
             var axis = graphicVisEl.selectAll('.x-axis')
             axis
             .transition(t)
@@ -112,42 +110,29 @@ window.createGraphic = function(graphicSelector, newdata){
             .attr("transform", "translate(" + margin + "," + scaleSize + ")")
             .style("opacity", 1)
             
+            //define format to use for ticks: 
             var parseTime = d3.timeParse("%Y");
+
+            //transition each item to its position:
 			item.transition(t)
 				.attr('transform', function(d, i) {
-                    if (d == "Coins")
-                    {
-                        return translate(chartSize/2, chartSize/2 - margin)
-                    }
-					return translate(scaleX(parseTime(d.year)), chartSize / 2 -margin - 10*i)
+					return translate(scaleX(parseTime(d.year)), chartSize / 2 -margin - 25*i)
 				})
 
+
+            //change circle radius:
+            var item = graphicVisEl.selectAll('.item')
             item.select('circle')
                 .attr('class','')
                 .style('fill', 'pink')
 				.transition(t)
-                .attr('r', function(d)
-                {
-                    if (d!="Coins")
-                    {
-                        return minR
-                    }
-                    return 0
-                })
-                .style('opacity', function(d)
-                {
-                    if (d == "Coins")
-                        return 0;
-                    return 1;
-                });
+                .attr('r', minR)
+                .style('opacity', 1)
 
 
-                // Define the circletext:
-
-            
+            // Define the circletext:
             var circleText = d3.selectAll(".item").append("text")
-                .attr("class", "circleText")	
-                .style('opacity',0)		
+                .attr("class", "circleText")		
                 .style('fill','white')
                 .html(function(d){return d.symbol;})
                 .style('opacity',1)
@@ -155,6 +140,7 @@ window.createGraphic = function(graphicSelector, newdata){
             circleText.exit()
                         
 
+            //define mouseover behavior for circles (tooltip):
             let circles = item.select('circle')
                 .on('mouseover', function(d){
                     d3.select(this).style('fill','red');
@@ -173,21 +159,19 @@ window.createGraphic = function(graphicSelector, newdata){
                     res.style('opacity',0);
                 })
 
-
-
-
-
 			item.select('text')
 				.transition(t)
                 .style('opacity', 0)
             
+
+            //position the x-axis:
             var scaleSize = (chartSize/2 + margin)
             axis
-            .transition(t)
-            .call(xAxis)
-            .attr("class", "x-axis")
-            .attr("transform", "translate(" + margin + "," + scaleSize + ")")
-            .style("opacity", 1)
+                .transition(t)
+                .call(xAxis)
+                .attr("class", "x-axis")
+                .attr("transform", "translate(" + margin + "," + scaleSize + ")")
+                .style("opacity", 1)
 		},
 
 
@@ -197,15 +181,11 @@ window.createGraphic = function(graphicSelector, newdata){
             //this one colors the bubbles according to algo.
             console.log('step  2');
 
-            var algos=[];
-            for (let i=0;i<newdata.length;i++){
-                if (!algos.includes(newdata[i].algo)) algos.push(newdata[i].algo);
-            }
-            console.log(algos);
-            var colorScale = d3.scaleOrdinal(d3.schemeAccent) 
-                .domain(algos)
-            console.log('testing color scale:', colorScale('Scrypt'))
-                // .range();
+            //hide treemap:
+            d3.selectAll('rect').style('opacity',0);
+            d3.selectAll('.treemap-text').remove()
+
+            //transition definition:
 			var t = d3.transition()
 				.duration(800)
                 .ease(d3.easeQuadInOut)
@@ -233,11 +213,12 @@ window.createGraphic = function(graphicSelector, newdata){
 
 
             let circles = item.select('circle')
-            .transition(t)
-            // .delay(50)
-            .attr('r', function(d, i) {
-                return minR;
-            })
+                .transition(t)
+                .attr('r', function(d, i) {
+                    return minR;
+                })
+
+            //tooltip:
             circles = item.selectAll('circle')
             .on('mouseover', function(d){
                 d3.select(this).style('fill','red')
@@ -268,14 +249,9 @@ window.createGraphic = function(graphicSelector, newdata){
             //bubbles grow in size to represent market cap.
             console.log('step  3');
 
-
-            var algos=[];
-            for (let i=0;i<newdata.length;i++){
-                if (!algos.includes(newdata[i].algo)) algos.push(newdata[i].algo);
-            }
-            console.log(algos);
-            var colorScale = d3.scaleOrdinal(d3.schemeAccent) 
-                .domain(algos)
+            //hide treemap:
+            d3.selectAll('rect').style('opacity',0);
+            d3.selectAll('.treemap-text').remove()
 
             //remove symbol titles from circles:
             d3.selectAll('.circleText').remove();
@@ -305,15 +281,16 @@ window.createGraphic = function(graphicSelector, newdata){
             //bubbles return to neutral colors:
             console.log('step  4');
 
+            //hide treemap:
             d3.selectAll('rect').style('opacity',0);
             d3.selectAll('.treemap-text').remove()
+
+            //show the first vis:
             d3.selectAll('circle').style('opacity',1)
             d3.selectAll('.x-axis').style('opacity',1)
             d3.selectAll('item text').style('opacity',1)
-            // d3.selectAll('.tooltip').style('opacity',1)
             
-            svg  = d3.selectAll('svg')
-        
+            //transition defn:
             var t = d3.transition()
 				.ease(d3.easeLinear)
 
@@ -410,10 +387,6 @@ window.createGraphic = function(graphicSelector, newdata){
             {"name":"mister_n","group":"D","value":28,"colname":"level3"}],
             "colname":"level2"}],"name":"CEO"};
             var treedata={"children":[]};
-            var algos=[];
-            for (let i=0;i<newdata.length;i++){
-                if (!algos.includes(newdata[i].algo)) algos.push(newdata[i].algo);
-            }
             for (let i=0;i<algos.length;i++){
                 let children=[];
                 for (let j=0;j<newdata.length;j++){
@@ -503,11 +476,9 @@ window.createGraphic = function(graphicSelector, newdata){
 			.classed('chart', true)
 			.attr('transform', 'translate(' + margin + ',' + margin + ')')
 
-		scaleR = d3.scaleLinear()
 		scaleX = d3.scaleLinear()
 
 
-		console.log(d3.max(numberData))
 		console.log('newdata:',newdata)
         var lowestVal = d3.min(newdata, d=>d.year)
         var highestVal = d3.max(newdata, d=>d.year)
