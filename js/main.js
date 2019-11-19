@@ -1,7 +1,12 @@
 //next:
 //next vis (almost done, depends on if we want zooming)
-//add transition to next vis.
 //dynamic data vis?
+//fix tooltip on upscroll.
+
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+ }
 
 window.createGraphic = function(graphicSelector, newdata){
 	var graphicEl = d3.select('.graphic')
@@ -27,6 +32,7 @@ window.createGraphic = function(graphicSelector, newdata){
     var maxR = 200
     var xAxis = null
     var svg
+    var parseTime = d3.timeParse("%Y");
     
 	
 	// actions to take on each step of our scroll-driven story
@@ -109,9 +115,7 @@ window.createGraphic = function(graphicSelector, newdata){
             .attr("class", "x-axis")
             .attr("transform", "translate(" + margin + "," + scaleSize + ")")
             .style("opacity", 1)
-            
-            //define format to use for ticks: 
-            var parseTime = d3.timeParse("%Y");
+
 
             //transition each item to its position:
 			item.transition(t)
@@ -262,7 +266,6 @@ window.createGraphic = function(graphicSelector, newdata){
 
 			// circles are sized
 			var item = graphicVisEl.selectAll('.item')
-			
 			item.select('circle')
 				.transition(t)
 				.delay(50)
@@ -294,9 +297,8 @@ window.createGraphic = function(graphicSelector, newdata){
             var t = d3.transition()
 				.ease(d3.easeLinear)
 
-			// circles are sized
+			// circles are colored back to neutral:
 			var item = graphicVisEl.selectAll('.item')
-			
 			item.select('circle')
 				.transition(t)
                 .style('fill','pink')
@@ -304,88 +306,84 @@ window.createGraphic = function(graphicSelector, newdata){
 
             //tooltips:
             let circles = item.selectAll('circle')
-            .on('mouseover', function(d){
-                d3.select(this).attr('r',marketScale(d.marketcap)*1.5);
-                let res = d3.selectAll('.tooltip')
-                res.transition().duration(50)
-                    .style('opacity',1)
-                res.html('<strong>'+d.name+'</strong>'+
-                '<br>Algorithm: '+d.algo+'<br>Market Cap: '+d.marketcap);
-                // console.log((d3.event.pageX), d3.event.pageY-1400);
-                res.style('right', 50 + "px");
-                res.style('top', 100 + "px");
-                // div.style('left', (d3.event.pageX) + "px")
-                // div.style('top', (d3.event.pageY) + "px");
-                console.log(d.name)
-            })
-            .on('mouseout', function(d){
-                d3.select(this).attr('r',marketScale(d.marketcap))
-                let res = d3.select('.tooltip');
-                res.style('opacity',0);
-            })
-
-            
+                .on('mouseover', function(d){
+                    d3.select(this).attr('r',marketScale(d.marketcap)*1.5);
+                    let res = d3.selectAll('.tooltip')
+                    res.transition().duration(50)
+                        .style('opacity',1)
+                    res.html('<strong>'+d.name+'</strong>'+
+                    '<br>Algorithm: '+d.algo+'<br>Market Cap: '+d.marketcap);
+                    // console.log((d3.event.pageX), d3.event.pageY-1400);
+                    res.style('right', 50 + "px");
+                    res.style('top', 100 + "px");
+                    // div.style('left', (d3.event.pageX) + "px")
+                    // div.style('top', (d3.event.pageY) + "px");
+                    console.log(d.name)
+                })
+                .on('mouseout', function(d){
+                    d3.select(this).attr('r',marketScale(d.marketcap))
+                    let res = d3.select('.tooltip');
+                    res.style('opacity',0);
+                })      
         },
-
-
 
 
         
         function step5() {
-            console.log('step 5')
-            //appends new svg to another html element. 
+            console.log('step 6')
+
+
+            //hide the first vis: 
+            // sleep(2000);
             d3.selectAll('circle').style('opacity',0)
             d3.selectAll('.x-axis').style('opacity',0)
             d3.selectAll('item text').style('opacity',0)
             d3.selectAll('.tooltip').style('opacity',0)
 
+            
+
+            //now define stuff for treemap:
             var margin = {top: 10, right: 10, bottom: 10, left: 10},
             width = 1000 - margin.left - margin.right,
             height = 700 - margin.top - margin.bottom;
             let size= 1000;
-
-            // // append the svg object to the body of the page
-            // var svg = d3.select("#my_dataviz")
-            // .append("svg")
-            // .attr("width", width + margin.left + margin.right)
-            // .attr("height", height + margin.top + margin.bottom)
-            // .append("g")
-            // .attr("transform",
-            //     "translate(" + margin.left + "," + margin.top + ")")
-            //graphicVisEl
             
+            //add a new svg: 
             svg  = d3.selectAll('svg').append('svg')
             svg
-            .append('svg')
-			.attr('width', size + 2*margin.left)
-            .attr('height', size + 2*margin.left)
-            .attr('left', '100px')
-            .attr('top','300px')
-            .attr('margin-left', '50px')
-            .attr('class','treemap')
+                .append('svg')
+                .attr('width', size + 2*margin.left)
+                .attr('height', size + 2*margin.left)
+                .attr('left', '100px')
+                .attr('top','300px')
+                .attr('margin-left', '50px')
+                .attr('class','treemap')
 
-            //edit the data in order to make it compatible with making treemap:
-            let sample={"children":
-            [{"name":"boss1",
-            "children":[{"name":"mister_a","group":"A","value":28,"colname":"level3"},
-            {"name":"mister_b","group":"A","value":19,"colname":"level3"},
-            {"name":"mister_c","group":"C","value":18,"colname":"level3"},
-            {"name":"mister_d","group":"C","value":19,"colname":"level3"}],
-            "colname":"level2"},
-            {"name":"boss2",
-            "children":[{"name":"mister_e","group":"C","value":14,"colname":"level3"},
-            {"name":"mister_f","group":"A","value":11,"colname":"level3"},
-            {"name":"mister_g","group":"B","value":15,"colname":"level3"},
-            {"name":"mister_h","group":"B","value":16,"colname":"level3"}],
-            "colname":"level2"},
-            {"name":"boss3",
-            "children":[{"name":"mister_i","group":"B","value":10,"colname":"level3"},
-            {"name":"mister_j","group":"A","value":13,"colname":"level3"},
-            {"name":"mister_k","group":"A","value":13,"colname":"level3"},
-            {"name":"mister_l","group":"D","value":25,"colname":"level3"},
-            {"name":"mister_m","group":"D","value":16,"colname":"level3"},
-            {"name":"mister_n","group":"D","value":28,"colname":"level3"}],
-            "colname":"level2"}],"name":"CEO"};
+            //some sample data for treemap so we don't forget how our data 
+            //should be structured:
+                        let sample={"children":
+                        [{"name":"boss1",
+                        "children":[{"name":"mister_a","group":"A","value":28,"colname":"level3"},
+                        {"name":"mister_b","group":"A","value":19,"colname":"level3"},
+                        {"name":"mister_c","group":"C","value":18,"colname":"level3"},
+                        {"name":"mister_d","group":"C","value":19,"colname":"level3"}],
+                        "colname":"level2"},
+                        {"name":"boss2",
+                        "children":[{"name":"mister_e","group":"C","value":14,"colname":"level3"},
+                        {"name":"mister_f","group":"A","value":11,"colname":"level3"},
+                        {"name":"mister_g","group":"B","value":15,"colname":"level3"},
+                        {"name":"mister_h","group":"B","value":16,"colname":"level3"}],
+                        "colname":"level2"},
+                        {"name":"boss3",
+                        "children":[{"name":"mister_i","group":"B","value":10,"colname":"level3"},
+                        {"name":"mister_j","group":"A","value":13,"colname":"level3"},
+                        {"name":"mister_k","group":"A","value":13,"colname":"level3"},
+                        {"name":"mister_l","group":"D","value":25,"colname":"level3"},
+                        {"name":"mister_m","group":"D","value":16,"colname":"level3"},
+                        {"name":"mister_n","group":"D","value":28,"colname":"level3"}],
+                        "colname":"level2"}],"name":"CEO"};
+
+            //our treemap-strucutred data: 
             var treedata={"children":[]};
             for (let i=0;i<algos.length;i++){
                 let children=[];
@@ -397,12 +395,14 @@ window.createGraphic = function(graphicSelector, newdata){
                 let j= {name: algos[i], children: children};
                 treedata['children'].push(j);
             }
-            console.log('sample:',sample);
-            console.log('treedata:',treedata);
+            // console.log('sample:',sample);
+            // console.log('treedata:',treedata);
 
+            //this automatically calculates x and y coordinates based on our 
+            // treemap data: 
             var root = d3.hierarchy(treedata).sum(function(d){ return d.marketcap}) // Here the size of each leave is given in the 'value' field in input data
-            console.log('descendants',root.descendants());
-            console.log(root.links());
+            // console.log('descendants',root.descendants());
+            // console.log('links:', root.links());
             // Then d3.treemap computes the position of each element of the hierarchy
             d3.treemap()
                 .size([width, height])
@@ -424,33 +424,33 @@ window.createGraphic = function(graphicSelector, newdata){
                 .style("stroke", "black")
                 .style("fill", "slateblue")
 
-             // and to add the text labels
+            // and to add the text labels
             svg
-            .selectAll("text")
-            .data(root.leaves())
-            .enter()
-            .append("text")
-                .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
-                .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
-                .text(function(d){ return d.data.name })
-                .attr("font-size", "15px")
-                .attr("fill", "white")
-                .attr('class','treemap-text')
-            
-            
+                .selectAll("text")
+                .data(root.leaves())
+                .enter()
+                .append("text")
+                    .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+                    .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+                    .text(function(d){ return d.data.name })
+                    .attr("font-size", "15px")
+                    .attr("fill", "white")
+                    .attr('class','treemap-text')
         },
+
 
         function step6()
         {
-            // d3.selectAll('rect').exit().remove()
+            //hide treemap:
             d3.selectAll('rect').style('opacity',0);
+            d3.selectAll('.treemap-text').remove()
+            d3.selectAll('circle').style('opacity',0)
         },
 
-        function step7()
-        {
+        // function step7()
+        // {
             
-            // d3.selectAll('svg').exit().remove()
-        }
+        // }
 
 	]
 
@@ -465,28 +465,33 @@ window.createGraphic = function(graphicSelector, newdata){
 		return 'translate(' + x + ',' + y + ')'
 	}
 
-	function setupCharts() {
 
+
+
+	function setupCharts() {
+        //append svg for our first vis:
 		svg = graphicVisEl.append('svg')
 			.attr('width', size + 2*margin)
             .attr('height', size + 2*margin)
             .attr('class','firstvis')
-		
+        
+        //group element for our first vis:
 		var chart = svg.append('g')
 			.classed('chart', true)
 			.attr('transform', 'translate(' + margin + ',' + margin + ')')
 
+        //xscale:
 		scaleX = d3.scaleLinear()
 
 
+        //testing input data:
 		console.log('newdata:',newdata)
         var lowestVal = d3.min(newdata, d=>d.year)
         var highestVal = d3.max(newdata, d=>d.year)
-        console.log(lowestVal)
+        // console.log(lowestVal)
         // d3.min(data,d=>d.Income)
 
-        var parseTime = d3.timeParse("%Y");
-        console.log(chartSize)
+        //define scaleX:
 		scaleX
 			.domain([parseTime(lowestVal), parseTime(highestVal)])
             .range([margin, size-margin]);
@@ -494,8 +499,7 @@ window.createGraphic = function(graphicSelector, newdata){
         var scaleSize = chartSize/2 + margin
 
         
-        
-        console.log(scaleX)
+        //define x-axis:
         xAxis = d3.axisBottom().scale(scaleX).tickFormat(d3.timeFormat("%Y"));
         //add x-axis to group xg:
         var xg = svg.append("g")
@@ -503,8 +507,8 @@ window.createGraphic = function(graphicSelector, newdata){
         .attr("class", "x-axis")
         .attr("transform", "translate(" + margin + "," + scaleSize + ")")
 
-        console.log(scaleX(2012))
 
+        //adding first circle: 
 		var item = chart.selectAll('.item')
 			.data(newdata)
 			.enter().append('g')
@@ -515,28 +519,20 @@ window.createGraphic = function(graphicSelector, newdata){
 			.attr('cx', 0)
 			.attr('cy', 0)
 
-		item.append('text')
-			.text(function(d) { 
-                if (d == "Coins")
-                    return d
-                return d.Abbreviation })
-			.attr('y', 1)
-			.style('opacity', 0)
 	}
+
 
 	function setupProse() {
 		var height = window.innerHeight * 0.5
 		graphicProseEl.selectAll('.trigger')
 			.style('height', height + 'px')
 	}
-
 	function init() {
 		setupCharts()
         setupProse()
 		update(0)
     }
     
-	
 	init()
 	
 	return {
