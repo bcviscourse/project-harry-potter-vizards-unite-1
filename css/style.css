@@ -16,7 +16,7 @@ body {
   padding: 20px;
   color: black;
   text-align: center;
-  margin-bottom: 200px;
+  /* margin-bottom: 200px; */
 }
 
 .footer {
@@ -70,6 +70,7 @@ body {
   left: 500px;
   animation: float 2.5s infinite;
 }
+
 /* 
 @keyframes float {
   50%{

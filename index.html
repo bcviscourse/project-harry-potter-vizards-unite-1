@@ -31,14 +31,14 @@
 	<link rel="stylesheet" href="css/style.css">
 	<!-- <script type="text/javascript" src = "js/scatter_chart.js"></script> -->
 
-	<div class=" center header">
+	<div class="center-header">
 		<div class="center title">Final Project: Cryptocurrency</div>
 		<div class="center names">Edward Cramer, Helen Nazarenko, Michelle Youn, & Linda Chen</div>
 		<br>
 	</div>
 
 	<!-- <div class="balloon_container"> -->
-		<div class="balloon"></div>
+		<!-- <div class="balloon"></div> -->
 	<!-- </div> -->
 
 	<div class='library'>
@@ -47,13 +47,17 @@
 
 		<div class='library__graphic graphic'>
 			<div class='graphic__prose'>
+				Step 0:
+				We show a single circle representing the nature of centralized currency.
 
 				<!-- Section 1 -->
 				<section>
 					<p class='trigger' data-step='0'>
 						<br>
-						<br> Step 0:
-						<br> We show a single circle representing the nature of centralized currency.
+						<br>
+						<br> Step 1:
+						<br> The bubble pops, and splits into circles representing different cryptocurrencies.
+						<br> They lay out horizontally along a timeline.
 					</p>
 				</section>
 
@@ -62,9 +66,9 @@
 					<p class='trigger' data-step='1'>
 						<div class='tooltip' ></div>
 						<br>
-						<br> Step 1:
-						<br> The bubble pops, and splits into circles representing different cryptocurrencies.
-						<br> They lay out horizontally along a timeline.
+						<br> Step 2:
+						<br> The bubbles change color to show different hashing algorithms.
+						<br> 
 					</p>
 				</section>
 
@@ -73,8 +77,8 @@
 					<p class='trigger' data-step='2'>
 						<div class='tooltip' ></div>
 						<br>
-						<br> Step 2:
-						<br> The bubbles change color to show different hashing algorithms.
+						<br> Step 3:
+						<br> The bubbles grow in size to represent market cap.
 						<br>
 					</p>
 				</section>
@@ -83,8 +87,8 @@
 					<p class='trigger' data-step='3'>
 						<div class='tooltip' ></div>
 						<br>
-						<br> Step 3:
-						<br> The bubbles grow in size to represent market cap.
+						<br> Step 4:
+						<br> The colors turn neutral to show the shift from an engineering approach to a financial one.
 						<br>
 					</p>
 
@@ -94,8 +98,8 @@
 					<p class='trigger' data-step='4'>
 					<div class='tooltip' ></div>
 					<br>
-					<br> Step 4:
-					<br> The colors turn neutral to show the shift from an engineering approach to a financial one.
+					<br> 
+					<br> 
 					<br>
 				</section>
 
@@ -109,7 +113,7 @@
 			</div>
 			
 
-
+			<!-- <div class="balloon"></div> -->
 			<div class='graphic__vis'></div>
 			<div id="my_dataviz"></div>
 			
@@ -219,7 +223,10 @@
 					$graphicEl.scrollStory({
 						contentSelector: '.trigger',
 						triggerOffset: halfViewportHeight,
-						scrollOffset: -100,
+						// scrollOffset: 200,
+						speed: 0,
+						scrollSensitivity: 1000,
+						// throttleType: 'throttle',
 						itemfocus: handleItemFocus,
 						containerscroll: handleContainerScroll,
 					})

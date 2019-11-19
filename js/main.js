@@ -1,7 +1,7 @@
 //next:
-//next vis (almost done, depends on if we want zooming)
+//scrollstory runtime optimization?
+//tooltips: treemap and fix vis1 tooltip on upscroll. 
 //dynamic data vis?
-//fix tooltip on upscroll.
 
 
 function sleep(ms) {
@@ -31,7 +31,6 @@ window.createGraphic = function(graphicSelector, newdata){
     var sumforstep5=0 ;
     for (let i=0;i<algos.length;i++){
         if (newdata[i].name !="Bitcoin" & newdata[i].name !="Ethereum"){
-            // console.log(newdata[i].marketcap)
             sumforstep5= sumforstep5+ newdata[i].marketcap;
         }
     }
@@ -156,24 +155,24 @@ function updateTree1(width,height,margin){
     .on("click",function(d){
         let n= d.data.name;
         if (n!= "Ethereum" &n!= "Bitcoin"){
-            updateTree2(width,height,margin); //EDIT THIS
+            updateTree2(width,height,margin); 
         }
     })
 
     svg.selectAll('text').remove();
 
-                // and to add the text labels
-                svg
-                .selectAll("text")
-                .data(root2.leaves())
-                .enter()
-                .append("text")
-                    .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
-                    .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
-                    .text(function(d){ return d.data.name })
-                    .attr("font-size", "15px")
-                    .attr("fill", "white")
-                    .attr('class','treemap-text')
+    //add text labels:
+    svg
+    .selectAll("text")
+    .data(root2.leaves())
+    .enter()
+    .append("text")
+        .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+        .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+        .text(function(d){ return d.data.name })
+        .attr("font-size", "15px")
+        .attr("fill", "white")
+        .attr('class','treemap-text')
 
 
 
@@ -210,18 +209,18 @@ function updateTree2(width,height,margin){
 
     svg.selectAll('text').remove();
 
-                // and to add the text labels
-                svg
-                .selectAll("text")
-                .data(root3.leaves())
-                .enter()
-                .append("text")
-                    .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
-                    .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
-                    .text(function(d){ return d.data.name })
-                    .attr("font-size", "15px")
-                    .attr("fill", "white")
-                    .attr('class','treemap-text')
+    // and to add the text labels
+    svg
+    .selectAll("text")
+    .data(root3.leaves())
+    .enter()
+    .append("text")
+        .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+        .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+        .text(function(d){ return d.data.name })
+        .attr("font-size", "15px")
+        .attr("fill", "white")
+        .attr('class','treemap-text')
 }
 
 
@@ -234,6 +233,10 @@ function updateTree2(width,height,margin){
 	var steps = [
 		function step0() {
             console.log('step  0');
+
+            //hide treemap (in case someone scrolls really fast):
+            d3.selectAll('rect').style('opacity',0);
+            d3.selectAll('.treemap-text').remove()
 
             // define a general transition:
 			var t = d3.transition()
@@ -263,8 +266,8 @@ function updateTree2(width,height,margin){
             item.select('circle')
                 .style('fill','pink')
                 .attr('class','balloon')
-                .attr('cx', -100)
-                .attr('cy',-100)
+                .attr('cx', size/6)
+                .attr('cy',-350)
 				.transition(t)
                 .attr('r', maxR)
                 .style('opacity', 1)
@@ -285,6 +288,10 @@ function updateTree2(width,height,margin){
 
 		function step1() {
             console.log('step  1');
+
+            //hide treemap (in case someone scrolls really fast):
+            d3.selectAll('rect').style('opacity',0);
+            d3.selectAll('.treemap-text').remove()
 
             //return circles center to 0,0:
             var item = graphicVisEl.selectAll('.item')
@@ -308,7 +315,7 @@ function updateTree2(width,height,margin){
             .transition(t)
             .call(xAxis)
             .attr("class", "x-axis")
-            .attr("transform", "translate(" + margin + "," + scaleSize + ")")
+            .attr("transform", "translate(" + size/6 + "," + scaleSize + ")")
             .style("opacity", 1)
 
 
@@ -349,8 +356,7 @@ function updateTree2(width,height,margin){
                     res.html('<strong>'+d.name+'</strong>'+
                         '<br>Algorithm: '+d.algo+'<br>Market Cap: '+d.marketcap);
                     res.style('right', 50 + "px");
-                    res.style('top', 100 + "px");
-                    // console.log(d.name)
+                    res.style('top', 500 + "px");
                 })
                 .on('mouseout', function(){
                     d3.select(this).style('fill','pink');
@@ -428,7 +434,7 @@ function updateTree2(width,height,margin){
                 '<br>Algorithm: '+d.algo+'<br>Market Cap: '+d.marketcap);
                 // console.log((d3.event.pageX), d3.event.pageY-1400);
                 res.style('right', 50 + "px");
-                res.style('top', 100 + "px");
+                res.style('top', 500 + "px");
                 // div.style('left', (d3.event.pageX) + "px")
                 // div.style('top', (d3.event.pageY) + "px");
                 // console.log(d.name)
@@ -510,7 +516,7 @@ function updateTree2(width,height,margin){
                     '<br>Algorithm: '+d.algo+'<br>Market Cap: '+d.marketcap);
                     // console.log((d3.event.pageX), d3.event.pageY-1400);
                     res.style('right', 50 + "px");
-                    res.style('top', 100 + "px");
+                    res.style('top', 500 + "px");
                     // div.style('left', (d3.event.pageX) + "px")
                     // div.style('top', (d3.event.pageY) + "px");
                     // console.log(d.name)
