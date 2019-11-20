@@ -40,7 +40,7 @@ function scrollstory() {
 
         // a global function creates and handles all the vis + updates
         console.log(data)
-        var graphic = createGraphic('.graphic', data, window.innerHeight*.9, window.innerWidth*.9)
+        var graphic = createGraphic('.graphic', data, halfViewportHeight, window.innerWidth)
 
         // handle the fixed/static position of grahpic
         var toggle = function (fixed, bottom) {
@@ -82,12 +82,14 @@ function scrollstory() {
         $graphicEl.scrollStory({
             contentSelector: '.trigger',
             triggerOffset: halfViewportHeight,
+            keyboard: true,
             // scrollOffset: 200,
-            speed: 0,
-            scrollSensitivity: 1000,
+            // speed: 100,
+            scrollSensitivity: 10,
             // throttleType: 'throttle',
             itemfocus: handleItemFocus,
             containerscroll: handleContainerScroll,
+            autoActivateFirstItem: true
         })
     }
 }

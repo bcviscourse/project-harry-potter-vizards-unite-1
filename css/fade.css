@@ -1,6 +1,6 @@
 section {
     opacity: 0;
-    transform: translate(0, 20px); 
+    transform: translate(0, 0px); 
     transition: all 0.2s;
     position: relative;
 }

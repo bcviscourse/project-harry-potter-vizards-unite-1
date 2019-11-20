@@ -237,3 +237,7 @@ rect{
   top:0%;
   font-size: 30px;
 }
+
+svg{
+  border: 1px solid black;
+}

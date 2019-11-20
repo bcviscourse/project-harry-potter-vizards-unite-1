@@ -42,7 +42,9 @@ window.createGraphic = function(graphicSelector, newdata, parent_height, parent_
 	var margin = 100
     var sizeX = parent_width
     var sizeY = parent_height
-	var chartSize = sizeX - margin * 2
+    var sizeX_with_margins, sizeY_with_margins;
+    var x_axis_offset = 50
+	var chartSize = sizeX - (20 * 2) // due to padding from graphic__vis
 	var scaleX = null
 	var minR = 25
     var maxR = 200
@@ -251,7 +253,7 @@ function updateTree2(width,height,margin){
                 .transition(t)
                 .call(xAxis)
                 .attr("class", "x-axis")
-                .attr("transform", "translate(" + margin + "," + scaleSize + ")")
+                .attr("transform", "translate(" + 0 + "," + sizeY + ")")
                 .style("opacity", 0)
 
 
@@ -265,10 +267,11 @@ function updateTree2(width,height,margin){
                 })
             
             // Functions to center the first "balloon" under the text correctly
-            var center_header_location = document.getElementsByClassName("graphic__prose")[0];
+            var center_header_location = document.getElementsByClassName("firstvis")[0];
             console.log(center_header_location)
-            var padding = window.getComputedStyle(center_header_location, null).getPropertyValue('padding')
-            var center_balloon_x = center_header_location.clientWidth/2 - margin - parseInt(padding);
+            // var padding = window.getComputedStyle(center_header_location, null).getPropertyValue('padding')
+            var center_balloon_x = center_header_location.clientWidth/2
+            var center_balloon_Y = center_header_location.clientHeight/2
             console.log(center_balloon_x)
             
             //add the giant circle:
@@ -276,9 +279,9 @@ function updateTree2(width,height,margin){
                 .style('fill','pink')
                 // .attr('class','balloon')
                 .attr('cx', center_balloon_x)
-                .attr('cy',chartSize/4)
+                .attr('cy',center_balloon_Y)
 				.transition(t)
-                .attr('r', maxR)
+                .attr('r', function)
                 .style('opacity', 1)
 
             //remove text from scrollup:
@@ -293,7 +296,7 @@ function updateTree2(width,height,margin){
             .html("Coins")
             .style('opacity',1)
             .attr("x", center_balloon_x)
-            .attr("y", chartSize/4);
+            .attr("y", center_balloon_Y);
     },
 
 
@@ -324,14 +327,14 @@ function updateTree2(width,height,margin){
 				.duration(400)
                 .ease(d3.easeQuadInOut)
                 	
-            
+            console.log("TEST" + sizeY_with_margins)
             //show the x-axis:
             var axis = graphicVisEl.selectAll('.x-axis')
             axis
             .transition(t)
             .call(xAxis)
             .attr("class", "x-axis")
-            .attr("transform", "translate(" + sizeX/6 + "," + scaleSize + ")")
+            .attr("transform", "translate(" + 0 + "," + sizeY_with_margins + ")")
             .style("opacity", 1)
 
 
@@ -386,12 +389,12 @@ function updateTree2(width,height,margin){
             
 
             //position the x-axis:
-            var scaleSize = (chartSize/2 + margin)
+            var newY = sizeY_with_margins - x_axis_offset
             axis
                 .transition(t)
                 .call(xAxis)
                 .attr("class", "x-axis")
-                .attr("transform", "translate(" + margin + "," + scaleSize + ")")
+                .attr("transform", "translate(" + 0 + "," + newY + ")")
                 .style("opacity", 1)
 		},
 
@@ -549,13 +552,16 @@ function updateTree2(width,height,margin){
         function step5() {
             console.log('step 5')
 
+            //transition defn:
+            var t = d3.transition()
+				.ease(d3.easeLinear)
 
             //hide the first vis: 
             // sleep(2000);
-            d3.selectAll('circle').style('opacity',0)
-            d3.selectAll('.x-axis').style('opacity',0)
-            d3.selectAll('item text').style('opacity',0)
-            d3.selectAll('.tooltip').style('opacity',0)
+            d3.selectAll('circle').transition(t).style('opacity',0)
+            d3.selectAll('.x-axis').transition(t).style('opacity',0)
+            d3.selectAll('item text').transition(t).style('opacity',0)
+            d3.selectAll('.tooltip').transition(t).style('opacity',0)
 
             
 
@@ -579,33 +585,40 @@ function updateTree2(width,height,margin){
                 (root)
             
             //add a new svg: 
-            svg  = d3.selectAll('svg').append('svg')
-            svg
-                .append('svg')
-                .attr('width', size + 2*margin.left)
-                .attr('height', size + 2*margin.left)
-                .attr('left', '100px')
-                .attr('top','300px')
-                .attr('margin-left', '50px')
-                .attr('class','treemap')
+            // svg  = d3.selectAll('svg').append('svg')
+            // svg
+            //     .append('svg')
+            //     .attr('width', size + 2*margin.left)
+            //     .attr('height', size + 2*margin.left)
+            //     .attr('left', '100px')
+            //     .attr('top','300px')
+            //     .attr('margin-left', '50px')
+            //     .attr('class','treemap')
 
 
             
-            // console.log('root', root);
             // use this information to add rectangles:
-            svg
+            let rects = svg
                 .selectAll("rect")
                 .attr('class','treemap')
                 .data(root.leaves())
                 .enter()
                 .append("rect")
-                .attr('x', function (d) { return d.x0; })
+                .transition(t)
+                .attr('x', function (d) { 
+                    console.log("Drew once") 
+                    return d.x0; })
                 .attr('y', function (d) { return d.y0; })
                 .attr('width', function (d) { return d.x1 - d.x0; })
                 .attr('height', function (d) { return d.y1 - d.y0; })
                 .style("stroke", "black")
                 .style("fill", function(d){return colorScale(d.parent.data.name);})
-                .on("click",function(d){
+
+            svg.selectAll("rect").transition(t).style("opacity", 1)
+
+            console.log(rects)
+
+            rects.selectAll('rect').on("click",function(d){
                     let n= d.data.name;
                     // console.log(d.parent.data.name);
                     // console.log(colorScale(d.parent.data.name))
@@ -632,8 +645,11 @@ function updateTree2(width,height,margin){
 
         function step6()
         {
+
+            var t = d3.transition()
+				.ease(d3.easeLinear)
             //hide treemap:
-            d3.selectAll('rect').style('opacity',0);
+            d3.selectAll('rect').transition(t).style('opacity',0);
             d3.selectAll('.treemap-text').remove()
             // d3.selectAll('circle').style('opacity',0)
         }
@@ -661,15 +677,17 @@ function updateTree2(width,height,margin){
 
 	function setupCharts() {
         //append svg for our first vis:
+        sizeX_with_margins = sizeX-2*20 // 2*20 comes from the padding of div.graphic__vis
+        sizeY_with_margins = sizeY - 2*20 // keeping consistent with above
 		svg = graphicVisEl.append('svg')
-			.attr('width', sizeX + 2*margin)
-            .attr('height', sizeY + 2*margin)
+			.attr('width', sizeX_with_margins)
+            .attr('height', sizeY_with_margins)
             .attr('class','firstvis')
         
         //group element for our first vis:
 		var chart = svg.append('g')
 			.classed('chart', true)
-			.attr('transform', 'translate(' + margin + ',' + margin + ')')
+			.attr('transform', 'translate(' + 0 + ',' + 0 + ')')
 
         //xscale:
 		scaleX = d3.scaleLinear()
@@ -696,7 +714,8 @@ function updateTree2(width,height,margin){
         var xg = svg.append("g")
         .call(xAxis)
         .attr("class", "x-axis")
-        .attr("transform", "translate(" + margin + "," + scaleSize + ")")
+        .attr("transform", "translate(" + 0 + "," + 0 + ")")
+        .style("opacity", 0)
 
 
         //adding first circle: 
