@@ -39,16 +39,19 @@ window.createGraphic = function(graphicSelector, newdata, parent_height, parent_
         if (newdata[i].name == "Lisk" | newdata[i].name== "DigiByte" | newdata[i].name=="Siacoin" | newdata[i] == "Verge" | newdata[i] == "MonaCoin") sumforupdatetree1= sumforupdatetree1+ newdata[i].marketcap;
     }
 
-	var margin = 100
+    var side_margin = 20  // -- margin must match padding from graphic__vis
+    var bottom_margin = 40 // arbitrary -- used for placing circles
+    var top_margin = 40 // arbitrary -- used for placing circles
     var sizeX = parent_width
     var sizeY = parent_height
     var sizeX_with_margins, sizeY_with_margins;
-    var x_axis_offset = 50
 	var chartSize = sizeX - (20 * 2) // due to padding from graphic__vis
-	var scaleX = null
+    var scaleX = null
+    var scaleY = null
 	var minR = 25
     var maxR = 200
     var xAxis = null
+    var x_axis_location
     var svg
     var parseTime = d3.timeParse("%Y");
 
@@ -248,7 +251,7 @@ function updateTree2(width,height,margin){
             
             //hide x-axis (on scrollup):
             var axis = graphicVisEl.selectAll('.x-axis')
-            var scaleSize = (chartSize/2 + margin)
+            var scaleSize = (chartSize/2 + side_margin)
             axis
                 .transition(t)
                 .call(xAxis)
@@ -281,7 +284,9 @@ function updateTree2(width,height,margin){
                 .attr('cx', center_balloon_x)
                 .attr('cy',center_balloon_Y)
 				.transition(t)
-                .attr('r', function)
+                .attr('r', function(){
+                    return center_balloon_Y/1.3
+                }) // Set max r to some value based on svg size
                 .style('opacity', 1)
 
             //remove text from scrollup:
@@ -327,7 +332,7 @@ function updateTree2(width,height,margin){
 				.duration(400)
                 .ease(d3.easeQuadInOut)
                 	
-            console.log("TEST" + sizeY_with_margins)
+            console.log("TEST---test" + sizeY_with_margins)
             //show the x-axis:
             var axis = graphicVisEl.selectAll('.x-axis')
             axis
@@ -336,12 +341,14 @@ function updateTree2(width,height,margin){
             .attr("class", "x-axis")
             .attr("transform", "translate(" + 0 + "," + sizeY_with_margins + ")")
             .style("opacity", 1)
+            console.log("translated" + sizeY_with_margins)
 
 
+            console.log(newdata.length)
             //transition each item to its position:
 			item.transition(t)
 				.attr('transform', function(d, i) {
-					return translate(scaleX(parseTime(d.year)), chartSize / 2 -margin - 25*i)
+					return translate(scaleX(d.year), scaleY(i))
 				})
 
 
@@ -389,12 +396,12 @@ function updateTree2(width,height,margin){
             
 
             //position the x-axis:
-            var newY = sizeY_with_margins - x_axis_offset
+            x_axis_location = sizeY_with_margins - bottom_margin
             axis
                 .transition(t)
                 .call(xAxis)
                 .attr("class", "x-axis")
-                .attr("transform", "translate(" + 0 + "," + newY + ")")
+                .attr("transform", translate(0, x_axis_location))
                 .style("opacity", 1)
 		},
 
@@ -677,12 +684,13 @@ function updateTree2(width,height,margin){
 
 	function setupCharts() {
         //append svg for our first vis:
-        sizeX_with_margins = sizeX-2*20 // 2*20 comes from the padding of div.graphic__vis
-        sizeY_with_margins = sizeY - 2*20 // keeping consistent with above
+        sizeX_with_margins = sizeX-2*side_margin // 2*20 comes from the padding of div.graphic__vis
+        sizeY_with_margins = sizeY - bottom_margin - top_margin // keeping consistent with above
 		svg = graphicVisEl.append('svg')
 			.attr('width', sizeX_with_margins)
             .attr('height', sizeY_with_margins)
             .attr('class','firstvis')
+            // .attr('transform', 'translate(0,0)')
         
         //group element for our first vis:
 		var chart = svg.append('g')
@@ -697,25 +705,35 @@ function updateTree2(width,height,margin){
 		// console.log('newdata:',newdata)
         var lowestVal = d3.min(newdata, d=>d.year)
         var highestVal = d3.max(newdata, d=>d.year)
+        var tickNumber = highestVal-lowestVal
         // console.log(lowestVal)
         // d3.min(data,d=>d.Income)
 
         //define scaleX:
 		scaleX
-			.domain([parseTime(lowestVal), parseTime(highestVal)])
-            .range([margin, sizeX-margin]);
+			.domain([lowestVal, highestVal])
+            .range([3*side_margin, sizeX_with_margins-3*side_margin]);
 
-        var scaleSize = chartSize/2 + margin
+        console.log(scaleX(2014))
+        console.log(scaleX(2015))
+        console.log(lowestVal)
+
+
+        var scaleSize = chartSize/2 + side_margin
 
         
         //define x-axis:
-        xAxis = d3.axisBottom().scale(scaleX).tickFormat(d3.timeFormat("%Y"));
+        xAxis = d3.axisBottom().scale(scaleX).ticks(tickNumber).tickFormat(d3.format("d"))
         //add x-axis to group xg:
         var xg = svg.append("g")
         .call(xAxis)
         .attr("class", "x-axis")
         .attr("transform", "translate(" + 0 + "," + 0 + ")")
         .style("opacity", 0)
+
+        scaleY = d3.scaleLinear()
+            .domain([0, newdata.length])
+            .range([top_margin, sizeY_with_margins- bottom_margin]);
 
 
         //adding first circle: 

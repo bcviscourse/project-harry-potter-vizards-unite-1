@@ -35,7 +35,7 @@ body {
 /* makes animation float */
 @keyframes float {
     50%{
-        transform: translateY(15px);
+        transform: translateY(10%);
     }
     /* from {background-color: #f7174c;}
     to {background-color: white;} */
