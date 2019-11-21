@@ -517,19 +517,25 @@ function updateTree2(width,height,margin){
             d3.selectAll('rect').style('opacity',0);
             d3.selectAll('.treemap-text').remove()
 
-            //show the first vis:
-            d3.selectAll('circle').style('opacity',1)
-            d3.selectAll('.x-axis').style('opacity',1)
-            d3.selectAll('item text').style('opacity',1)
-            
             //transition defn:
             var t = d3.transition()
+                .ease(d3.easeLinear)
+                
+            var t2 = d3.transition()
+                .duration(500)
 				.ease(d3.easeLinear)
+
+            //show the first vis:
+            d3.selectAll('circle').transition(t2).style('opacity',function() {
+                console.log("HEY")
+                return 1})
+            d3.selectAll('.x-axis').transition(t2).style('opacity',1)
+            d3.selectAll('item text').transition(t2).style('opacity',1)
 
 			// circles are colored back to neutral:
 			var item = graphicVisEl.selectAll('.item')
 			item.select('circle')
-				.transition(t)
+				.transition(t2)
                 .style('fill','pink')
 
 
