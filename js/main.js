@@ -304,7 +304,7 @@ function updateTree2(width,height,margin){
                 //     tooltip.html("TEST")
                 //             .style("left", (d3.event.pageX) + "px")		
                 //             .style("top", (d3.event.pageY - 100) + "px");	
-                // })
+                // }) // USE THIS DIFFERENT PLACES TO TRIGGER ON EVENT -- couldn't get this last night...
                 
 
             //remove text from scrollup:
