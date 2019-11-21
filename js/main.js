@@ -28,6 +28,7 @@ window.createGraphic = function(graphicSelector, newdata, parent_height, parent_
     var parseTime = d3.timeParse("%Y");
     var root
     var rects
+    var tooltip
 
     var algos=[];
     for (let i=0;i<newdata.length;i++){
@@ -687,7 +688,10 @@ function updateTree2(width,height,margin){
         //group element for our first vis:
 		var chart = svg.append('g')
 			.classed('chart', true)
-			.attr('transform', 'translate(' + 0 + ',' + 0 + ')')
+            .attr('transform', 'translate(' + 0 + ',' + 0 + ')')
+            
+        var tooltip = svg.append("div")
+            .classed('tooltip', true)
 
         //xscale:
 		scaleX = d3.scaleLinear()
