@@ -54,6 +54,8 @@ window.createGraphic = function(graphicSelector, newdata, parent_height, parent_
     var x_axis_location
     var svg
     var parseTime = d3.timeParse("%Y");
+    var root
+    var rects
 
 //our treemap-strucutred data: 
 // var treedata={"children":[]};
@@ -358,7 +360,7 @@ function updateTree2(width,height,margin){
                 .attr('class','')
                 .style('fill', 'pink')
 				.transition(t)
-                .attr('r', minR)
+                .attr('r', minR) // minR needs to be a more standardized scale....
                 .style('opacity', 1)
 
 
@@ -561,7 +563,10 @@ function updateTree2(width,height,margin){
 
             //transition defn:
             var t = d3.transition()
-				.ease(d3.easeLinear)
+                .ease(d3.easeLinear)
+                
+            
+            let margin_treemap = {top: 10, left:0, right:0, bottom: 10}
 
             //hide the first vis: 
             // sleep(2000);
@@ -570,26 +575,18 @@ function updateTree2(width,height,margin){
             d3.selectAll('item text').transition(t).style('opacity',0)
             d3.selectAll('.tooltip').transition(t).style('opacity',0)
 
-            
-
-            //now define stuff for treemap:
-            var margin = {top: 10, right: 0, bottom: 10, left: 0}
-            let size= 1000;
-
-            var width = 1300 - margin.left - margin.right;
-            var height = 700 - margin.top - margin.bottom;
             //this automatically calculates x and y coordinates based on our 
             // treemap data: 
 
             
-            var root = d3.hierarchy(treedata1).sum(function(d){ return d.marketcap}) // Here the size of each leave is given in the 'value' field in input data
-            // console.log('descendants',root.descendants());
-            // console.log('links:', root.links());
-            // Then d3.treemap computes the position of each element of the hierarchy
-            d3.treemap()
-                .size([width, height])
-                .padding(2)
-                (root)
+            // var root = d3.hierarchy(treedata1).sum(function(d){ return d.marketcap}) // Here the size of each leave is given in the 'value' field in input data
+            // // console.log('descendants',root.descendants());
+            // // console.log('links:', root.links());
+            // // Then d3.treemap computes the position of each element of the hierarchy
+            // d3.treemap()
+            //     .size([sizeX_with_margins, sizeY_with_margins])
+            //     .padding(2)
+            //     (root)
             
             //add a new svg: 
             // svg  = d3.selectAll('svg').append('svg')
@@ -604,48 +601,53 @@ function updateTree2(width,height,margin){
 
 
             
-            // use this information to add rectangles:
-            let rects = svg
-                .selectAll("rect")
-                .attr('class','treemap')
-                .data(root.leaves())
-                .enter()
-                .append("rect")
-                .transition(t)
-                .attr('x', function (d) { 
-                    console.log("Drew once") 
-                    return d.x0; })
-                .attr('y', function (d) { return d.y0; })
-                .attr('width', function (d) { return d.x1 - d.x0; })
-                .attr('height', function (d) { return d.y1 - d.y0; })
-                .style("stroke", "black")
-                .style("fill", function(d){return colorScale(d.parent.data.name);})
+            // // use this information to add rectangles:
+            // let rects = svg
+            //     .selectAll("rect")
+            //     .attr('class','treemap')
+            //     .data(root.leaves())
+            //     .enter()
+            //     .append("rect")
+            //     .style("stroke", "black")
+            //     .style("fill", function(d){return colorScale(d.parent.data.name);})
 
-            svg.selectAll("rect").transition(t).style("opacity", 1)
+            //     .attr('x', function (d) { 
+            //         console.log("Drew once") 
+            //         return d.x0; })
+            //     .attr('y', function (d) { return d.y0; })
+            //     .attr('width', function (d) { return d.x1 - d.x0; })
+            //     .attr('height', function (d) { return d.y1 - d.y0; })
+            //     .style("opacity", 1)
+                
+            svg.selectAll("rect").transition(t).style("opacity",1)
 
-            console.log(rects)
+            console.log(rects.selectAll("rects"))
 
-            rects.selectAll('rect').on("click",function(d){
+            svg.selectAll('rect').on("click",function(d){
                     let n= d.data.name;
+                    console.log("hit")
                     // console.log(d.parent.data.name);
                     // console.log(colorScale(d.parent.data.name))
                     if (n!= "Ethereum" &n!= "Bitcoin"){
-                        updateTree1(width,height,margin);
+                        updateTree1(sizeX_with_margins,sizeY_with_margins,margin_treemap);
                     }
                 })
 
+            console.log(rects.selectAll("text"))
             // and to add the text labels
-            svg
-                .selectAll("text")
+            rects
+                .select("text")
                 .data(root.leaves())
                 .enter()
                 .append("text")
-                    .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
-                    .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
-                    .text(function(d){ return d.data.name })
-                    .attr("font-size", "15px")
-                    .attr("fill", "white")
-                    .attr('class','treemap-text')
+                .attr("x", function(d){ 
+                    console.log("text once")
+                    return d.x0+5})    // +10 to adjust position (more right)
+                .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+                .text(function(d){ return d.data.name })
+                .attr("font-size", "15px")
+                .attr("fill", "white")
+                .attr('class','treemap-text')
 
         },
 
@@ -745,13 +747,55 @@ function updateTree2(width,height,margin){
 		
 		item.append('circle')
 			.attr('cx', 0)
-			.attr('cy', 0)
+            .attr('cy', 0)
+            
+        
+        root = d3.hierarchy(treedata1).sum(function(d){ return d.marketcap}) // Here the size of each leave is given in the 'value' field in input data
+        // console.log('descendants',root.descendants());
+        // console.log('links:', root.links());
+        // Then d3.treemap computes the position of each element of the hierarchy
+        d3.treemap()
+            .size([sizeX_with_margins, sizeY_with_margins])
+            .padding(2)
+            (root)
+
+                    // use this information to add rectangles:
+        rects = svg
+            .selectAll("rect")
+            .attr('class','treemap')
+            .data(root.leaves())
+            .enter()
+            .append("rect")
+            .style("stroke", "black")
+            .style("fill", function(d){return colorScale(d.parent.data.name);})
+
+            .attr('x', function (d) { 
+                console.log("Drew once") 
+                return d.x0; })
+            .attr('y', function (d) { return d.y0; })
+            .attr('width', function (d) { return d.x1 - d.x0; })
+            .attr('height', function (d) { return d.y1 - d.y0; })
+            .style("opacity", 1)
+        
+        rects
+            .select("text")
+            .data(root.leaves())
+            .enter()
+            .append("text")
+            .attr("x", function(d){ 
+                console.log("text once")
+                return d.x0+5})    // +10 to adjust position (more right)
+            .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+            .text(function(d){ return d.data.name })
+            .attr("font-size", "15px")
+            .attr("fill", "white")
+            .attr('class','treemap-text')
 
 	}
 
 
 	function setupProse() {
-		var height = window.innerHeight * 0.5
+		var height = window.innerHeight * 0.7
 		graphicProseEl.selectAll('.trigger')
 			.style('height', height + 'px')
 	}
