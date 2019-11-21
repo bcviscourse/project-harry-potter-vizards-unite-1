@@ -1,10 +1,11 @@
 function scrollstory() {
     Promise.all([
-        d3.csv('data/out.csv')
-        // d3.csv('data/mining_algorithms.csv')
+        d3.csv('data/out.csv'),
+        d3.csv('data/total-market-cap.csv')
     ]).then(data => {
         let miningData = data[0]
-        console.log(miningData);
+        let market_cap_time_data = data[1]
+        console.log(market_cap_time_data);
         var TOTDATA =[];
         let i=0;
         //formatting the data:
@@ -23,10 +24,10 @@ function scrollstory() {
         }
         // miningData.filter(entry => entry.year != 0 && entry.year != "");
         // let smallMine = miningData.slice(1, 20)
-        setScrollStory(TOTDATA)
+        setScrollStory(TOTDATA, market_cap_time_data)
     })
 
-    function setScrollStory(data) {
+    function setScrollStory(data, time_data) {
         // select elements using jQuery since it is a dependency
         var $graphicEl = $('.graphic')
         var $graphicVisEl = $graphicEl.find('.graphic__vis')
@@ -41,7 +42,7 @@ function scrollstory() {
 
         // a global function creates and handles all the vis + updates
         console.log(data)
-        var graphic = createGraphic('.graphic', data, svgHeight, window.innerWidth)
+        var graphic = createGraphic('.graphic', data, time_data, svgHeight, window.innerWidth)
 
         // handle the fixed/static position of grahpic
         var toggle = function (fixed, bottom) {

@@ -7,7 +7,7 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
  }
 
-window.createGraphic = function(graphicSelector, newdata, parent_height, parent_width){
+window.createGraphic = function(graphicSelector, newdata, time_data, parent_height, parent_width){
 	var graphicEl = d3.select('.graphic')
 	var graphicVisEl = graphicEl.select('.graphic__vis')
     var graphicProseEl = graphicEl.select('.graphic__prose')
@@ -29,6 +29,8 @@ window.createGraphic = function(graphicSelector, newdata, parent_height, parent_
     var root
     var rects
     var tooltip
+    var timeline
+    var chart
 
     var algos=[];
     for (let i=0;i<newdata.length;i++){
@@ -239,19 +241,26 @@ function updateTree2(width,height,margin){
         {
             console.log('step 0')
             ///remove all axes:
-            svg.selectAll('g').remove()
-            //remove tree map:
-            d3.selectAll('rect').remove();
-            //remove all text:
-            svg.selectAll('text').remove()
-            //remove line chart:
-            d3.selectAll('path').remove()
+            // Rework these to work on one svg
+            svg.select('.chart').style('opacity',0)
+            chart.style('opacity',0)
+            timeline.transition().style('opacity',1)
+            timeline.selectAll('g').style('opacity',1)
+            rects.style('opacity',0)
+            // //remove tree map:
+            // d3.selectAll('rect').remove();
+            // //remove all text:
+            // svg.selectAll('text').remove()
+            // //remove line chart:
+            // d3.selectAll('path').remove()
             d3.selectAll('.tooltip').style('opacity',0)
+
 
         },
 		function step1() {
             console.log('step  1');
 
+            chart.transition().style('opacity',1)
             //hide treemap (in case someone scrolls really fast):
             d3.selectAll('rect').style('opacity',0);
             d3.selectAll('.treemap-text').remove()
@@ -259,7 +268,9 @@ function updateTree2(width,height,margin){
             // define a general transition:
 			var t = d3.transition()
                 .duration(400)
-				.ease(d3.easeQuadInOut)
+                .ease(d3.easeQuadInOut)
+                
+            timeline.style('opacity',0)
 			
             
             //hide x-axis (on scrollup):
@@ -596,6 +607,8 @@ function updateTree2(width,height,margin){
             //transition defn:
             var t = d3.transition()
                 .ease(d3.easeLinear)
+            
+            rects.transition(t).style('opacity',1)
                 
             
             let margin_treemap = {top: 10, left:0, right:0, bottom: 10}
@@ -722,7 +735,7 @@ function updateTree2(width,height,margin){
             // .attr('transform', 'translate(0,0)')
         
         //group element for our first vis:
-		var chart = svg.append('g')
+		chart = svg.append('g')
 			.classed('chart', true)
             .attr('transform', 'translate(' + 0 + ',' + 0 + ')')
             
@@ -795,7 +808,11 @@ function updateTree2(width,height,margin){
             (root)
 
                     // use this information to add rectangles:
-        rects = svg
+
+        rects = svg.append('g')
+                    .classed('treemap', true)
+                    .attr('transform', 'translate(' + 0 + ',' + 0 + ')')
+        rects
             .selectAll("rect")
             .attr('class','treemap')
             .data(root.leaves())
@@ -810,19 +827,85 @@ function updateTree2(width,height,margin){
             .attr('width', function (d) { return d.x1 - d.x0; })
             .attr('height', function (d) { return d.y1 - d.y0; })
             .style("opacity", 1)
-        
-        rects
-            .select("text")
-            .data(root.leaves())
-            .enter()
             .append("text")
             .attr("x", function(d){ 
+                console.log("text")
                 return d.x0+5})    // +10 to adjust position (more right)
             .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
             .text(function(d){ return d.data.name })
             .attr("font-size", "15px")
             .attr("fill", "white")
             .attr('class','treemap-text')
+        
+        // console.log(rects
+        //     .selectAll("rect")
+        //     .data(root.leaves())
+        //     .enter())    
+        rects
+            .selectAll("rect")
+            .data(root.leaves())
+            .enter()
+            .append("text")
+            .attr("x", function(d){ 
+                console.log("text")
+                return d.x0+5})    // +10 to adjust position (more right)
+            .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
+            .text(function(d){ return d.data.name })
+            .attr("font-size", "15px")
+            .attr("fill", "white")
+            .attr('class','treemap-text')
+
+        console.log(rects.selectAll('text'))
+        
+        timeline = svg.append('g')
+			.classed('timeline', true)
+            .attr('transform', 'translate(' + 0 + ',' + 0 + ')')
+
+        var parseTime = d3.timeParse("%m/%d/%y");
+        var market_data = []
+        for (let i=0;i<time_data.length;i++){
+            market_data[i]={value: ((+time_data[i]["MarketCap"])/1000000).toFixed(2), date: parseTime(time_data[i]["Date"])}
+        }
+
+        var x = d3.scaleTime()
+                .domain(d3.extent(market_data, function(d) { 
+                    return +d.date; 
+                }))
+                .range([4*side_margin, sizeX_with_margins-4*side_margin]);
+        
+        var y = d3.scaleLinear()
+                .domain([0, d3.max(market_data, function(d) { return +d.value; })])
+                .range([ sizeY_with_margins- bottom_margin, bottom_margin ]);
+        
+        //define aces and groups and axes labels:
+        var lineXAxis = d3.axisBottom().scale(x);
+        var lineYAxis = d3.axisLeft().scale(y);
+
+        timeline.append('g').call(lineXAxis)
+            .attr('class','linex')
+            .attr('transform', 'translate(0,'+ (sizeY_with_margins - bottom_margin)+')')
+        timeline.append('g').call(lineYAxis)
+            .attr('transform','translate('+(4*side_margin) +',0)')
+            .attr('class','liney')
+        
+        timeline.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -1*sizeY_with_margins/2)
+            .attr("y",side_margin)
+            // .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .style('fill','grey')
+            .text("Millions of Dollars");
+
+        timeline.append("path")
+            .datum(market_data)
+            .attr("fill", "none")
+            .attr("stroke", "pink")
+            .attr("stroke-width", 3)
+            .attr("d", d3.line()
+                .x(function(d) { return x(+d.date) })
+                .y(function(d) { return y(+d.value) })
+                )
 
 	}
 
