@@ -263,6 +263,12 @@ function updateTree2(width,height,margin){
             var item = graphicVisEl.selectAll('.item')
             item.classed('balloon', true)
             // item.attr('class', 'balloon')
+            item.on('mouseover', function(d){
+                console.log("TEST")
+                tooltip.html("TEST")
+                        .style("left", (d3.event.pageX) + "px")		
+                        .style("top", (d3.event.pageY - 100) + "px");	
+            })
 			item.transition(t)
                 .attr('transform', function(d){
                         return translate(0,0)
@@ -273,6 +279,16 @@ function updateTree2(width,height,margin){
             // var padding = window.getComputedStyle(center_header_location, null).getPropertyValue('padding')
             var center_balloon_x = center_header_location.clientWidth/2
             var center_balloon_Y = center_header_location.clientHeight/2
+
+            // .on('mouseover', function(d){
+            //     d3.select(this).style('fill','red');
+            //     let res = d3.select('.tooltip');
+            //     res.transition().duration(50)
+            //         .style('opacity',1)
+            //     res.html('<strong>'+d.name+'</strong>'+
+            //         '<br>Algorithm: '+d.algo+'<br>Market Cap: '+d.marketcap);
+            //     res.style('right', 50 + "px");
+            //     res.style('top', 500 + "px");
             
             //add the giant circle:
             item.select('circle')
@@ -285,6 +301,19 @@ function updateTree2(width,height,margin){
                     return center_balloon_Y/1.3
                 }) // Set max r to some value based on svg size
                 .style('opacity', 1)
+            
+            item.selectAll('circle')
+                .style('fill', function(d){
+                    console.log(d)
+                    return "pink"
+                })
+                .on('mouseover', function(d){
+                    console.log("TEST")
+                    tooltip.html("TEST")
+                            .style("left", (d3.event.pageX) + "px")		
+                            .style("top", (d3.event.pageY - 100) + "px");	
+                })
+                
 
             //remove text from scrollup:
             d3.selectAll('.item text').remove()
@@ -690,10 +719,10 @@ function updateTree2(width,height,margin){
 			.classed('chart', true)
             .attr('transform', 'translate(' + 0 + ',' + 0 + ')')
             
-        var tooltip = svg.append("div")
-            .classed('tooltip', true)
-            .style('right', 0 + "px")
-            .style('top', 0 + "px");
+        // Define the div for the tooltip
+        tooltip = d3.select("body").append("div")	
+            .attr("class", "tooltip")				
+            .style("opacity", 0);
 
         //xscale:
 		scaleX = d3.scaleLinear()
