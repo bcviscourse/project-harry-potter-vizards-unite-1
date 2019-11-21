@@ -263,12 +263,6 @@ function updateTree2(width,height,margin){
             var item = graphicVisEl.selectAll('.item')
             item.classed('balloon', true)
             // item.attr('class', 'balloon')
-            item.on('mouseover', function(d){
-                console.log("TEST")
-                tooltip.html("TEST")
-                        .style("left", (d3.event.pageX) + "px")		
-                        .style("top", (d3.event.pageY - 100) + "px");	
-            })
 			item.transition(t)
                 .attr('transform', function(d){
                         return translate(0,0)
@@ -303,16 +297,14 @@ function updateTree2(width,height,margin){
                 .style('opacity', 1)
             
             item.selectAll('circle')
-                .style('fill', function(d){
-                    console.log(d)
-                    return "pink"
-                })
-                .on('mouseover', function(d){
-                    console.log("TEST")
-                    tooltip.html("TEST")
-                            .style("left", (d3.event.pageX) + "px")		
-                            .style("top", (d3.event.pageY - 100) + "px");	
-                })
+                .style('fill', "pink")
+
+                // .on('mouseover', function(d){
+                //     console.log("TEST")
+                //     tooltip.html("TEST")
+                //             .style("left", (d3.event.pageX) + "px")		
+                //             .style("top", (d3.event.pageY - 100) + "px");	
+                // })
                 
 
             //remove text from scrollup:
@@ -350,7 +342,7 @@ function updateTree2(width,height,margin){
             //for the tooltip. best to just fix a position since 
             //varying based on mouseover location is clumsy: 
             let res = d3.select('.tooltip');
-            res.style('opacity',0);
+            res.style('opacity',1);
 
             //define a general transition:
 			var t = d3.transition()
@@ -550,6 +542,7 @@ function updateTree2(width,height,margin){
                 return 1})
             d3.selectAll('.x-axis').transition(t2).style('opacity',1)
             d3.selectAll('item text').transition(t2).style('opacity',1)
+            d3.selectAll('.tooltip').transition(t2).style('opacity',1)
 
 			// circles are colored back to neutral:
 			var item = graphicVisEl.selectAll('.item')
@@ -720,9 +713,13 @@ function updateTree2(width,height,margin){
             .attr('transform', 'translate(' + 0 + ',' + 0 + ')')
             
         // Define the div for the tooltip
-        tooltip = d3.select("body").append("div")	
+        tooltip = graphicVisEl.append("div")	
             .attr("class", "tooltip")				
-            .style("opacity", 0);
+            .style("opacity", 1)
+            .style("width", 15 + "%")
+            .style("height", 15 + "%")
+            .style('right', 80 + "%")
+            .style('top', 40 + "%");
 
         //xscale:
 		scaleX = d3.scaleLinear()

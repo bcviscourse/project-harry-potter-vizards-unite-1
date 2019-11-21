@@ -83,7 +83,6 @@ function scrollstory() {
         $graphicEl.scrollStory({
             contentSelector: '.trigger',
             triggerOffset: halfViewportHeight,
-            keyboard: true,
             // scrollOffset: 200,
             // speed: 100,
             scrollSensitivity: 10,
