@@ -692,6 +692,8 @@ function updateTree2(width,height,margin){
             
         var tooltip = svg.append("div")
             .classed('tooltip', true)
+            .style('right', 0 + "px")
+            .style('top', 0 + "px");
 
         //xscale:
 		scaleX = d3.scaleLinear()
