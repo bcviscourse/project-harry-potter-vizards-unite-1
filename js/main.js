@@ -273,11 +273,9 @@ function updateTree2(width,height,margin){
             
             // Functions to center the first "balloon" under the text correctly
             var center_header_location = document.getElementsByClassName("firstvis")[0];
-            console.log(center_header_location)
             // var padding = window.getComputedStyle(center_header_location, null).getPropertyValue('padding')
             var center_balloon_x = center_header_location.clientWidth/2
             var center_balloon_Y = center_header_location.clientHeight/2
-            console.log(center_balloon_x)
             
             //add the giant circle:
             item.select('circle')
@@ -294,7 +292,6 @@ function updateTree2(width,height,margin){
             //remove text from scrollup:
             d3.selectAll('.item text').remove()
 
-            console.log(d3.selectAll('.balloon'))
             //add new text containing just "Coins":
             var circleText = d3.selectAll(".item").append("text")
             .attr("class", "circleText")	
@@ -334,7 +331,6 @@ function updateTree2(width,height,margin){
 				.duration(400)
                 .ease(d3.easeQuadInOut)
                 	
-            console.log("TEST---test" + sizeY_with_margins)
             //show the x-axis:
             var axis = graphicVisEl.selectAll('.x-axis')
             axis
@@ -343,10 +339,8 @@ function updateTree2(width,height,margin){
             .attr("class", "x-axis")
             .attr("transform", "translate(" + 0 + "," + sizeY_with_margins + ")")
             .style("opacity", 1)
-            console.log("translated" + sizeY_with_margins)
 
 
-            console.log(newdata.length)
             //transition each item to its position:
 			item.transition(t)
 				.attr('transform', function(d, i) {
@@ -527,7 +521,6 @@ function updateTree2(width,height,margin){
 
             //show the first vis:
             d3.selectAll('circle').transition(t2).style('opacity',function() {
-                console.log("HEY")
                 return 1})
             d3.selectAll('.x-axis').transition(t2).style('opacity',1)
             d3.selectAll('item text').transition(t2).style('opacity',1)
@@ -618,7 +611,6 @@ function updateTree2(width,height,margin){
             //     .style("fill", function(d){return colorScale(d.parent.data.name);})
 
             //     .attr('x', function (d) { 
-            //         console.log("Drew once") 
             //         return d.x0; })
             //     .attr('y', function (d) { return d.y0; })
             //     .attr('width', function (d) { return d.x1 - d.x0; })
@@ -627,11 +619,8 @@ function updateTree2(width,height,margin){
                 
             svg.selectAll("rect").transition(t).style("opacity",1)
 
-            console.log(rects.selectAll("rects"))
-
             svg.selectAll('rect').on("click",function(d){
                     let n= d.data.name;
-                    console.log("hit")
                     // console.log(d.parent.data.name);
                     // console.log(colorScale(d.parent.data.name))
                     if (n!= "Ethereum" &n!= "Bitcoin"){
@@ -639,7 +628,6 @@ function updateTree2(width,height,margin){
                     }
                 })
 
-            console.log(rects.selectAll("text"))
             // and to add the text labels
             rects
                 .select("text")
@@ -647,7 +635,6 @@ function updateTree2(width,height,margin){
                 .enter()
                 .append("text")
                 .attr("x", function(d){ 
-                    console.log("text once")
                     return d.x0+5})    // +10 to adjust position (more right)
                 .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
                 .text(function(d){ return d.data.name })
@@ -710,22 +697,15 @@ function updateTree2(width,height,margin){
 
 
         //testing input data:
-		// console.log('newdata:',newdata)
         var lowestVal = d3.min(newdata, d=>d.year)
         var highestVal = d3.max(newdata, d=>d.year)
         var tickNumber = highestVal-lowestVal
-        // console.log(lowestVal)
         // d3.min(data,d=>d.Income)
 
         //define scaleX:
 		scaleX
 			.domain([lowestVal, highestVal])
             .range([3*side_margin, sizeX_with_margins-3*side_margin]);
-
-        console.log(scaleX(2014))
-        console.log(scaleX(2015))
-        console.log(lowestVal)
-
 
         var scaleSize = chartSize/2 + side_margin
 
@@ -776,7 +756,6 @@ function updateTree2(width,height,margin){
             .style("fill", function(d){return colorScale(d.parent.data.name);})
 
             .attr('x', function (d) { 
-                console.log("Drew once") 
                 return d.x0; })
             .attr('y', function (d) { return d.y0; })
             .attr('width', function (d) { return d.x1 - d.x0; })
@@ -789,7 +768,6 @@ function updateTree2(width,height,margin){
             .enter()
             .append("text")
             .attr("x", function(d){ 
-                console.log("text once")
                 return d.x0+5})    // +10 to adjust position (more right)
             .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
             .text(function(d){ return d.data.name })
