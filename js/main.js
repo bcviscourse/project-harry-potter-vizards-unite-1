@@ -11,10 +11,24 @@ window.createGraphic = function(graphicSelector, newdata, parent_height, parent_
 	var graphicEl = d3.select('.graphic')
 	var graphicVisEl = graphicEl.select('.graphic__vis')
     var graphicProseEl = graphicEl.select('.graphic__prose')
+    var side_margin = 20  // -- margin must match padding from graphic__vis
+    var bottom_margin = 40 // arbitrary -- used for placing circles
+    var top_margin = 40 // arbitrary -- used for placing circles
+    var sizeX = parent_width
+    var sizeY = parent_height
+    var sizeX_with_margins, sizeY_with_margins;
+	var chartSize = sizeX - (20 * 2) // due to padding from graphic__vis
+    var scaleX = null
+    var scaleY = null
+    var marketScale
+	var minR = 20
+    var xAxis = null
+    var x_axis_location
+    var svg
+    var parseTime = d3.timeParse("%Y");
+    var root
+    var rects
 
-    var marketScale = d3.scaleLinear()
-        .domain(d3.extent(newdata,function(d){return d.marketcap;}) )
-        .range([15,35]);
     var algos=[];
     for (let i=0;i<newdata.length;i++){
         if (!algos.includes(newdata[i].algo) && newdata[i].algo !=undefined) algos.push(newdata[i].algo);
@@ -38,24 +52,6 @@ window.createGraphic = function(graphicSelector, newdata, parent_height, parent_
     for (let i=0;i<algos.length;i++){
         if (newdata[i].name == "Lisk" | newdata[i].name== "DigiByte" | newdata[i].name=="Siacoin" | newdata[i] == "Verge" | newdata[i] == "MonaCoin") sumforupdatetree1= sumforupdatetree1+ newdata[i].marketcap;
     }
-
-    var side_margin = 20  // -- margin must match padding from graphic__vis
-    var bottom_margin = 40 // arbitrary -- used for placing circles
-    var top_margin = 40 // arbitrary -- used for placing circles
-    var sizeX = parent_width
-    var sizeY = parent_height
-    var sizeX_with_margins, sizeY_with_margins;
-	var chartSize = sizeX - (20 * 2) // due to padding from graphic__vis
-    var scaleX = null
-    var scaleY = null
-	var minR = 25
-    var maxR = 200
-    var xAxis = null
-    var x_axis_location
-    var svg
-    var parseTime = d3.timeParse("%Y");
-    var root
-    var rects
 
 //our treemap-strucutred data: 
 // var treedata={"children":[]};
@@ -681,6 +677,7 @@ function updateTree2(width,height,margin){
         //append svg for our first vis:
         sizeX_with_margins = sizeX-2*side_margin // 2*20 comes from the padding of div.graphic__vis
         sizeY_with_margins = sizeY - bottom_margin - top_margin // keeping consistent with above
+
 		svg = graphicVisEl.append('svg')
 			.attr('width', sizeX_with_margins)
             .attr('height', sizeY_with_margins)
@@ -722,6 +719,12 @@ function updateTree2(width,height,margin){
         scaleY = d3.scaleLinear()
             .domain([0, newdata.length])
             .range([top_margin, sizeY_with_margins- bottom_margin]);
+
+        var lowestRadius = sizeY_with_margins * .01
+        var highestRadius = sizeY_with_margins * .04
+        marketScale = d3.scaleLinear()
+            .domain(d3.extent(newdata,function(d){return d.marketcap;}) )
+            .range([lowestRadius,highestRadius]);
 
 
         //adding first circle: 
@@ -779,7 +782,7 @@ function updateTree2(width,height,margin){
 
 
 	function setupProse() {
-		var height = window.innerHeight * 0.7
+		var height = window.innerHeight * 0.6
 		graphicProseEl.selectAll('.trigger')
 			.style('height', height + 'px')
 	}
