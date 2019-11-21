@@ -235,8 +235,22 @@ function updateTree2(width,height,margin){
 
 	// actions to take on each step of our scroll-driven story
 	var steps = [
-		function step0() {
-            console.log('step  0');
+        function step0()
+        {
+            console.log('step 0')
+            ///remove all axes:
+            svg.selectAll('g').remove()
+            //remove tree map:
+            d3.selectAll('rect').remove();
+            //remove all text:
+            svg.selectAll('text').remove()
+            //remove line chart:
+            d3.selectAll('path').remove()
+            d3.selectAll('.tooltip').style('opacity',0)
+
+        },
+		function step1() {
+            console.log('step  1');
 
             //hide treemap (in case someone scrolls really fast):
             d3.selectAll('rect').style('opacity',0);
@@ -323,8 +337,8 @@ function updateTree2(width,height,margin){
 
 
 
-		function step1() {
-            console.log('step  1');
+		function step2() {
+            console.log('step  2');
             
             // Remove balloon animation
             var item = graphicVisEl.selectAll('.item')
@@ -422,9 +436,9 @@ function updateTree2(width,height,margin){
 
 
 
-		function step2() {
+		function step3() {
             //this one colors the bubbles according to algo.
-            console.log('step  2');
+            console.log('step  3');
 
             //hide treemap:
             d3.selectAll('rect').style('opacity',0);
@@ -490,9 +504,9 @@ function updateTree2(width,height,margin){
 
 
 
-        function step3() {
+        function step4() {
             //bubbles grow in size to represent market cap.
-            console.log('step  3');
+            console.log('step  4');
 
             //hide treemap:
             d3.selectAll('rect').style('opacity',0);
@@ -521,9 +535,9 @@ function updateTree2(width,height,margin){
 
 
 
-        function step4() {
+        function step5() {
             //bubbles return to neutral colors:
-            console.log('step  4');
+            console.log('step  5');
 
             //hide treemap:
             d3.selectAll('rect').style('opacity',0);
@@ -576,7 +590,7 @@ function updateTree2(width,height,margin){
 
 
         
-        function step5() {
+        function step6() {
             console.log('step 5')
 
             //transition defn:
@@ -664,7 +678,7 @@ function updateTree2(width,height,margin){
         },
 
 
-        function step6()
+        function step7()
         {
 
             var t = d3.transition()
