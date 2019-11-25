@@ -87,7 +87,7 @@ function scrollstory() {
             // scrollOffset: 200,
             // speed: 100,
             scrollSensitivity: 10,
-            // throttleType: 'throttle',
+            throttleType: 'throttle',
             itemfocus: handleItemFocus,
             containerscroll: handleContainerScroll,
             autoActivateFirstItem: true

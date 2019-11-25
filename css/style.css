@@ -2,6 +2,10 @@ body {
   background-color: #fff;
 }
 
+.chart{
+  color:purple;
+}
+
 .title {
   font-family: 'Roboto Slab', serif;
   font-size: 30px;
@@ -198,21 +202,16 @@ body {
 div.tooltip {	
     position: absolute;			
     text-align: center;			
-    /* width: 300px;					
-    height: 100px;		 */
     opacity: 0;
     padding: 2px;				
     font: 14px sans-serif;		
     background: pink;	
     border: 0px;		
     border-radius: 8px;			
-    pointer-events: none;			
+    pointer-events: none;	
+    color: black;		
 }
 
-.tooltip{
-  color: black;
-  background-color: red;
-}
 
 svg{
   /* margin:100px; */
