@@ -49,7 +49,7 @@ window.createGraphic = function(graphicSelector, newdata, time_data, parent_heig
     var timeline
     var chart
     var rects = d3.selectAll('rect')
-    var lineCircleRMin= 3
+    var lineCircleRMin= 4
     var lineCircleRMax= 11
     var legend;
     var legendSequential;
@@ -444,10 +444,11 @@ path
                 .attr('cy', function(d){return y(+d.value)})
                 .style('opacity',0)
 
-        timeline.selectAll('circle')
-                .transition()
-                .delay(function(d,i){ return i * 4 })
-                .style("opacity", 1);
+        // timeline.selectAll('circle')
+        //         .transition()
+        //         // .delay(function(d,i){ return i * 4 })
+        //         .duration(7000)
+        //         .style("opacity", 1);
 // .attr("stroke-dasharray", totalLength + " " + totalLength)
 // .attr("stroke-dashoffset", totalLength)
 // .transition() // Call Transition Method
@@ -461,6 +462,7 @@ path
                     .on('mouseover',function(d, i){
                         d3.select(this).style('cursor', 'pointer')
                         d3.select(this).attr('r', lineCircleRMax).style('fill','blue')
+                        d3.select(this).style('opacity',1)
                         let res = d3.selectAll('.tooltip')
                         res.style('opacity',1)
                         res.html('<br>Total Market Cap: '+formatNum(d.value)+ ' million. <br>Date: '+dateFormat(d.date));
@@ -476,6 +478,8 @@ path
 
 		function step1() {
             console.log('step  1, giant balloon');
+
+            d3.selectAll('circle').style('opacity',1)
 
             timeline.lower()
             svg.select(".legendSequential").remove()
@@ -500,6 +504,7 @@ path
                 .ease(d3.easeQuadInOut)
 
 
+        d3.selectAll('.item').remove()
                     //adding first circle: 
 		var item = chart.selectAll('.item')
         .data(newdata)
@@ -510,6 +515,7 @@ path
     item.append('circle')
         .attr('cx', 0)
         .attr('cy', 0)
+        .style('opacity',1)
                 
         
             //hide x-axis (on scrollup):
@@ -549,8 +555,6 @@ path
                 }) // Set max r to some value based on svg size
                 .style('opacity', 1)
             
-            item.selectAll('circle')
-                .style('fill', "pink")
 
                 // .on('mouseover', function(d){
                 //     console.log("TEST")
@@ -578,6 +582,7 @@ path
 		function step2() {
             console.log('step  2');
 
+            d3.selectAll('circle').style('opacity',1)
             svg.select(".legendSequential").remove()
             
             //hide old tooltip:
@@ -683,6 +688,8 @@ path
             //this one colors the bubbles according to algo.
             console.log('step  3');
 
+            d3.selectAll('circle').style('opacity',1)
+
             //hide timeline:
             d3.selectAll('timeline').transition(t).style('opacity',0)
             timeline.lower()
@@ -773,6 +780,7 @@ svg.select(".legendSequential")
             //bubbles grow in size to represent market cap.
             console.log('step  4');
 
+            d3.selectAll('circle').style('opacity',1)
             svg.select(".legendSequential").remove()
 
             //hide timeline:
@@ -846,7 +854,7 @@ legendSequential = d3.legendColor()
         function step5() {
             //bubbles return to neutral colors:
             console.log('step  5');
-
+            d3.selectAll('circle').style('opacity',1)
             svg.select(".legendSequential").remove()
             //hide timeline:
             d3.selectAll('timeline').style('opacity',0)
