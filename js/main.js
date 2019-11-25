@@ -397,6 +397,29 @@ function updateTree3(width,height,margin){
             timeline.raise()
 
 
+var path = timeline.append("path")
+            .datum(market_data)
+            .attr("fill", "none")
+            .attr("stroke", "pink")
+            .attr("stroke-width", 4)
+            .attr("d", d3.line()
+                .x(function(d) { return x(+d.date) })
+                .y(function(d) { return y(+d.value) })
+                )
+            // Variable to Hold Total Length
+var totalLength = path.node().getTotalLength();
+
+
+// Set Properties of Dash Array and Dash Offset and initiate Transition
+path
+	.attr("stroke-dasharray", totalLength + " " + totalLength)
+	.attr("stroke-dashoffset", totalLength)
+  .transition() // Call Transition Method
+	.duration(5000) // Set Duration timing (ms)
+	.ease(d3.easeLinear) // Set Easing option
+	.attr("stroke-dashoffset", 0); // Set final value of dash-offset for transition
+
+
 
             function dateFormat(s){
                 s= s.toString()
@@ -406,9 +429,10 @@ function updateTree3(width,height,margin){
             var formatNum= d3.format('($,');
 
 
-        var selectCircle = timeline.selectAll(".circle")
-            .data(market_data)
-            .enter().append('circle')
+
+    var selectCircle = timeline.selectAll("circle")
+        .data(market_data)
+        .enter().append('circle')
 
 
         timeline.selectAll('circle')
@@ -418,7 +442,19 @@ function updateTree3(width,height,margin){
                 .attr('cx', function(d){
                     return x(+d.date) } )
                 .attr('cy', function(d){return y(+d.value)})
-                .style('opacity',1)
+                .style('opacity',0)
+
+        timeline.selectAll('circle')
+                .transition()
+                .delay(function(d,i){ return i * 4 })
+                .style("opacity", 1);
+// .attr("stroke-dasharray", totalLength + " " + totalLength)
+// .attr("stroke-dashoffset", totalLength)
+// .transition() // Call Transition Method
+// .delay(function(d,i){ return i * 500})
+// .duration(5000) // Set Duration timing (ms)
+// .ease(d3.easeLinear) // Set Easing option
+// .attr("stroke-dashoffset", 0); // Set final value of dash-offset for transition
 
     
         timeline.selectAll('circle')
@@ -1131,15 +1167,15 @@ legendSequential = d3.legendColor()
             .style('fill','grey')
             .text("Millions of Dollars");
 
-        var path = timeline.append("path")
-            .datum(market_data)
-            .attr("fill", "none")
-            .attr("stroke", "pink")
-            .attr("stroke-width", 4)
-            .attr("d", d3.line()
-                .x(function(d) { return x(+d.date) })
-                .y(function(d) { return y(+d.value) })
-                )
+        // var path = timeline.append("path")
+        //     .datum(market_data)
+        //     .attr("fill", "none")
+        //     .attr("stroke", "pink")
+        //     .attr("stroke-width", 4)
+        //     .attr("d", d3.line()
+        //         .x(function(d) { return x(+d.date) })
+        //         .y(function(d) { return y(+d.value) })
+        //         )
 
         // var selectCircle = timeline.selectAll(".circle")
         //     .data(market_data)
