@@ -1,11 +1,11 @@
 //next:
 //treemap make zoomable
 //treemap tooltip
-//transitions
 
 //discuss:
 //align tooltips better
 //colors
+//axes
 //dynamic data vis?
 
 
@@ -20,9 +20,9 @@
 //the treemap: rect and text.
 
 
-// function sleep(ms) {
-//     return new Promise(resolve => setTimeout(resolve, ms));
-//  }
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+ }
 
 window.createGraphic = function(graphicSelector, newdata, time_data, parent_height, parent_width){
 	var graphicEl = d3.select('.graphic')
@@ -58,6 +58,7 @@ window.createGraphic = function(graphicSelector, newdata, time_data, parent_heig
     var market_data =[];
     var x;
     var y;
+    var timeLineTime= 8000;
 
 
     var algos=[];
@@ -162,9 +163,7 @@ var root3 = d3.hierarchy(treedata3).sum(function(d){ return d.marketcap})
 function updateTree1(width,height,margin){
 
     d3.selectAll('rect').remove()
-    chart.selectAll('circle').style('opacity',0)
-    timeline.transition().style('opacity',0)
-    timeline.lower()
+    // timeline.lower()
 
     root = d3.hierarchy(treedata1).sum(function(d){ return d.marketcap}) // Here the size of each leave is given in the 'value' field in input data
         // console.log('descendants',root.descendants());
@@ -178,9 +177,9 @@ function updateTree1(width,height,margin){
 
 
                     // use this information to add rectangles:
-
+        d3.selectAll('.treemap').remove()
         rects = svg.append('g')
-                    // .classed('treemap', true)
+                    .classed('treemap', true)
                     .attr('transform', 'translate(' + 0 + ',' + 0 + ')')
         rects
             .selectAll("rect")
@@ -386,6 +385,8 @@ function updateTree3(width,height,margin){
         function step0()
         {
             console.log('step 0, line graph')
+            d3.selectAll('rect').remove();
+            d3.selectAll('path').remove()
             chart.style('opacity',0)
             rects.style('opacity',0)
             d3.selectAll('.tooltip').style('opacity',0)
@@ -415,7 +416,7 @@ path
 	.attr("stroke-dasharray", totalLength + " " + totalLength)
 	.attr("stroke-dashoffset", totalLength)
   .transition() // Call Transition Method
-	.duration(5000) // Set Duration timing (ms)
+	.duration(timeLineTime) // Set Duration timing (ms)
 	.ease(d3.easeLinear) // Set Easing option
 	.attr("stroke-dashoffset", 0); // Set final value of dash-offset for transition
 
@@ -444,41 +445,38 @@ path
                 .attr('cy', function(d){return y(+d.value)})
                 .style('opacity',0)
 
-        // timeline.selectAll('circle')
-        //         .transition()
-        //         // .delay(function(d,i){ return i * 4 })
-        //         .duration(7000)
-        //         .style("opacity", 1);
-// .attr("stroke-dasharray", totalLength + " " + totalLength)
-// .attr("stroke-dashoffset", totalLength)
-// .transition() // Call Transition Method
-// .delay(function(d,i){ return i * 500})
-// .duration(5000) // Set Duration timing (ms)
-// .ease(d3.easeLinear) // Set Easing option
-// .attr("stroke-dashoffset", 0); // Set final value of dash-offset for transition
 
-    
-        timeline.selectAll('circle')
-                    .on('mouseover',function(d, i){
-                        d3.select(this).style('cursor', 'pointer')
-                        d3.select(this).attr('r', lineCircleRMax).style('fill','blue')
-                        d3.select(this).style('opacity',1)
-                        let res = d3.selectAll('.tooltip')
-                        res.style('opacity',1)
-                        res.html('<br>Total Market Cap: '+formatNum(d.value)+ ' million. <br>Date: '+dateFormat(d.date));
-                        res.style('right', tooltipright + "px");
-                        res.style('top', tooltiptop + "px");
-                    })
-                    .on('mouseout',function(d){
-                        d3.select(this).attr('r', lineCircleRMin).style('fill','pink')
-                        let res = d3.selectAll('.tooltip').style('opacity',0)
-                    }) 
+        setTimeout(function(){ 
+
+            timeline.selectAll('circle')
+            .on('mouseover',function(d, i){
+                d3.select(this).style('cursor', 'pointer')
+                d3.select(this).attr('r', lineCircleRMax).style('fill','pink')
+                d3.select(this).style('opacity',1)
+                let res = d3.selectAll('.tooltip')
+                res.style('opacity',1)
+                res.html('<br>Total Market Cap: '+formatNum(d.value)+ ' million. <br>Date: '+dateFormat(d.date));
+                res.style('right', tooltipright + "px");
+                res.style('top', tooltiptop + "px");
+            })
+            .on('mouseout',function(d){
+                d3.select(this).attr('r', lineCircleRMin).style('opacity',0)
+                let res = d3.selectAll('.tooltip').style('opacity',0)
+            }) 
+
+                }, timeLineTime);
+
+        
         },
+
+
 
 
 		function step1() {
             console.log('step  1, giant balloon');
 
+            d3.selectAll('rect').remove();
+            d3.selectAll('path').remove()
             d3.selectAll('circle').style('opacity',1)
 
             timeline.lower()
@@ -488,7 +486,7 @@ path
             timeline.selectAll('.circle').selectAll('.tooltip').style('opacity',0)
 
             //hide timeline:
-            timeline.style('opacity',0)
+            // timeline.style('opacity',0)
 
             chart.style('opacity',1)
             //hide treemap (in case someone scrolls really fast):
@@ -496,12 +494,27 @@ path
             d3.selectAll('.treemap-text').remove()
 
             chart.lower()
-            timeline.selectAll('circle').remove()
+            timeline.selectAll('path')
+                .transition().duration(500)
+                .style('opacity',0)
+            timeline.selectAll('circle')
+                .transition().duration(500)
+                .attr('cy', sizeY_with_margins)
+                .transition().duration(500)
+                .style('opacity',0)
+
+            timeline.transition().duration(500).style('opacity',0)
+
+
+
+
+
+
 
             // define a general transition:
 			var t = d3.transition()
                 .duration(400)
-                .ease(d3.easeQuadInOut)
+                .ease(d3.easeCubicOut)
 
 
         d3.selectAll('.item').remove()
@@ -582,6 +595,8 @@ path
 		function step2() {
             console.log('step  2');
 
+            d3.selectAll('rect').remove();
+            d3.selectAll('path').remove()
             d3.selectAll('circle').style('opacity',1)
             svg.select(".legendSequential").remove()
             
@@ -606,13 +621,43 @@ path
 
             //return circles center to 0,0:
             var item = graphicVisEl.selectAll('.item')
-            item.select('circle').attr('cx',0).attr('cy',0);
 
 
+
+            item.selectAll('circle')
+                .transition().duration(400).ease(d3.easeCubicOut)
+                .attr('cx', -200).attr('cy', -200)
+                .transition()
+                .attr('cx', 0).attr('cy',0)
+            // item.transition().duration(500)
+            //     .attr('transform', function(d,i){
+            //         return translate(0,0)
+            //     })
+
+            
+        setTimeout(function(){ 
+
+            graphicVisEl.selectAll('.item').transition().duration(500).ease(d3.easeElasticInOut)
+                        .attr('transform', function(d, i) {
+                            return translate(scaleX(d.year), scaleY(i))
+                        })
+                                    //change circle radius:
+            var item = graphicVisEl.selectAll('.item')
+            item.select('circle')
+                .attr('class','')
+                .style('fill', 'pink')
+				.transition(t)
+                .attr('r', minR) // minR needs to be a more standardized scale....
+                .style('opacity', 1)
+
+                }, 1000);
+                                    //transition each item to its position:
+                    
+            
             //define a general transition:
 			var t = d3.transition()
-				.duration(400)
-                .ease(d3.easeQuadInOut)
+				.duration(1000)
+                .ease(d3.easeExpInOut)
                 	
             //show the x-axis:
             var axis = graphicVisEl.selectAll('.x-axis')
@@ -624,21 +669,10 @@ path
             .style("opacity", 1)
 
 
-            //transition each item to its position:
-			item.transition(t)
-				.attr('transform', function(d, i) {
-					return translate(scaleX(d.year), scaleY(i))
-				})
 
 
-            //change circle radius:
-            var item = graphicVisEl.selectAll('.item')
-            item.select('circle')
-                .attr('class','')
-                .style('fill', 'pink')
-				.transition(t)
-                .attr('r', minR) // minR needs to be a more standardized scale....
-                .style('opacity', 1)
+
+
 
 
             // Define the circletext:
@@ -688,6 +722,8 @@ path
             //this one colors the bubbles according to algo.
             console.log('step  3');
 
+            d3.selectAll('rect').remove();
+            d3.selectAll('path').remove()
             d3.selectAll('circle').style('opacity',1)
 
             //hide timeline:
@@ -780,6 +816,8 @@ svg.select(".legendSequential")
             //bubbles grow in size to represent market cap.
             console.log('step  4');
 
+            d3.selectAll('rect').remove();
+            d3.selectAll('path').remove()
             d3.selectAll('circle').style('opacity',1)
             svg.select(".legendSequential").remove()
 
@@ -854,6 +892,7 @@ legendSequential = d3.legendColor()
         function step5() {
             //bubbles return to neutral colors:
             console.log('step  5');
+            d3.selectAll('path').remove()
             d3.selectAll('circle').style('opacity',1)
             svg.select(".legendSequential").remove()
             //hide timeline:
@@ -861,7 +900,7 @@ legendSequential = d3.legendColor()
             timeline.selectAll('.circle').selectAll('.tooltip').style('opacity',0)
             timeline.lower()
             //hide treemap:
-            d3.selectAll('rect').style('opacity',0);
+            d3.selectAll('rect').remove();
             d3.selectAll('.treemap-text').remove()
             //remove symbol titles from circles:
             d3.selectAll('.circleText').remove();
@@ -871,17 +910,40 @@ legendSequential = d3.legendColor()
             d3.selectAll('circle').style('opacity',1)
             d3.selectAll('.x-axis').style('opacity',1)
             d3.selectAll('item text').style('opacity',1)
-            d3.selectAll('.tooltip').style('opacity',1)
+            // d3.selectAll('.tooltip').style('opacity',1)
 
                 
             var t2 = d3.transition()
                 .duration(500)
-				.ease(d3.easeLinear)
+                .ease(d3.easeLinear)
+                
+
+
+                // item.selectAll('circle')
+                // .transition().duration(400).ease(d3.easeCubicOut)
+                // .attr('cx', -200).attr('cy', -200)
+                // .transition()
+                // .attr('cx', 0).attr('cy',0)
+
+
+
+
 
 			// circles are colored back to neutral:
 			var item = graphicVisEl.selectAll('.item')
-			item.select('circle')
+			item.selectAll('circle')
                 .style('fill','pink')
+                .style('opacity',1)
+                .attr('cx', function(d){
+                    console.log(d.year)
+                    return 0})
+                .attr('cy', function(d,i){return 0;})
+            console.log(item.selectAll('circle'))
+
+            item
+                .attr('transform', function(d, i) {
+                    return translate(scaleX(d.year), scaleY(i))
+                })
 
 
             //tooltips:
@@ -902,79 +964,6 @@ legendSequential = d3.legendColor()
                 })      
 
 
-
-
-            //                //return circles center to 0,0:
-            // var item = graphicVisEl.selectAll('.item')
-            // item.select('circle').attr('cx',0).attr('cy',0);
-                	
-            // //show the x-axis:
-            // var axis = graphicVisEl.selectAll('.x-axis')
-            // axis
-            // .transition(t)
-            // .call(xAxis)
-            // .attr("class", "x-axis")
-            // .attr("transform", "translate(" + 0 + "," + sizeY_with_margins + ")")
-            // .style("opacity", 1)
-
-
-            // //transition each item to its position:
-			// item.transition(t)
-			// 	.attr('transform', function(d, i) {
-			// 		return translate(scaleX(d.year), scaleY(i))
-			// 	})
-
-
-            // //change circle radius:
-            // var item = graphicVisEl.selectAll('.item')
-            // item.select('circle')
-            //     .attr('class','')
-            //     .style('fill', 'pink')
-			// 	.transition(t)
-            //     .attr('r', minR) // minR needs to be a more standardized scale....
-            //     .style('opacity', 1)
-
-
-            // // Define the circletext:
-            // var circleText = d3.selectAll(".item").append("text")
-            //     .attr("class", "circleText")		
-            //     .style('fill','white')
-            //     .html(function(d){return d.symbol;})
-            //     .style('opacity',1)
-
-                        
-
-            // //define mouseover behavior for circles (tooltip):
-            // d3.selectAll('circle')
-            //     .on('mouseover', function(d){
-            //         d3.select(this).style('cursor', 'pointer')
-            //         d3.select(this).attr('r', minR * 1.5 )
-            //         let res = d3.select('.tooltip');
-            //         res.html('<strong>'+d.name+'</strong>'+
-            //             '<br>Algorithm: '+d.algo+'<br>Market Cap: '+d.marketcap);
-            //         res.style('right', 50 + "px");
-            //         res.style('top', 250 + "px");
-            //         res.style('opacity',1)
-            //     })
-            //     .on('mouseout', function(){
-            //         d3.select(this).attr('r', minR)
-            //         d3.selectAll('.tooltip').style('opacity',0)
-            //     })
-
-			// item.select('text')
-			// 	.transition(t)
-            //     .style('opacity', 0)
-            
-
-            // //position the x-axis:
-            // x_axis_location = sizeY_with_margins - bottom_margin
-            // axis
-            //     .transition(t)
-            //     .call(xAxis)
-            //     .attr("class", "x-axis")
-            //     .attr("transform", translate(0, x_axis_location))
-            //     .style("opacity", 1)
-
             d3.selectAll('.tooltip').style('opacity',0)
         },
 
@@ -984,23 +973,30 @@ legendSequential = d3.legendColor()
             console.log('step 5')
 
             svg.select(".legendSequential").remove()
+            d3.selectAll('path').remove()
 
-            d3.selectAll('timeline').transition(t).style('opacity',0)
+            // d3.selectAll('timeline').transition(t).style('opacity',0)
+            d3.selectAll('circle').transition().duration(1000).ease(d3.easeLinear)
+                .attr('cy', sizeY_with_margins)
+                .transition().duration(300)
+                .style('fill', 'brown')
             timeline.lower()
 
 
             //transition defn:
             var t = d3.transition()
                 .ease(d3.easeLinear)
-            
-            rects.transition(t).style('opacity',1)
-                
-            
             let margin_treemap = {top: 10, left:0, right:0, bottom: 10}
+
+
+
+
+            setTimeout(function(){ 
 
             //hide the first vis: 
             chart.lower()
-            d3.selectAll('circle').transition(t).style('opacity',0)
+            rects.transition(t).style('opacity',1)
+            // d3.selectAll('circle').transition(t).style('opacity',0)
             d3.selectAll('.x-axis').transition(t).style('opacity',0)
             d3.selectAll('item text').transition(t).style('opacity',0)
             d3.selectAll('.tooltip').transition(t).style('opacity',0)
@@ -1010,6 +1006,10 @@ legendSequential = d3.legendColor()
             
             //hide old tooltip:
             timeline.selectAll('.circle').selectAll('.tooltip').style('opacity',0)
+    
+                    }, 1100);
+
+
 
         },
 
@@ -1018,6 +1018,7 @@ legendSequential = d3.legendColor()
         {
 
             svg.select(".legendSequential").remove()
+            d3.selectAll('path').remove()
 
             var t = d3.transition()
 				.ease(d3.easeLinear)
