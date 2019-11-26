@@ -20,10 +20,6 @@
 //the treemap: rect and text.
 
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
- }
-
 window.createGraphic = function(graphicSelector, newdata, time_data, parent_height, parent_width){
 	var graphicEl = d3.select('.graphic')
 	var graphicVisEl = graphicEl.select('.graphic__vis')
@@ -85,17 +81,20 @@ window.createGraphic = function(graphicSelector, newdata, time_data, parent_heig
     }
 
 //our treemap-strucutred data: 
-// var treedata={"children":[]};
-// for (let i=0;i<algos.length;i++){
-//     let children=[];
-//     for (let j=0;j<newdata.length;j++){
-//         if (newdata[j].algo== algos[i]){
-//             children.push({name: newdata[j].name, marketcap: newdata[j].marketcap});
-//         }
-//     }
-//     let j= {name: algos[i], children: children};
-//     treedata['children'].push(j);
-// }
+var treedata={"children":[]};
+for (let i=0;i<algos.length;i++){
+    let children=[];
+    for (let j=0;j<newdata.length;j++){
+        if (newdata[j].algo== algos[i]){
+            if(newdata[j].name== 'Bitcoin') children.push({name: 'BTC', marketcap: newdata[j].marketcap});
+            else if (newdata[j].name== 'Ethereum') children.push({name: 'ETH', marketcap: newdata[j].marketcap});
+            else children.push({name: newdata[j].name, marketcap: newdata[j].marketcap});
+        }
+    }
+    let j= {name: algos[i], children: children};
+    treedata['children'].push(j);
+}
+
 var treedata1 = {"children": [
     {"name":"SHA-256","children":
         [{"name":"BTC","marketcap":157000000000}] },
@@ -128,20 +127,35 @@ var treedata2 = {"children":[
         [{"name":"REP","marketcap":127941720.7}]},
     {"name":"Equilhash","children":
         [{"name":"KMD","marketcap":121105885.6}]},
-    {"name":"Other", "children":
-        [{"name":"Other", "marketcap": sumforupdatetree1} ] }
+    // {"name":"Other", "children":
+    //     [{"name":"Other", "marketcap": sumforupdatetree1} ] }
 
-    // {"name":"Sidechain","children":
-    //     [{"name":"Lisk","marketcap":97313663.16}]},
-    // {"name":"SHA-256;Scrypt;Qubit;Skein;Groestl","children":
-    //     [{"name":"DigiByte","marketcap":87731409.07}]},
-    // {"name":"blake2b","children":
-    //     [{"name":"Siacoin","marketcap":84616061.08}]},
-    // {"name":"Scrypt;X17;Groestl;Blake2s;Lyra2rev2","children":
-    //     [{"name":"Verge","marketcap":74185162.88}]},
-    // {"name":"Lyra2RE","children":
-    //     [{"name":"MonaCoin","marketcap":69801518}]}
+    {"name":"Sidechain","children":
+        [{"name":"LISK","marketcap":97313663.16}]},
+    {"name":"SHA-256;Scrypt;Qubit;Skein;Groestl","children":
+        [{"name":"DGB","marketcap":87731409.07}]},
+    {"name":"blake2b","children":
+        [{"name":"SC","marketcap":84616061.08}]},
+    {"name":"Scrypt;X17;Groestl;Blake2s;Lyra2rev2","children":
+        [{"name":"XVG","marketcap":74185162.88}]},
+    {"name":"Lyra2RE","children":
+        [{"name":"MONA","marketcap":69801518}]}
 ]};
+
+
+// var sign = svg.selectAll('rect').enter().append('rect')
+// .attr('x', 6)
+// .attr('y', 450)
+// .attr('width', sizeX_with_margins)
+// .attr('height', 30)
+// .style('stoke','black')
+// .style('fill', 'orange')
+// .style('opacity',1)
+// .append('text').text('Return to overview')
+
+
+
+
 var root2 = d3.hierarchy(treedata2).sum(function(d){ return d.marketcap});
 
 var treedata3 = {"children":[
@@ -163,15 +177,16 @@ var root3 = d3.hierarchy(treedata3).sum(function(d){ return d.marketcap})
 function updateTree1(width,height,margin){
 
     d3.selectAll('rect').remove()
-    // timeline.lower()
+    svg.selectAll(".legendSequential").remove()
+    console.log('CELL LABEL',d3.selectAll('.legendSequential'))
 
-    root = d3.hierarchy(treedata1).sum(function(d){ return d.marketcap}) // Here the size of each leave is given in the 'value' field in input data
+    root = d3.hierarchy(treedata).sum(function(d){ return d.marketcap}) // Here the size of each leave is given in the 'value' field in input data
         // console.log('descendants',root.descendants());
         // console.log('links:', root.links());
         // Then d3.treemap computes the position of each element of the hierarchy
         var j= d3.treemap()
             .size([width, height])
-            .padding(3)
+            .padding(1)
             // .tile(d3.treemapDice)
             (root)
 
@@ -196,85 +211,61 @@ function updateTree1(width,height,margin){
             .attr('width', function (d) { return d.x1 - d.x0; })
             .attr('height', function (d) { return d.y1 - d.y0; })
             .style("opacity", 1)
-            .append("text")
-            .attr("x", function(d){ 
-                console.log("text")
-                return d.x0+5})    // +10 to adjust position (more right)
+
+
+    // and to add the text labels
+    svg.selectAll('rect').select('text').remove()
+        svg.selectAll('rect')
+        .select("text")
+        .data(root.leaves())
+        .enter()
+        .append("text")
+            .attr("x", function(d){ return d.x0+3})    // +10 to adjust position (more right)
             .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
-            .text(function(d){ return d.data.name })
-            .attr("font-size", "15px")
-            .attr("fill", "white")
-            .attr('class','treemap-text')
-           
-        rects
-            .selectAll("rect")
-            .data(root.leaves())
-            .enter()
-            .append("text")
-            .attr("x", function(d){ 
-                console.log("text")
-                return d.x0+5})    // +10 to adjust position (more right)
-            .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
-            .text(function(d){ return d.data.name })
+            .text(function(d){ 
+                if (d.data.name == 'BTC' | d.data.name== 'ETH')
+                return d.data.name })
             .attr("font-size", "14px")
             .attr("fill", "white")
             .attr('class','treemap-text')
 
 
-    // and to add the text labels
-    svg.selectAll('rect').select('text').remove()
-    svg.selectAll('rect')
-    .select("text")
-    .data(root.leaves())
-    .enter()
-    .append("text")
-        .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
-        .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
-        .text(function(d){ 
-            console.log(d.data.name);
-            console.log('done')
-            return d.data.name })
-        .attr("font-size", "14px")
-        .attr("fill", "white")
-        .attr('class','treemap-text')
-
-        svg.selectAll("rect").style("opacity",1)
-
         svg.selectAll('rect')
             .on("click",function(d){
                 let n= d.data.name;
-                // console.log(d.parent.data.name);
-                // console.log(colorScale(d.parent.data.name))
-                if (n!= "Ethereum" &n!= "Bitcoin"){
+                if (n!= "ETH" &n!= "BTC"){
+                    // j.transition().duration(500)(root2);
                     updateTree2(width,height,margin);
                 }
             })
             .on('mouseover', function(d){
-                if (d.data.name=="Other"){
+                let n= d.data.name;
+                if (n!= "ETH" &n!= "BTC"){
                     d3.select(this).style('cursor', 'pointer')
                 }
             })
 
-    svg.select(".legendSequential").remove()
+    svg.selectAll(".legendSequential").remove()
 }
 
 
 function updateTree2(width,height,margin){
     chart.selectAll('circle').style('opacity',0)
     timeline.transition().style('opacity',0)
+    svg.selectAll(".legendSequential").remove()
     timeline.lower()
     // console.log('descendants',root.descendants());
     // console.log('links:', root.links());
     // Then d3.treemap computes the position of each element of the hierarchy
     d3.treemap()
-        .size([width, height])
+        .size([width, height-30])
         .padding(3)
         (root2)
 
     d3.selectAll('rect').remove();
     svg.selectAll('rect').select('text').remove()
 
-    svg  = d3.selectAll('svg').append('svg')
+    svg  = d3.selectAll('svg')
     svg
     .selectAll("rect")
     .attr('class','treemap')
@@ -287,17 +278,45 @@ function updateTree2(width,height,margin){
     .attr('height', function (d) { return d.y1 - d.y0; })
     .style("stroke", "black")
     .style("fill", function(d){return colorScaleforTreeMap(d.parent.data.name);})
-    .on("click",function(d){
-        let n= d.data.name;
-        if (n!= "Ethereum" &n!= "Bitcoin"){
-            updateTree3(width,height,margin); 
-        }
-    })
-    .on('mouseover', function(d){
-        if (d.data.name=="Other"){
-            d3.select(this).style('cursor', 'pointer')
-        }
-    })
+    // .on("click",function(d){
+    //     console.log(d);
+    //     if (['LISK', 'XVG', 'DGB', 'SC', 'MONA'].includes(d.data.name)){
+    //         updateTree3(width,height,margin); 
+    //     }
+    // })
+    // .on('mouseover', function(d){
+    //     if (['LISK', 'XVG', 'DGB', 'SC', 'MONA'].includes(d.data.name)){
+    //         d3.select(this).style('cursor', 'pointer')
+    //     }
+    // })
+
+    svg.append('rect')
+        .attr('x', 6)
+        .attr('y', 475.97 + 5)
+        .attr('height', 30 -5)
+        .attr('width', sizeX_with_margins - 12)
+        .attr('fill', 'red')
+        .attr('class','treemap')
+        .style("stroke", "black")
+
+
+    svg.selectAll('rect')
+        .on("click",function(d,i ){
+            if (i== 18){
+                updateTree1(width, height, margin);
+            }
+            else if (['LISK', 'XVG', 'DGB', 'SC', 'MONA'].includes(d.data.name)){
+                updateTree3(width,height,margin); 
+            }
+        })
+        .on('mouseover', function(d,i ){
+            if (i==18){
+                d3.select(this).style('cursor', 'pointer');
+            }
+            else if (['LISK', 'XVG', 'DGB', 'SC', 'MONA'].includes(d.data.name)){
+                d3.select(this).style('cursor', 'pointer')
+            }
+        })
 
     svg.selectAll('text').remove();
 
@@ -307,15 +326,24 @@ function updateTree2(width,height,margin){
     .data(root2.leaves())
     .enter()
     .append("text")
-        .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+        .attr("x", function(d){ return d.x0+3})    // +10 to adjust position (more right)
         .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
-        .text(function(d){ return d.data.name })
+        .text(function(d){ 
+            if (!['DGB','XVG','MONA','SC'].includes(d.data.name)) return d.data.name })
+        .attr("font-size", "14px")
+        .attr("fill", "white")
+        .attr('class','treemap-text')
+
+    svg.append('text')
+        .attr('x', sizeX_with_margins/2 - 20)
+        .attr('y', 475.97 + 5+ 15 )
+        .text('Return to Overview')
         .attr("font-size", "14px")
         .attr("fill", "white")
         .attr('class','treemap-text')
 
 
-    svg.select(".legendSequential").remove()
+    svg.selectAll(".legendSequential").remove()
             //HERE ENDS TREE1
 }
 
@@ -323,19 +351,20 @@ function updateTree2(width,height,margin){
 function updateTree3(width,height,margin){
     chart.selectAll('circle').style('opacity',0)
     timeline.transition().style('opacity',0)
+    svg.selectAll(".legendSequential").remove()
     timeline.lower()
     // console.log('descendants',root.descendants());
     // console.log('links:', root.links());
     // Then d3.treemap computes the position of each element of the hierarchy
     d3.treemap()
-        .size([width, height])
+        .size([width, height-30])
         .padding(3)
         (root3)
 
     d3.selectAll('rect').remove();
     svg.selectAll('rect').select('text').remove()
 
-    svg  = d3.selectAll('svg').append('svg')
+    svg  = d3.selectAll('svg')
     svg
     .selectAll("rect")
     .attr('class','treemap')
@@ -348,13 +377,35 @@ function updateTree3(width,height,margin){
     .attr('height', function (d) { return d.y1 - d.y0; })
     .style("stroke", "black")
     .style("fill", function(d){return colorScaleforTreeMap(d.parent.data.name);})
-    .on("click",function(d){
-    })
-    .on('mouseover', function(d){
-        if (d.data.name=="Other"){
-            d3.select(this).style('cursor', 'pointer')
+    // .on("click",function(d){
+    // })
+    // .on('mouseover', function(d){
+    //     if (d.data.name=="Other"){
+    //         d3.select(this).style('cursor', 'pointer')
+    //     }
+    // })
+
+    svg.append('rect')
+    .attr('x', 6)
+    .attr('y', 475.97 + 5)
+    .attr('height', 30 -5)
+    .attr('width', sizeX_with_margins - 12)
+    .attr('fill', 'red')
+    .attr('class','treemap')
+    .style("stroke", "black")
+
+    svg.selectAll('rect')
+    .on("click",function(d,i ){
+        if (i== 5){
+            updateTree1(width, height, margin);
         }
     })
+    .on('mouseover', function(d,i ){
+        if (i==5){
+            d3.select(this).style('cursor', 'pointer');
+        }
+    })
+
 
     svg.selectAll('text').remove();
 
@@ -364,14 +415,23 @@ function updateTree3(width,height,margin){
     .data(root3.leaves())
     .enter()
     .append("text")
-        .attr("x", function(d){ return d.x0+5})    // +10 to adjust position (more right)
+        .attr("x", function(d){ return d.x0+3})    // +10 to adjust position (more right)
         .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
         .text(function(d){ return d.data.name })
         .attr("font-size", "14px")
         .attr("fill", "white")
         .attr('class','treemap-text')
 
-    svg.select(".legendSequential").remove()
+
+    svg.append('text')
+        .attr('x', sizeX_with_margins/2 - 20)
+        .attr('y', 475.97 + 5+ 15 )
+        .text('Return to Overview')
+        .attr("font-size", "14px")
+        .attr("fill", "white")
+        .attr('class','treemap-text')
+
+    svg.selectAll(".legendSequential").remove()
 }
 
 
@@ -387,11 +447,12 @@ function updateTree3(width,height,margin){
             console.log('step 0, line graph')
             d3.selectAll('rect').remove();
             d3.selectAll('path').remove()
+            d3.selectAll('circle').remove()
             chart.style('opacity',0)
             rects.style('opacity',0)
             d3.selectAll('.tooltip').style('opacity',0)
-            chart.selectAll('circle').remove()
-            svg.select(".legendSequential").remove()
+            // chart.selectAll('circle').remove()
+            svg.selectAll(".legendSequential").remove()
 
             timeline.transition().style('opacity',1)
 
@@ -480,7 +541,8 @@ path
             d3.selectAll('circle').style('opacity',1)
 
             timeline.lower()
-            svg.select(".legendSequential").remove()
+            svg.selectAll(".legendSequential").remove()
+            
 
             //hide old tooltip:
             timeline.selectAll('.circle').selectAll('.tooltip').style('opacity',0)
@@ -596,9 +658,8 @@ path
             console.log('step  2');
 
             d3.selectAll('rect').remove();
-            d3.selectAll('path').remove()
             d3.selectAll('circle').style('opacity',1)
-            svg.select(".legendSequential").remove()
+            svg.selectAll(".legendSequential").remove()
             
             //hide old tooltip:
             timeline.selectAll('.circle').selectAll('.tooltip').style('opacity',0)
@@ -625,10 +686,11 @@ path
 
 
             item.selectAll('circle')
-                .transition().duration(400).ease(d3.easeCubicOut)
+                .transition().duration(300).ease(d3.easeCubicOut)
                 .attr('cx', -200).attr('cy', -200)
                 .transition()
                 .attr('cx', 0).attr('cy',0)
+                .attr('r',20)
             // item.transition().duration(500)
             //     .attr('transform', function(d,i){
             //         return translate(0,0)
@@ -637,7 +699,7 @@ path
             
         setTimeout(function(){ 
 
-            graphicVisEl.selectAll('.item').transition().duration(500).ease(d3.easeElasticInOut)
+            graphicVisEl.selectAll('.item').transition().ease(d3.easeElasticInOut)
                         .attr('transform', function(d, i) {
                             return translate(scaleX(d.year), scaleY(i))
                         })
@@ -650,7 +712,7 @@ path
                 .attr('r', minR) // minR needs to be a more standardized scale....
                 .style('opacity', 1)
 
-                }, 1000);
+                }, 550);
                                     //transition each item to its position:
                     
             
@@ -712,6 +774,7 @@ path
                 .attr("transform", translate(0, x_axis_location))
                 .style("opacity", 1)
 
+            d3.selectAll('path').remove()
             
 		},
 
@@ -741,7 +804,7 @@ path
             //raise chart element to make sure tooltip works.
             chart.raise()
 
-svg.select(".legendSequential").remove()
+svg.selectAll(".legendSequential").remove()
 
 legend = svg.append("g")
     .attr("class", "legendSequential")
@@ -819,7 +882,7 @@ svg.select(".legendSequential")
             d3.selectAll('rect').remove();
             d3.selectAll('path').remove()
             d3.selectAll('circle').style('opacity',1)
-            svg.select(".legendSequential").remove()
+            svg.selectAll(".legendSequential").remove()
 
             //hide timeline:
             d3.selectAll('timeline').transition(t).style('opacity',0)
@@ -894,7 +957,7 @@ legendSequential = d3.legendColor()
             console.log('step  5');
             d3.selectAll('path').remove()
             d3.selectAll('circle').style('opacity',1)
-            svg.select(".legendSequential").remove()
+            svg.selectAll(".legendSequential").remove()
             //hide timeline:
             d3.selectAll('timeline').style('opacity',0)
             timeline.selectAll('.circle').selectAll('.tooltip').style('opacity',0)
@@ -935,7 +998,6 @@ legendSequential = d3.legendColor()
                 .style('fill','pink')
                 .style('opacity',1)
                 .attr('cx', function(d){
-                    console.log(d.year)
                     return 0})
                 .attr('cy', function(d,i){return 0;})
             console.log(item.selectAll('circle'))
@@ -972,7 +1034,7 @@ legendSequential = d3.legendColor()
         function step6() {
             console.log('step 5')
 
-            svg.select(".legendSequential").remove()
+            svg.selectAll(".legendSequential").remove()
             d3.selectAll('path').remove()
 
             // d3.selectAll('timeline').transition(t).style('opacity',0)
@@ -1017,7 +1079,7 @@ legendSequential = d3.legendColor()
         function step7()
         {
 
-            svg.select(".legendSequential").remove()
+            svg.selectAll(".legendSequential").remove()
             d3.selectAll('path').remove()
 
             var t = d3.transition()
