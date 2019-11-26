@@ -1,11 +1,8 @@
 //next:
-//treemap make zoomable
-//treemap tooltip
 
 //discuss:
-//align tooltips better
+//align tooltips better, treemap tooltip position
 //colors
-//axes
 //dynamic data vis?
 
 
@@ -184,39 +181,62 @@ function updateTree1(width,height,margin){
         // console.log('descendants',root.descendants());
         // console.log('links:', root.links());
         // Then d3.treemap computes the position of each element of the hierarchy
-        var j= d3.treemap()
+        d3.treemap()
             .size([width, height])
             .padding(1)
             // .tile(d3.treemapDice)
             (root)
 
+            svg  = d3.selectAll('svg')
 
-                    // use this information to add rectangles:
-        d3.selectAll('.treemap').remove()
-        rects = svg.append('g')
-                    .classed('treemap', true)
-                    .attr('transform', 'translate(' + 0 + ',' + 0 + ')')
-        rects
+            var rects= svg.selectAll('rect')
+        
+            svg
             .selectAll("rect")
             .attr('class','treemap')
-            .data(root.leaves())
+            .data(root.leaves()) 
             .enter()
             .append("rect")
-            .style("stroke", "black")
-            .style("fill", function(d){return colorScaleforTreeMap(d.parent.data.name);})
-
-            .attr('x', function (d) { 
-                return d.x0; })
+            .attr('x',0)
+            .attr('y', 0)
+            .merge(rects)
+            .transition().duration(1000)
+            .attr('x', function (d) { return d.x0; })
             .attr('y', function (d) { return d.y0; })
             .attr('width', function (d) { return d.x1 - d.x0; })
             .attr('height', function (d) { return d.y1 - d.y0; })
-            .style("opacity", 1)
+            .style("stroke", "black")
+            .style("fill", function(d){
+                return colorScaleforTreeMap(d.parent.data.name);})
+        
+            rects.exit().remove()
+        //             // use this information to add rectangles:
+        // d3.selectAll('.treemap').remove()
+        // rects = svg.append('g')
+        //             .classed('treemap', true)
+        //             .attr('transform', 'translate(' + 0 + ',' + 0 + ')')
+        // rects
+        //     .selectAll("rect")
+        //     .attr('class','treemap')
+        //     .data(root.leaves())
+        //     .enter()
+        //     .append("rect")
+        //     .style("stroke", "black")
+        //     .style("fill", function(d){return colorScaleforTreeMap(d.parent.data.name);})
+
+        //     .attr('x', function (d) { 
+        //         return d.x0; })
+        //     .attr('y', function (d) { return d.y0; })
+        //     .attr('width', function (d) { return d.x1 - d.x0; })
+        //     .attr('height', function (d) { return d.y1 - d.y0; })
+        //     .style("opacity", 1)
 
 
     // and to add the text labels
-    svg.selectAll('rect').select('text').remove()
-        svg.selectAll('rect')
-        .select("text")
+    svg.selectAll('.treemap-text').remove();
+
+    
+        svg.selectAll(".treemap-text")
         .data(root.leaves())
         .enter()
         .append("text")
@@ -246,6 +266,7 @@ function updateTree1(width,height,margin){
             })
 
     svg.selectAll(".legendSequential").remove()
+
 }
 
 
@@ -254,6 +275,19 @@ function updateTree2(width,height,margin){
     timeline.transition().style('opacity',0)
     svg.selectAll(".legendSequential").remove()
     timeline.lower()
+
+
+
+    d3.selectAll('rect').attr('class',function(d,i){
+        console.log('i:',i);
+        if (i==18 | i== 19 | i== 20) return 'remove';
+        else return 'treemap';
+    })
+
+    // console.log('to remove:', d3.selectAll('rect.remove'))
+    d3.selectAll('rect.remove').remove();
+
+
     // console.log('descendants',root.descendants());
     // console.log('links:', root.links());
     // Then d3.treemap computes the position of each element of the hierarchy
@@ -262,33 +296,32 @@ function updateTree2(width,height,margin){
         .padding(3)
         (root2)
 
-    d3.selectAll('rect').remove();
-    svg.selectAll('rect').select('text').remove()
 
     svg  = d3.selectAll('svg')
+
+    var rects= svg.selectAll('rect')
+
     svg
     .selectAll("rect")
     .attr('class','treemap')
     .data(root2.leaves())
     .enter()
     .append("rect")
+    .attr('x',sizeX_with_margins)
+    .attr('y', sizeY_with_margins)
+    .merge(rects)
+    .transition().duration(1000)
     .attr('x', function (d) { return d.x0; })
     .attr('y', function (d) { return d.y0; })
     .attr('width', function (d) { return d.x1 - d.x0; })
     .attr('height', function (d) { return d.y1 - d.y0; })
     .style("stroke", "black")
-    .style("fill", function(d){return colorScaleforTreeMap(d.parent.data.name);})
-    // .on("click",function(d){
-    //     console.log(d);
-    //     if (['LISK', 'XVG', 'DGB', 'SC', 'MONA'].includes(d.data.name)){
-    //         updateTree3(width,height,margin); 
-    //     }
-    // })
-    // .on('mouseover', function(d){
-    //     if (['LISK', 'XVG', 'DGB', 'SC', 'MONA'].includes(d.data.name)){
-    //         d3.select(this).style('cursor', 'pointer')
-    //     }
-    // })
+    .style("fill", function(d){
+        return colorScaleforTreeMap(d.parent.data.name);})
+
+    rects.exit().remove()
+
+
 
     svg.append('rect')
         .attr('x', 6)
@@ -310,6 +343,7 @@ function updateTree2(width,height,margin){
             }
         })
         .on('mouseover', function(d,i ){
+            console.log(i);
             if (i==18){
                 d3.select(this).style('cursor', 'pointer');
             }
@@ -318,14 +352,18 @@ function updateTree2(width,height,margin){
             }
         })
 
-    svg.selectAll('text').remove();
+    svg.selectAll('.treemap-text').remove();
 
     //add text labels:
-    svg
-    .selectAll("text")
-    .data(root2.leaves())
-    .enter()
-    .append("text")
+    var newtext = svg
+            .selectAll(".treemap-text")
+            .data(root2.leaves())
+            .enter()
+            .append("text")
+
+    newtext.attr('x',sizeX_with_margins).attr('y', sizeY_with_margins);
+
+    newtext.transition().duration(1000)
         .attr("x", function(d){ return d.x0+3})    // +10 to adjust position (more right)
         .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
         .text(function(d){ 
@@ -337,10 +375,11 @@ function updateTree2(width,height,margin){
     svg.append('text')
         .attr('x', sizeX_with_margins/2 - 20)
         .attr('y', 475.97 + 5+ 15 )
+        .attr('class', 'treemap-text')
         .text('Return to Overview')
         .attr("font-size", "14px")
         .attr("fill", "white")
-        .attr('class','treemap-text')
+
 
 
     svg.selectAll(".legendSequential").remove()
@@ -356,34 +395,44 @@ function updateTree3(width,height,margin){
     // console.log('descendants',root.descendants());
     // console.log('links:', root.links());
     // Then d3.treemap computes the position of each element of the hierarchy
+    d3.selectAll('rect').attr('class',function(d,i){
+        console.log('i:',i);
+        if ((i>4 & i!=18)) return 'remove';
+        else return 'treemap';
+    })
+
+    // console.log('to remove:', d3.selectAll('rect.remove'))
+    d3.selectAll('rect.remove').remove();
+
+
     d3.treemap()
         .size([width, height-30])
         .padding(3)
         (root3)
 
-    d3.selectAll('rect').remove();
-    svg.selectAll('rect').select('text').remove()
+        svg  = d3.selectAll('svg')
 
-    svg  = d3.selectAll('svg')
-    svg
-    .selectAll("rect")
-    .attr('class','treemap')
-    .data(root3.leaves())
-    .enter()
-    .append("rect")
-    .attr('x', function (d) { return d.x0; })
-    .attr('y', function (d) { return d.y0; })
-    .attr('width', function (d) { return d.x1 - d.x0; })
-    .attr('height', function (d) { return d.y1 - d.y0; })
-    .style("stroke", "black")
-    .style("fill", function(d){return colorScaleforTreeMap(d.parent.data.name);})
-    // .on("click",function(d){
-    // })
-    // .on('mouseover', function(d){
-    //     if (d.data.name=="Other"){
-    //         d3.select(this).style('cursor', 'pointer')
-    //     }
-    // })
+        var rects= svg.selectAll('rect')
+    
+        svg
+        .selectAll("rect")
+        .attr('class','treemap')
+        .data(root3.leaves())
+        .enter()
+        .append("rect")
+        .attr('x',sizeX_with_margins)
+        .attr('y', sizeY_with_margins)
+        .merge(rects)
+        .transition().duration(1000)
+        .attr('x', function (d) { return d.x0; })
+        .attr('y', function (d) { return d.y0; })
+        .attr('width', function (d) { return d.x1 - d.x0; })
+        .attr('height', function (d) { return d.y1 - d.y0; })
+        .style("stroke", "black")
+        .style("fill", function(d){
+            return colorScaleforTreeMap(d.parent.data.name);})
+    
+        rects.exit().remove()
 
     svg.append('rect')
     .attr('x', 6)
@@ -396,22 +445,23 @@ function updateTree3(width,height,margin){
 
     svg.selectAll('rect')
     .on("click",function(d,i ){
-        if (i== 5){
+        if (i== 6){
             updateTree1(width, height, margin);
         }
     })
     .on('mouseover', function(d,i ){
-        if (i==5){
+        console.log(i);
+        if (i==6){
             d3.select(this).style('cursor', 'pointer');
         }
     })
 
 
-    svg.selectAll('text').remove();
+    svg.selectAll('.treemap-text').remove();
 
     // and to add the text labels
     svg
-    .selectAll("text")
+    .selectAll(".treemap-text")
     .data(root3.leaves())
     .enter()
     .append("text")
@@ -423,13 +473,13 @@ function updateTree3(width,height,margin){
         .attr('class','treemap-text')
 
 
-    svg.append('text')
+        svg.append('text')
         .attr('x', sizeX_with_margins/2 - 20)
         .attr('y', 475.97 + 5+ 15 )
+        .attr('class', 'treemap-text')
         .text('Return to Overview')
         .attr("font-size", "14px")
         .attr("fill", "white")
-        .attr('class','treemap-text')
 
     svg.selectAll(".legendSequential").remove()
 }
