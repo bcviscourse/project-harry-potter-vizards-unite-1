@@ -37,7 +37,7 @@ function scrollstory() {
         // viewport height
         var viewportHeight = window.innerHeight
         var halfViewportHeight = Math.floor(viewportHeight / 2)
-        var svgHeight = 8*Math.floor(viewportHeight / 10)
+        var svgHeight = 9*Math.floor(viewportHeight / 10)
         console.log(viewportHeight)
 
         // a global function creates and handles all the vis + updates

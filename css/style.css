@@ -193,7 +193,7 @@ body {
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 100%;
+    font-size: 75%;
     font: inherit;
     vertical-align: baseline;
   }
@@ -240,4 +240,8 @@ rect{
 
 svg{
   border: 1px dashed black;
+}
+
+.label{
+  font-size: 70%;
 }
