@@ -42,16 +42,16 @@ window.createGraphic = function(graphicSelector, newdata, time_data, parent_heig
     var timeline
     var chart
     var rects = d3.selectAll('rect')
-    var lineCircleRMin= 4
+    var lineCircleRMin= 6
     var lineCircleRMax= 11
     var legend;
     var legendSequential;
-    var tooltipright= 500;
-    var tooltiptop= 250;
+    var tooltipright= 60;
+    var tooltiptop= 40;
     var market_data =[];
     var x;
     var y;
-    var timeLineTime= 8000;
+    var timeLineTime= 4000;
 
 
     var algos=[];
@@ -561,17 +561,18 @@ path
 
             timeline.selectAll('circle')
             .on('mouseover',function(d, i){
+                
                 d3.select(this).style('cursor', 'pointer')
-                d3.select(this).attr('r', lineCircleRMax).style('fill','pink')
+                d3.select(this).attr('r', lineCircleRMax).style('fill','pink').style('stroke',"black")
                 d3.select(this).style('opacity',1)
                 let res = d3.selectAll('.tooltip')
                 res.style('opacity',1)
                 res.html('<br>Total Market Cap: '+formatNum(d.value)+ ' million. <br>Date: '+dateFormat(d.date));
-                res.style('right', tooltipright + "px");
-                res.style('top', tooltiptop + "px");
+                res.style('right', tooltipright-10 + "%");
+                res.style('top', tooltiptop + "%");
             })
             .on('mouseout',function(d){
-                d3.select(this).attr('r', lineCircleRMin).style('opacity',0)
+                d3.select(this).attr('r', lineCircleRMin).style('stroke',"transparent").style('opacity',0)
                 let res = d3.selectAll('.tooltip').style('opacity',0)
             }) 
 
@@ -708,6 +709,7 @@ path
             console.log('step  2');
 
             d3.selectAll('rect').remove();
+            d3.selectAll(".circleText").remove();
             d3.selectAll('circle').style('opacity',1)
             svg.selectAll(".legendSequential").remove()
             
@@ -735,12 +737,12 @@ path
 
 
 
-            item.selectAll('circle')
-                .transition().duration(300).ease(d3.easeCubicOut)
-                .attr('cx', -200).attr('cy', -200)
-                .transition()
-                .attr('cx', 0).attr('cy',0)
-                .attr('r',20)
+            // item.selectAll('circle')
+            //     .transition().duration(300).ease(d3.easeCubicOut)
+            //     .attr('cx', -200).attr('cy', -200)
+            //     .transition()
+            //     .attr('cx', 0).attr('cy',0)
+            //     .attr('r',20)
             // item.transition().duration(500)
             //     .attr('transform', function(d,i){
             //         return translate(0,0)
@@ -749,7 +751,17 @@ path
             
         setTimeout(function(){ 
 
-            graphicVisEl.selectAll('.item').transition().ease(d3.easeElasticInOut)
+            var item = graphicVisEl.selectAll('.item')
+                        // Define the circletext:
+            item.append("text")
+                .attr("class", "circleText")		
+                .style('fill','white')
+                .html(function(d){return d.symbol;})
+                .style('opacity',1)
+
+            item.selectAll("circle").attr("cx",0).attr("cy",0)
+            graphicVisEl.selectAll('.item')
+                        .transition().duration(500).ease(d3.easeLinear)
                         .attr('transform', function(d, i) {
                             return translate(scaleX(d.year), scaleY(i))
                         })
@@ -784,16 +796,6 @@ path
 
 
 
-
-
-
-            // Define the circletext:
-            var circleText = d3.selectAll(".item").append("text")
-                .attr("class", "circleText")		
-                .style('fill','white')
-                .html(function(d){return d.symbol;})
-                .style('opacity',1)
-
                         
 
             //define mouseover behavior for circles (tooltip):
@@ -804,8 +806,8 @@ path
                     let res = d3.select('.tooltip');
                     res.html('<strong>'+d.name+'</strong>'+
                         '<br>Algorithm: '+d.algo+'<br>Market Cap: '+d.marketcap);
-                    res.style('right', tooltipright + "px");
-                    res.style('top', tooltiptop + "px");
+                    res.style('right', tooltipright + "%");
+                    res.style('top', tooltiptop+ "%");
                     res.style('opacity',1)
                 })
                 .on('mouseout', function(){
@@ -912,8 +914,8 @@ svg.select(".legendSequential")
                 res.style('opacity',1)
                 res.html('<strong>'+d.name+'</strong>'+
                 '<br>Algorithm: '+d.algo+'<br>Market Cap: '+d.marketcap);
-                res.style('right', 50 + "px");
-                res.style('top', 250 + "px");
+                res.style('right', tooltipright + "%");
+                res.style('top', tooltiptop + "%");
             })
             .on('mouseout', function(d){
                 d3.select(this).attr('r', minR)
@@ -974,8 +976,8 @@ svg.select(".legendSequential")
                     res.style('opacity',1)
                     res.html('<strong>'+d.name+'</strong>'+
                     '<br>Algorithm: '+d.algo+'<br>Market Cap: '+d.marketcap);
-                    res.style('right', 50 + "px");
-                    res.style('top', 250 + "px");
+                    res.style('right', tooltipright + "%");
+                    res.style('top', tooltiptop + "%");
                 })
                 .on('mouseout', function(d){
                     d3.select(this).attr('r', marketScale(d.marketcap))
@@ -1044,13 +1046,12 @@ legendSequential = d3.legendColor()
 
 			// circles are colored back to neutral:
 			var item = graphicVisEl.selectAll('.item')
-			item.selectAll('circle')
+			item.selectAll('circle').transition().ease(d3.easeLinear)
                 .style('fill','pink')
                 .style('opacity',1)
                 .attr('cx', function(d){
                     return 0})
                 .attr('cy', function(d,i){return 0;})
-            console.log(item.selectAll('circle'))
 
             item
                 .attr('transform', function(d, i) {
@@ -1082,7 +1083,7 @@ legendSequential = d3.legendColor()
 
         
         function step6() {
-            console.log('step 5')
+            console.log('step 6')
 
             svg.selectAll(".legendSequential").remove()
             d3.selectAll('path').remove()
@@ -1193,7 +1194,6 @@ legendSequential = d3.legendColor()
             .style("opacity", 1)
             .style("width", 30 + "%")
             .style("height", 15 + "%")
-            .style('left', 5 + "%")
             .style('top', 100 + "%");
 
         //xscale:
@@ -1227,8 +1227,8 @@ legendSequential = d3.legendColor()
             .domain([0, newdata.length])
             .range([top_margin, sizeY_with_margins- bottom_margin]);
 
-        var lowestRadius = sizeY_with_margins * .01
-        var highestRadius = sizeY_with_margins * .04
+        var lowestRadius = sizeY_with_margins * .02
+        var highestRadius = sizeY_with_margins * .06
         marketScale = d3.scaleLinear()
             .domain(d3.extent(newdata,function(d){return d.marketcap;}) )
             .range([lowestRadius,highestRadius]);
