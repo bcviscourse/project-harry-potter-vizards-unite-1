@@ -252,7 +252,7 @@ function updateTree1(width,height,margin){
             .text(function(d){ 
                 if (d.data.name == 'BTC' | d.data.name== 'ETH')
                 return d.data.name })
-            .attr("font-size", "14px")
+            .attr("font-size", "80%")
             .attr("fill", "white")
             .attr('class','treemap-text')
 
@@ -371,7 +371,7 @@ function updateTree2(width,height,margin){
         .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
         .text(function(d){ 
             if (!['DGB','XVG','MONA','SC', 'LISK'].includes(d.data.name)) return d.data.name })
-        .attr("font-size", "14px")
+        .attr("font-size", "75%")
         .attr("fill", "white")
         .attr('class','treemap-text')
 
@@ -380,7 +380,7 @@ function updateTree2(width,height,margin){
         .attr('y', 9.7*sizeY_with_margins/10 )
         .attr('class', 'treemap-text')
         .text('Return to Overview')
-        .attr("font-size", "16px")
+        .attr("font-size", "90%")
         .attr("fill", "white")
 
     svg.selectAll('rect')
@@ -532,7 +532,7 @@ function updateTree3(width,height,margin){
         .attr("x", function(d){ return d.x0+3})    // +10 to adjust position (more right)
         .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
         .text(function(d){ return d.data.name })
-        .attr("font-size", "14px")
+        .attr("font-size", "75%")
         .attr("fill", "white")
         .attr('class','treemap-text')
 
@@ -542,7 +542,7 @@ function updateTree3(width,height,margin){
         .attr('y', 9.7*sizeY_with_margins/10 )
         .attr('class', 'treemap-text')
         .text('Return to Overview')
-        .attr("font-size", "16px")
+        .attr("font-size", "90%")
         .attr("fill", "white")
 
     svg.selectAll(".legendSequential").remove()
@@ -940,6 +940,28 @@ legendSequential = d3.legendColor()
 svg.select(".legendSequential")
     .call(legendSequential);
 
+        d3.selectAll(".cell")
+        .on("mouseover", function(){
+            d3.select(this).style('cursor', 'pointer')
+        })
+        .on("mouseout", function(){
+            d3.select(this).style('cursor', 'default')
+        })
+
+        d3.selectAll(".swatch")
+            .on("click", function(d){
+                console.log(d)
+                let circles = d3.selectAll(".item")
+                                .selectAll("circle")
+                                .attr("r", function(d_2){
+                                    // console.log(d_2)
+                                    if (d_2.algo === d)
+                                        return minR * 1.5
+                                    return minR
+                                })
+                console.log(circles)
+            })
+
             //transition definition:
 			var t = d3.transition()
 				.duration(800)
@@ -975,6 +997,7 @@ svg.select(".legendSequential")
             //tooltip:
             circles = item.selectAll('circle')
             .on('mouseover', function(d){
+                circles.attr('r', minR)
                 d3.select(this).style('cursor', 'pointer')
                 d3.select(this).attr('r', minR *1.5)
                 let res = d3.selectAll('.tooltip')

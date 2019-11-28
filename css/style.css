@@ -238,6 +238,10 @@ rect{
   /* font-size: 30px; */
 }
 
+.treemap-text{
+  text-shadow: 2px 2px black;
+}
+
 svg{
 /*   border: 1px dashed black; */
 }
