@@ -1,9 +1,8 @@
-//next:
-
-//discuss:
-//align tooltips better, treemap tooltip position
-//colors
-//dynamic data vis?
+//next, discuss:
+//treemap tooltip position
+//dynamic data vis 
+//text
+//colors 
 
 
 //graph description vs what we need to set opacity 
@@ -51,17 +50,26 @@ window.createGraphic = function(graphicSelector, newdata, time_data, parent_heig
     var market_data =[];
     var x;
     var y;
-    var timeLineTime= 4000;
+    var timeLineTime= 5000;
+    function dateFormat(s){
+        s= s.toString()
+        let index = s.search('00:00:');
+        return s.slice(0,index);
+    }
+    var formatNum= d3.format('($,');
 
 
     var algos=[];
     for (let i=0;i<newdata.length;i++){
         if (!algos.includes(newdata[i].algo) && newdata[i].algo !=undefined) algos.push(newdata[i].algo);
     }
-    var colorScaleforLegend = d3.scaleOrdinal(["sienna","maroon", "olive",'green','teal','lime','fuchsia','silver', 'hotpink',"orange","tan","green","brown","grey","purple","blue"]) 
+
+    // ['#C164C9', '#C2EF51', '#70E4EF', '#EFC170', '#6895FF', '#EF709D', 'lightgrey']
+    // '#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000',            '#ffd8b1', '#000075', '#808080', '#ffffff', '#000000'
+    var colorScaleforLegend = d3.scaleOrdinal(['#000075', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324' , '#800000', 'black', '#00FF00']) 
         .domain(algos)
     algos.push("Other")
-    var colorScaleforTreeMap = d3.scaleOrdinal(["sienna","maroon", "olive",'green','teal','lime','fuchsia','silver', 'hotpink',"orange","tan","green","brown","grey","purple","blue", 'aqua']) 
+    var colorScaleforTreeMap = d3.scaleOrdinal(['#000075', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#800000', 'black', '#00FF00', '#808000']) 
 
 
 
@@ -175,7 +183,6 @@ function updateTree1(width,height,margin){
 
     d3.selectAll('rect').remove()
     svg.selectAll(".legendSequential").remove()
-    console.log('CELL LABEL',d3.selectAll('.legendSequential'))
 
     root = d3.hierarchy(treedata).sum(function(d){ return d.marketcap}) // Here the size of each leave is given in the 'value' field in input data
         // console.log('descendants',root.descendants());
@@ -264,6 +271,12 @@ function updateTree1(width,height,margin){
                     d3.select(this).style('cursor', 'pointer').style("fill", function(d){
                         return "lightgrey"})
                 }
+                let res = d3.select('.tooltip');
+                res.html('<strong>'+d.data.name+'</strong>'+
+                    '<br>Algorithm: '+d.parent.data.name+'<br>Market Cap: '+formatNum(d.data.marketcap));
+                res.style('right', tooltipright + "%");
+                res.style('top', tooltiptop+ "%");
+                res.style('opacity',1)
             })
             .on('mouseout', function(d){
                 let n= d.data.name;
@@ -357,7 +370,7 @@ function updateTree2(width,height,margin){
         .attr("x", function(d){ return d.x0+3})    // +10 to adjust position (more right)
         .attr("y", function(d){ return d.y0+20})    // +20 to adjust position (lower)
         .text(function(d){ 
-            if (!['DGB','XVG','MONA','SC'].includes(d.data.name)) return d.data.name })
+            if (!['DGB','XVG','MONA','SC', 'LISK'].includes(d.data.name)) return d.data.name })
         .attr("font-size", "14px")
         .attr("fill", "white")
         .attr('class','treemap-text')
@@ -389,6 +402,15 @@ function updateTree2(width,height,margin){
                 d3.select(this).style('cursor', 'pointer').style("fill", function(d){
                     return "lightgrey"})
             }
+            else d3.select(this).style('cursor', 'default' )
+            let res = d3.select('.tooltip');
+            if (i!=18){
+                res.html('<strong>'+d.data.name+'</strong>'+
+                    '<br>Algorithm: '+d.parent.data.name+'<br>Market Cap: '+formatNum(d.data.marketcap));
+                res.style('right', tooltipright + "%");
+                res.style('top', tooltiptop+ "%");
+                res.style('opacity',1)
+            }
         })
         .on('mouseout', function(d,i ){
             console.log(i);
@@ -397,7 +419,7 @@ function updateTree2(width,height,margin){
                     return "red"})
             }
             else if (['LISK', 'XVG', 'DGB', 'SC', 'MONA'].includes(d.data.name)){
-                d3.select(this).style('cursor', 'pointer').style("fill", function(d){
+                d3.select(this).style("fill", function(d){
                     return colorScaleforTreeMap(d.parent.data.name);})
             }
             
@@ -473,14 +495,21 @@ function updateTree3(width,height,margin){
         }
     })
     .on('mouseover', function(d,i ){
-        console.log(i);
         if (i==6){
             d3.select(this).style('cursor', 'pointer').style("fill", function(d){
                 return "lightgrey"})
         }
+        else d3.select(this).style('cursor', 'default' )
+        let res = d3.select('.tooltip');
+        if (i!=6){
+            res.html('<strong>'+d.data.name+'</strong>'+
+                '<br>Algorithm: '+d.parent.data.name+'<br>Market Cap: '+formatNum(d.data.marketcap)); 
+            res.style('right', tooltipright + "%");
+            res.style('top', tooltiptop+ "%");
+            res.style('opacity',1)
+        }
     })
     .on('mouseout', function(d,i ){
-        console.log(i);
         if (i==6){
             d3.select(this).style('cursor', 'pointer').style("fill", function(d){
                 return "red"})
@@ -549,7 +578,7 @@ d3.selection.prototype.moveToFront = function() {
 var path = timeline.append("path")
             .datum(market_data)
             .attr("fill", "none")
-            .attr("stroke", "pink")
+            .attr("stroke", 'lightgrey')
             .attr("stroke-width", 4)
             .attr("d", d3.line()
                 .x(function(d) { return x(+d.date) })
@@ -570,15 +599,6 @@ path
 
 
 
-            function dateFormat(s){
-                s= s.toString()
-                let index = s.search('00:00:');
-                return s.slice(0,index);
-            }
-            var formatNum= d3.format('($,');
-
-
-
     var selectCircle = timeline.selectAll("circle")
         .data(market_data)
         .enter().append('circle')
@@ -586,7 +606,7 @@ path
 
         timeline.selectAll('circle')
                 .attr('class','circle')
-                .attr('fill','pink')
+                .attr('fill','lightgrey')
                 .attr('r', lineCircleRMin)
                 .attr('cx', function(d){
                     return x(+d.date) } )
@@ -600,7 +620,7 @@ path
             .on('mouseover',function(d, i){
                 
                 d3.select(this).style('cursor', 'pointer')
-                d3.select(this).attr('r', lineCircleRMax).style('fill','pink').style('stroke',"black")
+                d3.select(this).attr('r', lineCircleRMax).style('fill','lightgrey').style('stroke',"black")
                 d3.select(this).style('opacity',1)
                 let res = d3.selectAll('.tooltip')
                 res.style('opacity',1)
@@ -709,7 +729,7 @@ path
             
             //add the giant circle:
             item.select('circle')
-                .style('fill','pink')
+                .style('fill','lightgrey')
                 .attr('cx', center_balloon_x)
                 .attr('cy',center_balloon_Y)
 				.transition(t)
@@ -811,7 +831,7 @@ path
                 .attr('r', minR) // minR needs to be a more standardized scale....
             item.select('circle')
                 .transition().duration(200)
-                .style('fill', 'pink')
+                .style('fill', 'lightgrey')
                 .attr('r', minR) // minR needs to be a more standardized scale....
                 .style('opacity', 1)
 
@@ -847,7 +867,7 @@ path
                     d3.select(this).attr('r', minR * 1.5 )
                     let res = d3.select('.tooltip');
                     res.html('<strong>'+d.name+'</strong>'+
-                        '<br>Algorithm: '+d.algo+'<br>Market Cap: '+d.marketcap);
+                        '<br>Algorithm: '+d.algo+'<br>Market Cap: '+formatNum(d.marketcap));
                     res.style('right', tooltipright + "%");
                     res.style('top', tooltiptop+ "%");
                     res.style('opacity',1)
@@ -956,13 +976,20 @@ svg.select(".legendSequential")
                 let res = d3.selectAll('.tooltip')
                 res.style('opacity',1)
                 res.html('<strong>'+d.name+'</strong>'+
-                '<br>Algorithm: '+d.algo+'<br>Market Cap: '+d.marketcap);
+                '<br>Algorithm: '+d.algo+'<br>Market Cap: '+formatNum(d.marketcap));
                 res.style('right', tooltipright-12 + "%"); // MATCH THIS TO NEXT STEP
                 res.style('top', tooltiptop + "%");
+                res.style('background-color', colorScaleforLegend(d.algo))
+                console.log(colorScaleforLegend(d.algo))
+                if (!['#00FF00', '#ffe119', '#46f0f0', '#bcf60c', '#fabebe', '#e6beff'].includes(colorScaleforLegend(d.algo))){
+                    res.style('color', 'white')
+                }
             })
             .on('mouseout', function(d){
                 d3.select(this).attr('r', minR)
                 let res = d3.selectAll('.tooltip').style('opacity',0)
+                res.style('color', 'black')
+                res.style('background-color', 'lightgrey')
             })
         },
 
@@ -1011,6 +1038,8 @@ svg.select(".legendSequential")
 					return colorScaleforLegend(d.algo);
                 })
             
+
+
             item.selectAll('circle')
                 .on('mouseover',function(d){
                     d3.select(this).style('cursor', 'pointer')
@@ -1018,13 +1047,20 @@ svg.select(".legendSequential")
                     let res = d3.selectAll('.tooltip')
                     res.style('opacity',1)
                     res.html('<strong>'+d.name+'</strong>'+
-                    '<br>Algorithm: '+d.algo+'<br>Market Cap: '+d.marketcap);
+                    '<br>Algorithm: '+d.algo+'<br>Market Cap: '+formatNum(d.marketcap));
                     res.style('right', tooltipright + "%");
                     res.style('top', tooltiptop + "%");
+                    res.style('background-color', colorScaleforLegend(d.algo))
+                    console.log(colorScaleforLegend(d.algo))
+                    if (!['#00FF00', '#ffe119', '#46f0f0', '#bcf60c', '#fabebe', '#e6beff'].includes(colorScaleforLegend(d.algo))){
+                        res.style('color', 'white')
+                    }
                 })
                 .on('mouseout', function(d){
                     d3.select(this).attr('r', marketScale(d.marketcap))
                     let res = d3.selectAll('.tooltip').style('opacity',0)
+                    res.style('color', 'black')
+                    res.style('background-color', 'lightgrey')
                 })
 
 
@@ -1090,7 +1126,7 @@ legendSequential = d3.legendColor()
 			// circles are colored back to neutral:
 			var item = graphicVisEl.selectAll('.item')
 			item.selectAll('circle').transition().ease(d3.easeLinear)
-                .style('fill','pink')
+                .style('fill','lightgrey')
                 .style('opacity',1)
                 .attr('cx', function(d){
                     return 0})
@@ -1110,7 +1146,7 @@ legendSequential = d3.legendColor()
                     let res = d3.selectAll('.tooltip')
                     res.style('opacity',1)
                     res.html('<strong>'+d.name+'</strong>'+
-                    '<br>Algorithm: '+d.algo+'<br>Market Cap: '+d.marketcap);
+                    '<br>Algorithm: '+d.algo+'<br>Market Cap: '+formatNum(d.marketcap));
                     res.style('right', tooltipright + "%");
                     res.style('top', tooltiptop + "%");
                 })
@@ -1175,11 +1211,13 @@ legendSequential = d3.legendColor()
 
             svg.selectAll(".legendSequential").remove()
             d3.selectAll('path').remove()
+            d3.selectAll('.tooltip').style('opacity',0)
+
 
             var t = d3.transition()
 				.ease(d3.easeLinear)
             //hide treemap:
-            d3.selectAll('rect').transition(t).style('opacity',0);
+            d3.selectAll('rect').remove()
             d3.selectAll('.treemap-text').remove()
             
             //hide timeline:
@@ -1328,7 +1366,7 @@ legendSequential = d3.legendColor()
             .attr("y",side_margin)
             // .attr("dy", "1em")
             .style("text-anchor", "middle")
-            .style('fill','grey')
+            .style('fill','lightgrey')
             .text("Millions of Dollars");
 
         // var path = timeline.append("path")
