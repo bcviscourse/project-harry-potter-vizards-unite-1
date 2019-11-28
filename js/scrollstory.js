@@ -86,7 +86,7 @@ function scrollstory() {
             triggerOffset: halfViewportHeight,
             // scrollOffset: 200,
             // speed: 100,
-            scrollSensitivity: 10,
+            scrollSensitivity: 1,
             throttleType: 'throttle',
             itemfocus: handleItemFocus,
             containerscroll: handleContainerScroll,
