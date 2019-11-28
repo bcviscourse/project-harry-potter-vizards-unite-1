@@ -268,9 +268,9 @@ function updateTree1(width,height,margin){
             .on('mouseover', function(d){
                 let n= d.data.name;
                 if (n!= "ETH" &n!= "BTC"){
-                    d3.select(this).style('cursor', 'pointer').style("fill", function(d){
-                        return "lightgrey"})
+                    d3.select(this).style('cursor', 'pointer')
                 }
+                d3.select(this).style("fill", "silver")
                 let res = d3.select('.tooltip');
                 res.html('<strong>'+d.data.name+'</strong>'+
                     '<br>Algorithm: '+d.parent.data.name+'<br>Market Cap: '+formatNum(d.data.marketcap));
@@ -279,10 +279,10 @@ function updateTree1(width,height,margin){
                 res.style('opacity',1)
             })
             .on('mouseout', function(d){
+                d3.select(this).style("fill", colorScaleforTreeMap(d.parent.data.name))
                 let n= d.data.name;
                 if (n!= "ETH" &n!= "BTC"){
-                    d3.select(this).style('cursor', 'pointer').style("fill", function(d){
-                        return colorScaleforTreeMap(d.parent.data.name);})
+                    d3.select(this).style('cursor', 'pointer')
                 }
             })
 
@@ -393,14 +393,12 @@ function updateTree2(width,height,margin){
             }
         })
         .on('mouseover', function(d,i ){
-            console.log(i);
+            d3.select(this).style("fill", "silver")
             if (i==18){
-                d3.select(this).style('cursor', 'pointer').style("fill", function(d){
-                    return "lightgrey"})
+                d3.select(this).style('cursor', 'pointer')
             }
             else if (['LISK', 'XVG', 'DGB', 'SC', 'MONA'].includes(d.data.name)){
-                d3.select(this).style('cursor', 'pointer').style("fill", function(d){
-                    return "lightgrey"})
+                d3.select(this).style('cursor', 'pointer')
             }
             else d3.select(this).style('cursor', 'default' )
             let res = d3.select('.tooltip');
@@ -418,7 +416,7 @@ function updateTree2(width,height,margin){
                 d3.select(this).style('cursor', 'pointer').style("fill", function(d){
                     return "red"})
             }
-            else if (['LISK', 'XVG', 'DGB', 'SC', 'MONA'].includes(d.data.name)){
+            else {
                 d3.select(this).style("fill", function(d){
                     return colorScaleforTreeMap(d.parent.data.name);})
             }
@@ -497,9 +495,10 @@ function updateTree3(width,height,margin){
     .on('mouseover', function(d,i ){
         if (i==6){
             d3.select(this).style('cursor', 'pointer').style("fill", function(d){
-                return "lightgrey"})
+                return "silver"})
         }
-        else d3.select(this).style('cursor', 'default' )
+        else d3.select(this).style('cursor', 'default' ).style("fill", function(d){
+            return "silver"})
         let res = d3.select('.tooltip');
         if (i!=6){
             res.html('<strong>'+d.data.name+'</strong>'+
@@ -513,6 +512,11 @@ function updateTree3(width,height,margin){
         if (i==6){
             d3.select(this).style('cursor', 'pointer').style("fill", function(d){
                 return "red"})
+        }
+        else
+        {
+            d3.select(this).style("fill", function(d){
+                return colorScaleforTreeMap(d.parent.data.name)})
         }
     })
 
@@ -1205,7 +1209,9 @@ legendSequential = d3.legendColor()
             // d3.selectAll('circle').transition(t).style('opacity',0)
             d3.selectAll('.x-axis').transition(t).style('opacity',0)
             d3.selectAll('item text').transition(t).style('opacity',0)
-            d3.selectAll('.tooltip').transition(t).style('opacity',0)
+            d3.selectAll('.tooltip')
+                    .style("color", "white")
+                    .style("background-color", "grey").transition(t).style('opacity',0)
 
 
             updateTree1(sizeX_with_margins,sizeY_with_margins,margin_treemap);
