@@ -1048,7 +1048,9 @@ svg.select(".legendSequential")
                     res.style('opacity',1)
                     res.html('<strong>'+d.name+'</strong>'+
                     '<br>Algorithm: '+d.algo+'<br>Market Cap: '+formatNum(d.marketcap));
-                    res.style('right', tooltipright + "%");
+                    // res.style('right', tooltipright + "%");
+                    // res.style('top', tooltiptop + "%");
+                    res.style('right', tooltipright-12 + "%"); 
                     res.style('top', tooltiptop + "%");
                     res.style('background-color', colorScaleforLegend(d.algo))
                     console.log(colorScaleforLegend(d.algo))
@@ -1064,9 +1066,21 @@ svg.select(".legendSequential")
                 })
 
 
+// legend = svg.append("g")
+//     .attr("class", "legendSequential")
+//     .attr("transform", "translate(20, 80)");
+
+// legendSequential = d3.legendColor()
+//     .shapeWidth(20)
+//     // .cells(6)
+//     .orient("vertical")
+//     .scale(colorScaleforLegend) 
+//     .title("Algorithms:")
+//     .shapeHeight(20)
 legend = svg.append("g")
     .attr("class", "legendSequential")
-    .attr("transform", "translate(20, 80)");
+    .attr("transform", "translate(" + side_margin + "," + 3*top_margin + ")")
+    // .attr("transform", "translate(20, 80)");
 
 legendSequential = d3.legendColor()
     .shapeWidth(20)
@@ -1074,7 +1088,7 @@ legendSequential = d3.legendColor()
     .orient("vertical")
     .scale(colorScaleforLegend) 
     .title("Algorithms:")
-    .shapeHeight(20)
+    .shapeHeight(7 * (sizeY_with_margins - x_axis_location)/newdata.length)
 
                 svg.select(".legendSequential")
                 .call(legendSequential);
