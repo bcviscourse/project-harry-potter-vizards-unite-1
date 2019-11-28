@@ -947,19 +947,14 @@ svg.select(".legendSequential")
         .on("mouseout", function(){
             d3.select(this).style('cursor', 'default')
         })
-
-        d3.selectAll(".swatch")
-            .on("click", function(d){
-                console.log(d)
-                let circles = d3.selectAll(".item")
-                                .selectAll("circle")
-                                .attr("r", function(d_2){
-                                    // console.log(d_2)
-                                    if (d_2.algo === d)
-                                        return minR * 1.5
-                                    return minR
-                                })
-                console.log(circles)
+        .on("click", function(d){
+                d3.selectAll(".item")
+                    .selectAll("circle")
+                    .attr("r", function(d_2){
+                            if (d_2.algo === d)
+                                return minR * 1.5
+                            return minR
+                            })
             })
 
             //transition definition:
@@ -1117,8 +1112,27 @@ legendSequential = d3.legendColor()
     .title("Algorithms:")
     .shapeHeight(7 * (sizeY_with_margins - x_axis_location)/newdata.length)
 
+
+
                 svg.select(".legendSequential")
                 .call(legendSequential);
+
+        d3.selectAll(".cell")
+        .on("mouseover", function(){
+            d3.select(this).style('cursor', 'pointer')
+        })
+        .on("mouseout", function(){
+            d3.select(this).style('cursor', 'default')
+        })
+        .on("click", function(d){
+                d3.selectAll(".item")
+                    .selectAll("circle")
+                    .attr("r", function(d_2){
+                            if (d_2.algo === d)
+                                return marketScale(d_2.marketcap) * 1.7
+                            return marketScale(d_2.marketcap)
+                            })
+            })
         },
 
 
@@ -1170,6 +1184,8 @@ legendSequential = d3.legendColor()
 			item.selectAll('circle').transition().ease(d3.easeLinear)
                 .style('fill','lightgrey')
                 .style('opacity',1)
+                .attr('r', function(d){
+                    return marketScale(d.marketcap)})
                 .attr('cx', function(d){
                     return 0})
                 .attr('cy', function(d,i){return 0;})
