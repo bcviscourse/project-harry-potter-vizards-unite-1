@@ -272,8 +272,7 @@ function updateTree1(width,height,margin){
                 }
                 d3.select(this).style("fill", "silver")
                 let res = d3.select('.tooltip');
-                res.html('<strong>'+d.data.name+'</strong>'+
-                    '<br>Algorithm: '+d.parent.data.name+'<br>Market Cap: '+formatNum(d.data.marketcap));
+                res.html('Algorithm: '+d.parent.data.name+'<br>Cryptocurrency name: '+d.data.name+'<br>Market Cap: '+formatNum(d.data.marketcap));
                 res.style('right', tooltipright + "%");
                 res.style('top', tooltiptop+ "%");
                 res.style('opacity',1)
@@ -403,8 +402,7 @@ function updateTree2(width,height,margin){
             else d3.select(this).style('cursor', 'default' )
             let res = d3.select('.tooltip');
             if (i!=18){
-                res.html('<strong>'+d.data.name+'</strong>'+
-                    '<br>Algorithm: '+d.parent.data.name+'<br>Market Cap: '+formatNum(d.data.marketcap));
+                res.html('Algorithm: '+d.parent.data.name+'<br>Cryptocurrency name: '+d.data.name+'<br>Market Cap: '+formatNum(d.data.marketcap));
                 res.style('right', tooltipright + "%");
                 res.style('top', tooltiptop+ "%");
                 res.style('opacity',1)
@@ -501,9 +499,7 @@ function updateTree3(width,height,margin){
             return "silver"})
         let res = d3.select('.tooltip');
         if (i!=6){
-            res.html('<strong>'+d.data.name+'</strong>'+
-                '<br>Algorithm: '+d.parent.data.name+'<br>Market Cap: '+formatNum(d.data.marketcap)); 
-            res.style('right', tooltipright + "%");
+            res.html('Algorithm: '+d.parent.data.name+'<br>Cryptocurrency name: '+d.data.name+'<br>Market Cap: '+formatNum(d.data.marketcap));
             res.style('top', tooltiptop+ "%");
             res.style('opacity',1)
         }
