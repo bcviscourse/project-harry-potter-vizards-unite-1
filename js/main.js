@@ -1104,6 +1104,7 @@ legendSequential = d3.legendColor()
         function step5() {
             //bubbles return to neutral colors:
             console.log('step  5');
+            d3.select(".tooltip").style("background-color", "lightgrey").style("color", "black")
             d3.selectAll('path').remove()
             d3.selectAll('circle').style('opacity',1)
             svg.selectAll(".legendSequential").remove()

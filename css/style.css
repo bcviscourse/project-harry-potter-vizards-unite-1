@@ -205,9 +205,9 @@ div.tooltip {
     opacity: 0;
     padding: 2px;				
     font: 14px sans-serif;		
-    background: #D3D3D3;	
-    border: 0px;		
-    border-radius: 8px;			
+    background: #D3D3D3;		
+    border-radius: 25px;
+    border: 2px solid black;	
     pointer-events: none;	
     color: black;		
 }
