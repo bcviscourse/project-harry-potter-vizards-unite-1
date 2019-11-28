@@ -118,7 +118,7 @@ var treedata2 = {"children":[
         {"name":"WAVES","marketcap":78217357.51},
         {"name":"BTS","marketcap":73893904.53},
         {"name":"MAID","marketcap":61514780.16}]},
-    {"name":"CPU mining; CryptoNight","children":
+    {"name":"CPU mining, CryptoNight","children":
         [{"name":"XMR","marketcap":1090476909}]},
     {"name":"X11","children":
         [{"name":"DASH","marketcap":631552497.2}]},
@@ -1161,7 +1161,7 @@ legendSequential = d3.legendColor()
             let circles = item.selectAll('circle')
                 .on('mouseover', function(d){
                     d3.select(this).style('cursor', 'pointer')
-                    d3.select(this).attr('r', marketScale(d.marketcap) *2)
+                    d3.select(this).attr('r', marketScale(d.marketcap) *1.5)
                     let res = d3.selectAll('.tooltip')
                     res.style('opacity',1)
                     res.html('<strong>'+d.name+'</strong>'+
@@ -1229,6 +1229,7 @@ legendSequential = d3.legendColor()
 
         function step7()
         {
+            // ADD TRANSITIONS HERE
 
             svg.selectAll(".legendSequential").remove()
             d3.selectAll('path').remove()
