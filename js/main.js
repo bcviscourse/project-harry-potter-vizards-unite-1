@@ -207,7 +207,7 @@ function updateTree1(width,height,margin){
             .attr('x',0)
             .attr('y', 0)
             .merge(rects)
-            .transition().duration(400)
+            .transition().duration(200)
             .attr('x', function (d) { return d.x0; })
             .attr('y', function (d) { return d.y0; })
             .attr('width', function (d) { return d.x1 - d.x0; })
@@ -272,7 +272,8 @@ function updateTree1(width,height,margin){
                 }
                 d3.select(this).style("fill", "silver")
                 let res = d3.select('.tooltip');
-                res.html('Algorithm: '+d.parent.data.name+'<br>Cryptocurrency name: '+d.data.name+'<br>Market Cap: '+formatNum(d.data.marketcap));
+                res.html('<strong>'+d.data.name+'</strong>'+
+                    '<br>Algorithm: '+d.parent.data.name+'<br>Market Cap: '+formatNum(d.data.marketcap));
                 res.style('right', tooltipright + "%");
                 res.style('top', tooltiptop+ "%");
                 res.style('opacity',1)
@@ -402,7 +403,8 @@ function updateTree2(width,height,margin){
             else d3.select(this).style('cursor', 'default' )
             let res = d3.select('.tooltip');
             if (i!=18){
-                res.html('Algorithm: '+d.parent.data.name+'<br>Cryptocurrency name: '+d.data.name+'<br>Market Cap: '+formatNum(d.data.marketcap));
+                res.html('<strong>'+d.data.name+'</strong>'+
+                    '<br>Algorithm: '+d.parent.data.name+'<br>Market Cap: '+formatNum(d.data.marketcap));
                 res.style('right', tooltipright + "%");
                 res.style('top', tooltiptop+ "%");
                 res.style('opacity',1)
@@ -499,7 +501,9 @@ function updateTree3(width,height,margin){
             return "silver"})
         let res = d3.select('.tooltip');
         if (i!=6){
-            res.html('Algorithm: '+d.parent.data.name+'<br>Cryptocurrency name: '+d.data.name+'<br>Market Cap: '+formatNum(d.data.marketcap));
+            res.html('<strong>'+d.data.name+'</strong>'+
+                '<br>Algorithm: '+d.parent.data.name+'<br>Market Cap: '+formatNum(d.data.marketcap)); 
+            res.style('right', tooltipright + "%");
             res.style('top', tooltiptop+ "%");
             res.style('opacity',1)
         }
@@ -1183,7 +1187,7 @@ legendSequential = d3.legendColor()
             d3.selectAll('path').remove()
 
             // d3.selectAll('timeline').transition(t).style('opacity',0)
-            d3.selectAll('circle').transition().duration(600).ease(d3.easeLinear)
+            d3.selectAll('circle').transition().duration(500).ease(d3.easeLinear)
                 .attr('cy', sizeY_with_margins+10)
                 .transition().duration(300)
                 .style('fill', 'brown')
@@ -1229,13 +1233,19 @@ legendSequential = d3.legendColor()
 
             svg.selectAll(".legendSequential").remove()
             d3.selectAll('path').remove()
-            d3.selectAll('.tooltip').style('opacity',0)
 
 
             var t = d3.transition()
 				.ease(d3.easeLinear)
             //hide treemap:
-            d3.selectAll('rect').remove()
+            d3.selectAll('rect')
+                .on("mouseover", function(){
+                    // do nothing
+                })
+                .transition().duration(800)
+                .attr("x", sizeX_with_margins * 1.2)
+                .style("opacity",0).remove()
+            // d3.selectAll('rect').remove()
             d3.selectAll('.treemap-text').remove()
             
             //hide timeline:
@@ -1246,6 +1256,8 @@ legendSequential = d3.legendColor()
             
             //remove symbol titles from circles:
             d3.selectAll('.circleText').remove();
+
+            d3.selectAll('.tooltip').style('opacity',0)
 
         }
 

@@ -204,7 +204,7 @@ div.tooltip {
     text-align: center;			
     opacity: 0;
     padding: 2px;				
-    font: 14px sans-serif;		
+    font: 90% 'Roboto Slab', serif;		
     background: #D3D3D3;		
     border-radius: 25px;
     border: 2px solid black;	
