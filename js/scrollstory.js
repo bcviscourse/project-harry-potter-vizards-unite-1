@@ -1,33 +1,39 @@
 function scrollstory() {
     Promise.all([
         d3.csv('data/out.csv'),
-        d3.csv('data/total-market-cap.csv')
+        d3.csv('data/total-market-cap.csv'),
+        d3.json('data/treedata_second-level.json'),
+        d3.json('data/treedata_third-level.json')
     ]).then(data => {
         let miningData = data[0]
         let market_cap_time_data = data[1]
+        let treemap_second_level = data[2]
+        let treemap_third_level = data[3]
         console.log(market_cap_time_data);
-        var TOTDATA =[];
-        let i=0;
+        var TOTDATA = [];
+        let i = 0;
         //formatting the data:
-        let count=0;
-        for (i=0;i<miningData.length;i++){
-            if (miningData[i].name2 !='' ){
-                TOTDATA[count] = {name: miningData[i].name,
-                                symbol: miningData[i].symbol,
-                                algo: miningData[i].algo,
-                                year: +miningData[i].year,
-                                marketcap: +miningData[i].marketcap,
-                                circulatingsupply: + miningData[i].circulatingsupply,
-                                price: +miningData[i].price};
+        let count = 0;
+        for (i = 0; i < miningData.length; i++) {
+            if (miningData[i].name2 != '') {
+                TOTDATA[count] = {
+                    name: miningData[i].name,
+                    symbol: miningData[i].symbol,
+                    algo: miningData[i].algo,
+                    year: +miningData[i].year,
+                    marketcap: +miningData[i].marketcap,
+                    circulatingsupply: + miningData[i].circulatingsupply,
+                    price: +miningData[i].price
+                };
                 count++;
             }
         }
         // miningData.filter(entry => entry.year != 0 && entry.year != "");
         // let smallMine = miningData.slice(1, 20)
-        setScrollStory(TOTDATA, market_cap_time_data)
+        setScrollStory(TOTDATA, market_cap_time_data, treemap_second_level, treemap_third_level)
     })
 
-    function setScrollStory(data, time_data) {
+    function setScrollStory(data, time_data, tm_secondlevel, tm_thirdlevel) {
         // select elements using jQuery since it is a dependency
         var $graphicEl = $('.graphic')
         var $graphicVisEl = $graphicEl.find('.graphic__vis')
@@ -37,12 +43,12 @@ function scrollstory() {
         // viewport height
         var viewportHeight = window.innerHeight
         var halfViewportHeight = Math.floor(viewportHeight / 2)
-        var svgHeight = 9*Math.floor(viewportHeight / 10)
+        var svgHeight = 9 * Math.floor(viewportHeight / 10)
         console.log(viewportHeight)
 
         // a global function creates and handles all the vis + updates
         console.log(data)
-        var graphic = createGraphic('.graphic', data, time_data, svgHeight, window.innerWidth)
+        var graphic = createGraphic('.graphic', data, time_data, tm_secondlevel, tm_thirdlevel, svgHeight, window.innerWidth)
 
         // handle the fixed/static position of grahpic
         var toggle = function (fixed, bottom) {
@@ -57,7 +63,7 @@ function scrollstory() {
         var handleItemFocus = function (event, item) {
             var step = item.data.step
             graphic.update(step)
-            console.log('STEP:',step)
+            console.log('STEP:', step)
         }
 
         // callback on scrollStory scroll event

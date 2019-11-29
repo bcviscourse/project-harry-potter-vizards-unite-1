@@ -1,0 +1,146 @@
+{
+    "children": [
+        {
+            "name": "Scrypt",
+            "children": [
+                {
+                    "name": "LTC",
+                    "marketcap": 3836414728
+                },
+                {
+                    "name": "DOGE",
+                    "marketcap": 328051591.5
+                }
+            ]
+        },
+        {
+            "name": "Transaction fee",
+            "children": [
+                {
+                    "name": "XLM",
+                    "marketcap": 1459172668
+                },
+                {
+                    "name": "WAVES",
+                    "marketcap": 78217357.51
+                },
+                {
+                    "name": "BTS",
+                    "marketcap": 73893904.53
+                },
+                {
+                    "name": "MAID",
+                    "marketcap": 61514780.16
+                }
+            ]
+        },
+        {
+            "name": "CPU mining, CryptoNight",
+            "children": [
+                {
+                    "name": "XMR",
+                    "marketcap": 1090476909
+                }
+            ]
+        },
+        {
+            "name": "X11",
+            "children": [
+                {
+                    "name": "DASH",
+                    "marketcap": 631552497.2
+                }
+            ]
+        },
+        {
+            "name": "blockchain",
+            "children": [
+                {
+                    "name": "XEM",
+                    "marketcap": 378860292.4
+                }
+            ]
+        },
+        {
+            "name": "Equihash",
+            "children": [
+                {
+                    "name": "ZEC",
+                    "marketcap": 288109779.9
+                }
+            ]
+        },
+        {
+            "name": "Blake256",
+            "children": [
+                {
+                    "name": "DCR",
+                    "marketcap": 251853300.9
+                }
+            ]
+        },
+        {
+            "name": "Smart contract",
+            "children": [
+                {
+                    "name": "REP",
+                    "marketcap": 127941720.7
+                }
+            ]
+        },
+        {
+            "name": "Equilhash",
+            "children": [
+                {
+                    "name": "KMD",
+                    "marketcap": 121105885.6
+                }
+            ]
+        },
+        {
+            "name": "Sidechain",
+            "children": [
+                {
+                    "name": "LISK",
+                    "marketcap": 97313663.16
+                }
+            ]
+        },
+        {
+            "name": "SHA-256;Scrypt;Qubit;Skein;Groestl",
+            "children": [
+                {
+                    "name": "DGB",
+                    "marketcap": 87731409.07
+                }
+            ]
+        },
+        {
+            "name": "blake2b",
+            "children": [
+                {
+                    "name": "SC",
+                    "marketcap": 84616061.08
+                }
+            ]
+        },
+        {
+            "name": "Scrypt;X17;Groestl;Blake2s;Lyra2rev2",
+            "children": [
+                {
+                    "name": "XVG",
+                    "marketcap": 74185162.88
+                }
+            ]
+        },
+        {
+            "name": "Lyra2RE",
+            "children": [
+                {
+                    "name": "MONA",
+                    "marketcap": 69801518
+                }
+            ]
+        }
+    ]
+}
