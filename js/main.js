@@ -22,43 +22,25 @@ window.createGraphic = function (graphicSelector, newdata, time_data, treedata2,
     var graphicProseEl = graphicEl.select('.graphic__prose')
     var side_margin = 20  // -- margin must match padding from graphic__vis
     var bottom_margin = 40 // arbitrary -- used for placing circles
-    var top_margin = 40 // arbitrary -- used for placing circles
+    var top_margin = 40 
     var sizeX = parent_width
     var sizeY = parent_height
-    var sizeX_with_margins, sizeY_with_margins;
-    var chartSize = sizeX - (20 * 2) // due to padding from graphic__vis
-    var scaleX = null
-    var scaleY = null
-    var marketScale
-    var minR = sizeX * 0.015
-    var xAxis = null
-    var x_axis_location
-    var svg
-    var parseTime = d3.timeParse("%Y");
-    var root
-    var rects
-    var tooltip
-    var timeline
-    var chart
-    var rects = d3.selectAll('rect')
     var lineCircleRMin = 6
     var lineCircleRMax = 11
-    var legend;
-    var legendSequential;
     var tooltipright = 60;
     var tooltiptop = 40;
+    var timeLineTime = 4500;
+    var minR = sizeX * 0.015
     var market_data = [];
-    var x;
-    var y;
-    var timeLineTime = 5000;
-    var bitcoinTotal;
+    var rects = d3.selectAll('rect')
+    var formatNum = d3.format('($,');
+    var sizeX_with_margins, sizeY_with_margins, scaleX, scaleY, chartSize, marketScale, xAxis
+    var x_axis_location, svg, root, timeline, chart, legendSequential, x, y, bitcoinTotal;
     function dateFormat(s) {
         s = s.toString()
         let index = s.search('00:00:');
         return s.slice(0, index);
     }
-    var formatNum = d3.format('($,');
-
 
     var algos = [];
     for (let i = 0; i < newdata.length; i++) {
@@ -1381,6 +1363,7 @@ window.createGraphic = function (graphicSelector, newdata, time_data, treedata2,
         //append svg for our first vis:
         sizeX_with_margins = sizeX - 2 * side_margin // 2*20 comes from the padding of div.graphic__vis
         sizeY_with_margins = sizeY - bottom_margin - top_margin // keeping consistent with above
+        chartSize = sizeX_with_margins - (side_margin * 2) // due to padding from graphic__vis
 
         svg = graphicVisEl.append('svg')
             .attr('width', sizeX_with_margins)
