@@ -51,6 +51,7 @@ window.createGraphic = function(graphicSelector, newdata, time_data, parent_heig
     var x;
     var y;
     var timeLineTime= 5000;
+    var bitcoinTotal;
     function dateFormat(s){
         s= s.toString()
         let index = s.search('00:00:');
@@ -91,7 +92,10 @@ for (let i=0;i<algos.length;i++){
     let children=[];
     for (let j=0;j<newdata.length;j++){
         if (newdata[j].algo== algos[i]){
-            if(newdata[j].name== 'Bitcoin') children.push({name: 'BTC', marketcap: newdata[j].marketcap});
+            if(newdata[j].name== 'Bitcoin') {
+                children.push({name: 'BTC', marketcap: newdata[j].marketcap});
+                bitcoinTotal = newdata[j].marketcap
+            }
             else if (newdata[j].name== 'Ethereum') children.push({name: 'ETH', marketcap: newdata[j].marketcap});
             else children.push({name: newdata[j].name, marketcap: newdata[j].marketcap});
         }
@@ -273,7 +277,9 @@ function updateTree1(width,height,margin){
                 d3.select(this).style("fill", "silver")
                 let res = d3.select('.tooltip');
                 res.html('<strong>'+d.data.name+'</strong>'+
-                    '<br>Algorithm: '+d.parent.data.name+'<br>Market Cap: '+formatNum(d.data.marketcap));
+                    '<br><category>Algorithm: </category>'+d.parent.data.name+'<br><category>Market Cap:</category> '
+                    +formatNum(d.data.marketcap) 
+                    + "<br><category> " + ((d.data.marketcap/bitcoinTotal) * 100).toFixed(3) + "%</category> of Bitcoin's Market Cap");
                 res.style('right', tooltipright + "%");
                 res.style('top', tooltiptop+ "%");
                 res.style('opacity',1)
@@ -404,7 +410,9 @@ function updateTree2(width,height,margin){
             let res = d3.select('.tooltip');
             if (i!=18){
                 res.html('<strong>'+d.data.name+'</strong>'+
-                    '<br>Algorithm: '+d.parent.data.name+'<br>Market Cap: '+formatNum(d.data.marketcap));
+                    '<br><category>Algorithm: </category>'+d.parent.data.name+'<br><category>Market Cap:</category> '
+                    +formatNum(d.data.marketcap)+ "<br><category> " + 
+                    ((d.data.marketcap/bitcoinTotal) * 100).toFixed(3) + "%</category> of Bitcoin's Market Cap");
                 res.style('right', tooltipright + "%");
                 res.style('top', tooltiptop+ "%");
                 res.style('opacity',1)
@@ -502,7 +510,8 @@ function updateTree3(width,height,margin){
         let res = d3.select('.tooltip');
         if (i!=6){
             res.html('<strong>'+d.data.name+'</strong>'+
-                '<br>Algorithm: '+d.parent.data.name+'<br>Market Cap: '+formatNum(d.data.marketcap)); 
+                '<br><category>Algorithm:</category> '+d.parent.data.name+'<br><category>Market Cap:</category> '+formatNum(d.data.marketcap)
+                + "<br><category> " + ((d.data.marketcap/bitcoinTotal) * 100).toFixed(3) + "%</category> of Bitcoin's Market Cap"); 
             res.style('right', tooltipright + "%");
             res.style('top', tooltiptop+ "%");
             res.style('opacity',1)
@@ -628,7 +637,8 @@ path
                 d3.select(this).style('opacity',1)
                 let res = d3.selectAll('.tooltip')
                 res.style('opacity',1)
-                res.html('<br>Total Market Cap: '+formatNum(d.value)+ ' million. <br>Date: '+dateFormat(d.date));
+                res.html('<p><category>Total Market Cap:</category> '+formatNum(d.value)
+                + ' million. <br><category>Date:</category> '+dateFormat(d.date)+"</p>");
                 res.style('right', tooltipright-10 + "%");
                 res.style('top', tooltiptop + "%");
             })
@@ -871,7 +881,7 @@ path
                     d3.select(this).attr('r', minR * 1.5 )
                     let res = d3.select('.tooltip');
                     res.html('<strong>'+d.name+'</strong>'+
-                        '<br>Algorithm: '+d.algo+'<br>Market Cap: '+formatNum(d.marketcap));
+                        '<br><category>Algorithm:</category> '+d.algo+'<br><category>Market Cap:</category> '+formatNum(d.marketcap));
                     res.style('right', tooltipright + "%");
                     res.style('top', tooltiptop+ "%");
                     res.style('opacity',1)
@@ -998,7 +1008,7 @@ svg.select(".legendSequential")
                 let res = d3.selectAll('.tooltip')
                 res.style('opacity',1)
                 res.html('<strong>'+d.name+'</strong>'+
-                '<br>Algorithm: '+d.algo+'<br>Market Cap: '+formatNum(d.marketcap));
+                '<br><category>Algorithm:</category> '+d.algo+'<br><category>Market Cap:</category> '+formatNum(d.marketcap));
                 res.style('right', tooltipright-12 + "%"); // MATCH THIS TO NEXT STEP
                 res.style('top', tooltiptop + "%");
                 res.style('background-color', colorScaleforLegend(d.algo))
@@ -1069,7 +1079,7 @@ svg.select(".legendSequential")
                     let res = d3.selectAll('.tooltip')
                     res.style('opacity',1)
                     res.html('<strong>'+d.name+'</strong>'+
-                    '<br>Algorithm: '+d.algo+'<br>Market Cap: '+formatNum(d.marketcap));
+                    '<br><category>Algorithm:</category> '+d.algo+'<br><category>Market Cap:</category> '+formatNum(d.marketcap));
                     // res.style('right', tooltipright + "%");
                     // res.style('top', tooltiptop + "%");
                     res.style('right', tooltipright-12 + "%"); 
@@ -1157,6 +1167,11 @@ legendSequential = d3.legendColor()
             //raise chart element to make sure tooltip works.
             chart.raise()
 
+            // TO DO:
+                // Move treemap data into own file
+                // Add % of bitcoin to treemap tooltip
+                // Clean up
+
             d3.selectAll('circle').style('opacity',1)
             d3.selectAll('.x-axis').style('opacity',1)
             d3.selectAll('item text').style('opacity',1)
@@ -1204,7 +1219,7 @@ legendSequential = d3.legendColor()
                     let res = d3.selectAll('.tooltip')
                     res.style('opacity',1)
                     res.html('<strong>'+d.name+'</strong>'+
-                    '<br>Algorithm: '+d.algo+'<br>Market Cap: '+formatNum(d.marketcap));
+                    '<br><category>Algorithm:</category> '+d.algo+'<br><category>Market Cap:</category> '+formatNum(d.marketcap));
                     res.style('right', tooltipright + "%");
                     res.style('top', tooltiptop + "%");
                 })
