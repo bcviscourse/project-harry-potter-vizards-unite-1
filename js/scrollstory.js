@@ -1,3 +1,5 @@
+import createGraphic from './main.js';
+
 function scrollstory() {
     Promise.all([
         d3.csv('data/out.csv'),
@@ -101,4 +103,5 @@ function scrollstory() {
     }
 }
 
+console.log("RUN")
 scrollstory()
