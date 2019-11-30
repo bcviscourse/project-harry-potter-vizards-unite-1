@@ -1,5 +1,10 @@
-export default function performStep0(chart, rects, svg, timeline, market_data, timeLineTime, 
-    lineCircleRMin, lineCircleRMax, x, y, formatNum, dateFormat, tooltipright, tooltiptop) {
+var timeLineTime = 4500; // Duration of initial line chart transition
+var lineCircleRMin = 6; // Radius min and max for line chart
+var lineCircleRMax = 11;
+
+// Line chart for history of cryptocurrencies
+export default function performStep0(chart, rects, svg, timeline, market_data, 
+    x, y, formatNum, tooltipright, tooltiptop) {
 
     console.log('step 0, line graph')
 
@@ -82,7 +87,14 @@ export default function performStep0(chart, rects, svg, timeline, market_data, t
 
     }, timeLineTime);
 
-    return [chart, rects, svg, timeline]
+    return (chart, rects, svg, timeline)
+
+    // Format date for first viz tooltip
+    function dateFormat(s) {
+        s = s.toString()
+        let index = s.search('00:00:');
+        return s.slice(4, 10) + ", " + s.slice(11, index - 1);
+    }
 
 
 }

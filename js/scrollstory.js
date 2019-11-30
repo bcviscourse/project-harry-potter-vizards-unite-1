@@ -50,7 +50,7 @@ function scrollstory() {
 
         // a global function creates and handles all the vis + updates
         console.log(data)
-        var graphic = createGraphic('.graphic', data, time_data, tm_secondlevel, tm_thirdlevel, svgHeight, window.innerWidth)
+        var graphic = createGraphic(data, time_data, tm_secondlevel, tm_thirdlevel, svgHeight, window.innerWidth)
 
         // handle the fixed/static position of grahpic
         var toggle = function (fixed, bottom) {
