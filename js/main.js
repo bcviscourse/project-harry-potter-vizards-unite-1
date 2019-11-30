@@ -13,6 +13,10 @@ import performStep7 from "./step7.js";
 //text
 //colors 
 
+// BUGS:
+//  - circles not moving back to their normal position sometimes after treemap
+//  - treemap sometimes will continue to appear after scrolling up
+
 
 //graph description vs what we need to set opacity 
 //the line graph: timeline and also tooltip
