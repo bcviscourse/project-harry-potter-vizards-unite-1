@@ -5,10 +5,12 @@ export default function performStep5(chart, svg, timeline,
     console.log('step  5');
 
     // Remove all unneeded components
+    console.log(d3.select(".tooltip"))
     d3.select(".tooltip").style("background-color", "lightgrey").style("color", "black")
     d3.selectAll('path').remove()
     d3.selectAll('circle').style('opacity', 1)
-    svg.selectAll(".legendSequential").remove()
+    svg.selectAll(".legendSequential").transition().style('opacity', 0).remove()
+    d3.selectAll(".y-axis").transition().duration(1000).style('opacity', 1)
 
     // Hide timeline:
     d3.selectAll('timeline').style('opacity', 0)
@@ -27,7 +29,7 @@ export default function performStep5(chart, svg, timeline,
     d3.selectAll('item text').style('opacity', 1)
 
     // Circles are colored back to neutral:
-    var item = graphicVisEl.selectAll('.item')
+    var item = graphicVisEl.selectAll('.item').on("mouseover", function(){})
     item.selectAll('circle').transition().ease(d3.easeLinear)
         .style('fill', 'lightgrey')
         .style('opacity', 1)

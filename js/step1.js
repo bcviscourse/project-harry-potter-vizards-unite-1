@@ -6,7 +6,7 @@ export default function performStep1(chart, svg, timeline, chartSize,
     // Remove all unneeded components
     d3.selectAll('rect').remove();
     d3.selectAll('path').remove()
-    d3.selectAll('circle').style('opacity', 1)
+    d3.selectAll(".y-axis").transition().duration(1000).style('opacity', 0)
 
     timeline.lower()
     svg.selectAll(".legendSequential").remove()
@@ -32,6 +32,8 @@ export default function performStep1(chart, svg, timeline, chartSize,
     d3.selectAll('rect').style('opacity', 0);
     d3.selectAll('.treemap-text').remove()
 
+    // Turn on circle elements
+    d3.selectAll('circle').style('opacity', 1)
 
     // Bring "chart" visualization to front
     chart.style('opacity', 1)

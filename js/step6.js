@@ -7,6 +7,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
     // Remove all unneeded components
     svg.selectAll(".legendSequential").remove()
     d3.selectAll('path').remove()
+    d3.selectAll(".y-axis").transition().duration(1000).style('opacity', 0)
 
     d3.selectAll('circle').transition().duration(500).ease(d3.easeLinear)
         .attr('cy', sizeY_with_margins + 10)

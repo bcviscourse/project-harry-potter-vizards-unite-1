@@ -69,6 +69,7 @@
 	alignment-baseline: middle;
 	text-shadow: 2px 2px black;
 	font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
+	cursor: default;
 }
 
 .bigText{

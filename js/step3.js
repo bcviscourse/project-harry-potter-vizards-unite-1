@@ -1,5 +1,5 @@
 // Colors the bubbles according to algo.
-export default function step3(chart, svg, timeline, 
+export default function step3(chart, svg, timeline,
     formatNum, tooltipright, tooltiptop, graphicVisEl, xAxis,
     x_axis_location, sizeY_with_margins, minR, side_margin, top_margin, colorScaleforLegend, newdata) {
     console.log('step  3');
@@ -20,7 +20,7 @@ export default function step3(chart, svg, timeline,
     d3.selectAll('rect').style('opacity', 0);
     d3.selectAll('.treemap-text').remove()
 
-    svg.selectAll(".legendSequential").remove()
+    var x = svg.selectAll(".legendSequential").remove().nodes().length
 
     chart.raise()
 
@@ -28,6 +28,16 @@ export default function step3(chart, svg, timeline,
     var legend = svg.append("g")
         .attr("class", "legendSequential")
         .attr("transform", "translate(" + side_margin + "," + 3 * top_margin + ")")
+        .style('opacity', function () {
+            if (x == 1)
+                return 1
+            return 0
+        })
+
+    legend
+        .transition()
+        .duration(500)
+        .style('opacity', 1)
 
     // Create and call legend for algorithms
     var legendSequential = d3.legendColor()
@@ -39,7 +49,7 @@ export default function step3(chart, svg, timeline,
         .shapeHeight(7 * (sizeY_with_margins - x_axis_location) / newdata.length)
 
     svg.select(".legendSequential")
-        .call(legendSequential);
+        .call(legendSequential)
 
     // Add clickable feature to legend
     d3.selectAll(".cell")
@@ -84,11 +94,11 @@ export default function step3(chart, svg, timeline,
         })
 
     // Events for tooltip:
-    circles = item.selectAll('circle')
+    circles = d3.selectAll('.item')
         .on('mouseover', function (d) {
-            circles.attr('r', minR)
-            d3.select(this).style('cursor', 'pointer')
-            d3.select(this).attr('r', minR * 1.5)
+            var selected_item = d3.select(this)
+            // circles.attr('r', minR)
+            selected_item.select("circle").attr('r', minR * 1.5)
             let res = d3.selectAll('.tooltip')
             res.style('opacity', 1)
             res.html('<strong>' + d.name + '</strong>' +
@@ -101,11 +111,11 @@ export default function step3(chart, svg, timeline,
             }
         })
         .on('mouseout', function (d) {
-            d3.select(this).attr('r', minR)
+            d3.select(this).select("circle").attr('r', minR)
             let res = d3.selectAll('.tooltip').style('opacity', 0)
             res.style('color', 'black')
             res.style('background-color', 'lightgrey')
         })
 
-        return (chart, svg, timeline, xAxis)
+    return (chart, svg, timeline, xAxis)
 }

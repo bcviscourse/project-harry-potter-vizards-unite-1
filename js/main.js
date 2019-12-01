@@ -16,6 +16,7 @@ import performStep7 from "./step7.js";
 // BUGS:
 //  - circles not moving back to their normal position sometimes after treemap
 //  - treemap sometimes will continue to appear after scrolling up
+//  - tooltip will sometimes stay in wrong spot after scrolling up
 
 
 //graph description vs what we need to set opacity 
@@ -61,7 +62,7 @@ export default function createGraphic(newdata, time_data, treedata2, treedata3, 
         // Line chart for history of cryptocurrencies
         function s0() {
             chart, rects, svg, timeline = performStep0(chart, rects, svg, timeline, market_data,
-                x, y, formatNum, tooltipright, tooltiptop)
+                x, y, formatNum, tooltipright, tooltiptop, sizeX_with_margins, sizeY_with_margins)
         },
 
         // Big "balloon" stage
@@ -162,6 +163,28 @@ export default function createGraphic(newdata, time_data, treedata2, treedata3, 
             .attr("class", "x-axis")
             .attr("transform", "translate(" + 0 + "," + 0 + ")")
             .style("opacity", 0)
+
+        console.log(chart)
+        var label1 = svg.append("text")
+            .classed("y-axis", true)
+            .attr("transform", "rotate(-90)")
+            .attr("x", -1 * top_margin*1.5)
+            .attr("y", side_margin)
+            .style("text-anchor", "middle")
+            .style('fill', 'lightgrey')
+            .style("opacity", 0)
+            .text("Highest M.C.");
+
+        var label2= svg.append("text")
+            .classed("y-axis", true)
+            .attr("transform", "rotate(-90)")
+            .attr("x", -1 * (sizeY_with_margins-bottom_margin*1.5))
+            .attr("y", .8* side_margin)
+            .style("text-anchor", "middle")
+            .style('fill', 'lightgrey')
+            .style("opacity", 0)
+            .text("Lowest M.C.");
+
 
         // Define scaleY for "circles" viz
         scaleY = d3.scaleLinear()

@@ -4,7 +4,7 @@ var lineCircleRMax = 11;
 
 // Line chart for history of cryptocurrencies
 export default function performStep0(chart, rects, svg, timeline, market_data, 
-    x, y, formatNum, tooltipright, tooltiptop) {
+    x, y, formatNum, tooltipright, tooltiptop, sizeX_with_margins, sizeY_with_margins) {
 
     console.log('step 0, line graph')
 
@@ -79,6 +79,11 @@ export default function performStep0(chart, rects, svg, timeline, market_data,
                     + ' million. <br><category>Date:</category> ' + dateFormat(d.date) + "</p>");
                 res.style('right', tooltipright - 10 + "%");
                 res.style('top', tooltiptop + "%");
+
+                // var position = d3.select(this).nodes()[0].cy.animVal.value
+                // var offset = d3.event.y - position
+                // res.style('right', 0.87*sizeX_with_margins - d3.event.pageX + "px");
+                // res.style('top', d3.event.y-offset - sizeY_with_margins/10 + "px");
             })
             .on('mouseout', function (d) {
                 d3.select(this).attr('r', lineCircleRMin).style('stroke', "transparent").style('opacity', 0)

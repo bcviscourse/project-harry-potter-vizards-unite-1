@@ -7,9 +7,8 @@ export default function performStep2(chart, svg, timeline,
     // Remove all unneeded components
     d3.selectAll('rect').remove();
     d3.selectAll(".circleText").remove();
-    d3.selectAll('circle').style('opacity', 1)
     d3.selectAll(".bigText").transition().duration(1000).style('opacity', 0)
-    svg.selectAll(".legendSequential").remove()
+    svg.selectAll(".legendSequential").transition().style('opacity', 0).remove()
 
     // Hide old tooltip:
     timeline.selectAll('.circle').selectAll('.tooltip').style('opacity', 0)
@@ -26,6 +25,9 @@ export default function performStep2(chart, svg, timeline,
     d3.selectAll('rect').style('opacity', 0);
     d3.selectAll('.treemap-text').remove()
 
+    // Turn on needed components
+    d3.selectAll('circle').style('opacity', 1)
+    d3.selectAll(".y-axis").transition().duration(1000).style('opacity', 1)
 
     // Raise chart element to make sure tooltip works.
     chart.raise()
@@ -79,10 +81,11 @@ export default function performStep2(chart, svg, timeline,
         .style("opacity", 1)
 
     // Define mouseover behavior for circles (tooltip):
-    d3.selectAll('circle')
+    d3.selectAll('.item')
         .on('mouseover', function (d) {
-            d3.select(this).style('cursor', 'pointer')
-            d3.select(this).attr('r', minR * 1.5)
+            var selected_item = d3.select(this)
+            // d3.select(this).style('cursor', 'pointer')
+            selected_item.select("circle").attr('r', minR * 1.5)
             let res = d3.select('.tooltip');
             res.html('<strong>' + d.name + '</strong>' +
                 '<br><category>Algorithm:</category> ' + d.algo + '<br><category>Market Cap:</category> ' + formatNum(d.marketcap));
@@ -91,7 +94,7 @@ export default function performStep2(chart, svg, timeline,
             res.style('opacity', 1)
         })
         .on('mouseout', function () {
-            d3.select(this).attr('r', minR)
+            d3.select(this).select('circle').attr('r', minR)
             d3.selectAll('.tooltip').style('opacity', 0)
         })
 

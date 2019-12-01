@@ -37,6 +37,8 @@ export default function performStep4(chart, svg, timeline,
         .transition(t)
         .delay(50)
         .attr('r', function (d, i) {
+            if (i==0)
+                console.log(marketScale(d.marketcap))
             return marketScale(d.marketcap);
         })
         .style('fill', function (d, i) {
@@ -45,10 +47,12 @@ export default function performStep4(chart, svg, timeline,
 
 
     // Events for tooltip
-    item.selectAll('circle')
+    d3.selectAll('.item')
         .on('mouseover', function (d) {
-            d3.select(this).style('cursor', 'pointer')
-            d3.select(this).attr('r', marketScale(d.marketcap) * 1.5)
+            var selected_item = d3.select(this)
+            // d3.select(this).style('cursor', 'pointer')
+            var newVal = marketScale(d.marketcap) * 1.3
+            selected_item.select("circle").attr('r', newVal)
             let res = d3.selectAll('.tooltip')
             res.style('opacity', 1)
             res.html('<strong>' + d.name + '</strong>' +
@@ -61,7 +65,7 @@ export default function performStep4(chart, svg, timeline,
             }
         })
         .on('mouseout', function (d) {
-            d3.select(this).attr('r', marketScale(d.marketcap))
+            d3.select(this).select("circle").attr('r', marketScale(d.marketcap))
             let res = d3.selectAll('.tooltip').style('opacity', 0)
             res.style('color', 'black')
             res.style('background-color', 'lightgrey')
