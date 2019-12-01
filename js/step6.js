@@ -1,7 +1,7 @@
 // Show the treemap
 export default function performStep6(chart, svg, timeline, rects, sizeY_with_margins, 
     sizeX_with_margins, treedata, colorScaleforTreeMap, formatNum, bitcoinTotal,
-    tooltipright, tooltiptop, root2, root3) {
+    tooltipright, tooltiptop, root2, root3, side_margin, bottom_margin) {
     console.log('step 6')
 
     // Remove all unneeded components
@@ -19,7 +19,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
     // Transition defn:
     var t = d3.transition()
         .ease(d3.easeLinear)
-    let margin_treemap = { top: 10, left: 0, right: 0, bottom: 10 }
+    let margin_treemap = { top: 10, left: 60, right: 0, bottom: 10 }
 
 
     setTimeout(function () {
@@ -55,7 +55,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
         // console.log('links:', root.links());
         // Then d3.treemap computes the position of each element of the hierarchy
         d3.treemap()
-            .size([width, height])
+            .size([width - 2 * side_margin, height-bottom_margin])
             .padding(1)
             // .tile(d3.treemapDice)
             (root)
@@ -74,7 +74,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
             .attr('y', 0)
             .merge(rects)
             .transition().duration(200)
-            .attr('x', function (d) { return d.x0; })
+            .attr('x', function (d) { return d.x0 + side_margin; })
             .attr('y', function (d) { return d.y0; })
             .attr('width', function (d) { return d.x1 - d.x0; })
             .attr('height', function (d) { return d.y1 - d.y0; })
@@ -114,7 +114,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
             .data(root.leaves())
             .enter()
             .append("text")
-            .attr("x", function (d) { return d.x0 + 3 })    // +10 to adjust position (more right)
+            .attr("x", function (d) { return d.x0 + side_margin + 3 })    // +10 to adjust position (more right)
             .attr("y", function (d) { return d.y0 + 20 })    // +20 to adjust position (lower)
             .text(function (d) {
                 if (d.data.name == 'BTC' | d.data.name == 'ETH')
@@ -183,7 +183,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
         // console.log('links:', root.links());
         // Then d3.treemap computes the position of each element of the hierarchy
         d3.treemap()
-            .size([width, height - 30])
+            .size([width - 2 * side_margin, height - bottom_margin])
             .padding(3)
             (root2)
 
@@ -202,7 +202,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
             .attr('y', sizeY_with_margins)
             .merge(rects)
             .transition().duration(1000)
-            .attr('x', function (d) { return d.x0; })
+            .attr('x', function (d) { return d.x0 + side_margin; })
             .attr('y', function (d) { return d.y0; })
             .attr('width', function (d) { return d.x1 - d.x0; })
             .attr('height', function (d) { return d.y1 - d.y0; })
@@ -217,7 +217,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
 
         svg.append('rect')
             .attr('x', sizeX_with_margins * .025)
-            .attr('y', sizeY_with_margins * .94)
+            .attr('y', sizeY_with_margins * .92)
             .attr('height', sizeY_with_margins * 0.05)
             .attr('width', sizeX_with_margins * .95)
             .attr('fill', 'red')
@@ -238,18 +238,18 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
         newtext.attr('x', sizeX_with_margins).attr('y', sizeY_with_margins);
 
         newtext.transition().duration(1000)
-            .attr("x", function (d) { return d.x0 + 3 })    // +10 to adjust position (more right)
+            .attr("x", function (d) { return d.x0 + side_margin + 3 })    // +10 to adjust position (more right)
             .attr("y", function (d) { return d.y0 + 20 })    // +20 to adjust position (lower)
             .text(function (d) {
                 if (!['DGB', 'XVG', 'MONA', 'SC', 'LISK'].includes(d.data.name)) return d.data.name
             })
-            .attr("font-size", "75%")
+            .attr("font-size", "72%")
             .attr("fill", "white")
             .attr('class', 'treemap-text')
 
         svg.append('text')
             .attr('x', sizeX_with_margins * .95 / 2)
-            .attr('y', 9.7 * sizeY_with_margins / 10)
+            .attr('y', 9.5 * sizeY_with_margins / 10)
             .attr('class', 'treemap-text')
             .text('Return to Overview')
             .attr("font-size", "90%")
@@ -324,7 +324,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
 
 
         d3.treemap()
-            .size([width, height - 30])
+            .size([width - 2 * side_margin, height-bottom_margin])
             .padding(3)
             (root3)
 
@@ -342,7 +342,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
             .attr('y', sizeY_with_margins)
             .merge(rects)
             .transition().duration(1000)
-            .attr('x', function (d) { return d.x0; })
+            .attr('x', function (d) { return d.x0 + side_margin; })
             .attr('y', function (d) { return d.y0; })
             .attr('width', function (d) { return d.x1 - d.x0; })
             .attr('height', function (d) { return d.y1 - d.y0; })
@@ -356,7 +356,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
 
         svg.append('rect')
             .attr('x', sizeX_with_margins * .025)
-            .attr('y', sizeY_with_margins * .94)
+            .attr('y', sizeY_with_margins * .92)
             .attr('height', sizeY_with_margins * 0.05)
             .attr('width', sizeX_with_margins * .95)
             .attr('fill', 'red')
@@ -410,7 +410,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
             .data(root3.leaves())
             .enter()
             .append("text")
-            .attr("x", function (d) { return d.x0 + 3 })    // +10 to adjust position (more right)
+            .attr("x", function (d) { return d.x0 + side_margin + 3 })    // +10 to adjust position (more right)
             .attr("y", function (d) { return d.y0 + 20 })    // +20 to adjust position (lower)
             .text(function (d) { return d.data.name })
             .attr("font-size", "75%")
@@ -420,7 +420,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
 
         svg.append('text')
             .attr('x', sizeX_with_margins * .95 / 2)
-            .attr('y', 9.7 * sizeY_with_margins / 10)
+            .attr('y', 9.5 * sizeY_with_margins / 10)
             .attr('class', 'treemap-text')
             .text('Return to Overview')
             .attr("font-size", "90%")

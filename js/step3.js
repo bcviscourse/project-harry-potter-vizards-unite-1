@@ -1,7 +1,7 @@
 // Colors the bubbles according to algo.
 export default function step3(chart, svg, timeline,
     formatNum, tooltipright, tooltiptop, graphicVisEl, xAxis,
-    x_axis_location, sizeY_with_margins, minR, side_margin, top_margin, colorScaleforLegend, newdata) {
+    x_axis_location, sizeX_with_margins, sizeY_with_margins, minR, side_margin, top_margin, colorScaleforLegend, newdata) {
     console.log('step  3');
 
     // Remove all unneeded components
@@ -27,7 +27,7 @@ export default function step3(chart, svg, timeline,
     // Setup location of legend
     var legend = svg.append("g")
         .attr("class", "legendSequential")
-        .attr("transform", "translate(" + side_margin + "," + 3 * top_margin + ")")
+        .attr("transform", "translate(" + 2 * side_margin + "," + 3 * top_margin + ")")
         .style('opacity', function () {
             if (x == 1)
                 return 1
@@ -96,6 +96,7 @@ export default function step3(chart, svg, timeline,
     // Events for tooltip:
     circles = d3.selectAll('.item')
         .on('mouseover', function (d) {
+            chart.selectAll('circle').attr('r', minR)
             var selected_item = d3.select(this)
             // circles.attr('r', minR)
             selected_item.select("circle").attr('r', minR * 1.5)
@@ -103,8 +104,15 @@ export default function step3(chart, svg, timeline,
             res.style('opacity', 1)
             res.html('<strong>' + d.name + '</strong>' +
                 '<br><category>Algorithm:</category> ' + d.algo + '<br><category>Market Cap:</category> ' + formatNum(d.marketcap));
-            res.style('right', tooltipright - 12 + "%");
-            res.style('top', tooltiptop + "%");
+            var position = d3.select(this).attr("transform")
+            var translate = position.substring(position.indexOf("(") + 1, position.indexOf(")")).split(",")
+            var offset = d3.event.y - translate[1]
+            res.style('right', function () {
+                if (translate[0] > sizeX_with_margins / 2)
+                    return 1.05 * sizeX_with_margins - d3.event.pageX + "px"; // TOOLTIP TO THE LEFT
+                return 0.7 * sizeX_with_margins - d3.event.pageX + "px";
+            })
+            res.style('top', d3.event.y-offset - sizeY_with_margins/10 + "px");
             res.style('background-color', colorScaleforLegend(d.algo))
             if (!['#00FF00', '#ffe119', '#46f0f0', '#bcf60c', '#fabebe', '#e6beff'].includes(colorScaleforLegend(d.algo))) {
                 res.style('color', 'white')

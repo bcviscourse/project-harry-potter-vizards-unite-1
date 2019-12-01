@@ -1,12 +1,14 @@
 // Circles return to neutral colors:
-export default function performStep5(chart, svg, timeline, 
+export default function performStep5(chart, svg, timeline,
     formatNum, tooltipright, tooltiptop, graphicVisEl, marketScale, translate,
-    scaleX, scaleY, xAxis) {
+    scaleX, scaleY, xAxis, sizeX_with_margins, sizeY_with_margins) {
     console.log('step  5');
 
     // Remove all unneeded components
     console.log(d3.select(".tooltip"))
-    d3.select(".tooltip").style("background-color", "lightgrey").style("color", "black")
+    d3.select(".tooltip")
+        .style("background-color", "lightgrey").style("color", "black").
+        transition().duration(300).style("opacity", 0)
     d3.selectAll('path').remove()
     d3.selectAll('circle').style('opacity', 1)
     svg.selectAll(".legendSequential").transition().style('opacity', 0).remove()
@@ -29,7 +31,7 @@ export default function performStep5(chart, svg, timeline,
     d3.selectAll('item text').style('opacity', 1)
 
     // Circles are colored back to neutral:
-    var item = graphicVisEl.selectAll('.item').on("mouseover", function(){})
+    var item = graphicVisEl.selectAll('.item').on("mouseover", function () { })
     item.selectAll('circle').transition().ease(d3.easeLinear)
         .style('fill', 'lightgrey')
         .style('opacity', 1)
@@ -48,19 +50,28 @@ export default function performStep5(chart, svg, timeline,
 
 
     // Events for tooltip:
-    let circles = item.selectAll('circle')
+    d3.selectAll('.item')
         .on('mouseover', function (d) {
-            d3.select(this).style('cursor', 'pointer')
-            d3.select(this).attr('r', marketScale(d.marketcap) * 1.5)
+            var selected_item = d3.select(this)
+            selected_item.select("circle").style('cursor', 'pointer')
+                                            .attr('r', marketScale(d.marketcap) * 1.5)
             let res = d3.selectAll('.tooltip')
             res.style('opacity', 1)
             res.html('<strong>' + d.name + '</strong>' +
                 '<br><category>Algorithm:</category> ' + d.algo + '<br><category>Market Cap:</category> ' + formatNum(d.marketcap));
-            res.style('right', tooltipright + "%");
-            res.style('top', tooltiptop + "%");
+            var position = d3.select(this).attr("transform")
+            console.log(position)
+            var translate = position.substring(position.indexOf("(") + 1, position.indexOf(")")).split(",")
+            var offset = d3.event.y - translate[1]
+            res.style('right', function () {
+                if (translate[0] > sizeX_with_margins / 2)
+                    return 1.05 * sizeX_with_margins - d3.event.pageX + "px"; // TOOLTIP TO THE LEFT
+                return 0.7 * sizeX_with_margins - d3.event.pageX + "px";
+            })
+            res.style('top', d3.event.y - offset -  1.2* sizeY_with_margins / 10 + "px");
         })
         .on('mouseout', function (d) {
-            d3.select(this).attr('r', marketScale(d.marketcap))
+            d3.select(this).select('circle').attr('r', marketScale(d.marketcap))
             let res = d3.selectAll('.tooltip').style('opacity', 0)
         })
 

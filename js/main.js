@@ -75,21 +75,21 @@ export default function createGraphic(newdata, time_data, treedata2, treedata3, 
         function s2() {
             chart, svg, timeline, xAxis, x_axis_location = performStep2(chart, svg, timeline,
                 formatNum, tooltipright, tooltiptop, graphicVisEl, xAxis, x_axis_location,
-                sizeY_with_margins, bottom_margin, translate, minR, scaleX, scaleY)
+                sizeY_with_margins, bottom_margin, translate, minR, scaleX, scaleY, sizeX_with_margins)
         },
 
         // Colors the bubbles according to algo.
         function s3() {
             chart, svg, timeline, xAxis = performStep3(chart, svg, timeline,
                 formatNum, tooltipright, tooltiptop, graphicVisEl, xAxis,
-                x_axis_location, sizeY_with_margins, minR, side_margin, top_margin, colorScaleforLegend, newdata)
+                x_axis_location, sizeX_with_margins, sizeY_with_margins, minR, side_margin, top_margin, colorScaleforLegend, newdata)
         },
 
         // Circle grow in size to represent market cap
         function s4() {
             chart, svg, timeline, xAxis = performStep4(chart, svg, timeline,
                 formatNum, tooltipright, tooltiptop, graphicVisEl, xAxis,
-                x_axis_location, sizeY_with_margins, side_margin, top_margin, colorScaleforLegend,
+                x_axis_location, sizeX_with_margins,sizeY_with_margins, side_margin, top_margin, colorScaleforLegend,
                 marketScale, newdata)
         },
 
@@ -97,14 +97,14 @@ export default function createGraphic(newdata, time_data, treedata2, treedata3, 
         function s5() {
             chart, svg, timeline, xAxis = performStep5(chart, svg, timeline,
                 formatNum, tooltipright, tooltiptop, graphicVisEl, marketScale, translate,
-                scaleX, scaleY, xAxis)
+                scaleX, scaleY, xAxis, sizeX_with_margins, sizeY_with_margins)
         },
 
         // Show the treemap
         function s6() {
             chart, svg, timeline, rects = performStep6(chart, svg, timeline, rects, sizeY_with_margins,
                 sizeX_with_margins, treedata, colorScaleforTreeMap, formatNum, bitcoinTotal,
-                tooltipright, tooltiptop, root2, root3)
+                tooltipright, tooltiptop, root2, root3, side_margin, bottom_margin)
         },
 
         // The last step -- final words....
@@ -164,8 +164,8 @@ export default function createGraphic(newdata, time_data, treedata2, treedata3, 
             .attr("transform", "translate(" + 0 + "," + 0 + ")")
             .style("opacity", 0)
 
-        console.log(chart)
-        var label1 = svg.append("text")
+        // Label of min and max market caps, also year label
+        svg.append("text")
             .classed("y-axis", true)
             .attr("transform", "rotate(-90)")
             .attr("x", -1 * top_margin*1.5)
@@ -175,7 +175,7 @@ export default function createGraphic(newdata, time_data, treedata2, treedata3, 
             .style("opacity", 0)
             .text("Highest M.C.");
 
-        var label2= svg.append("text")
+        svg.append("text")
             .classed("y-axis", true)
             .attr("transform", "rotate(-90)")
             .attr("x", -1 * (sizeY_with_margins-bottom_margin*1.5))
@@ -184,6 +184,16 @@ export default function createGraphic(newdata, time_data, treedata2, treedata3, 
             .style('fill', 'lightgrey')
             .style("opacity", 0)
             .text("Lowest M.C.");
+
+        svg.append("text")
+            .classed("y-axis", true)
+            .attr("transform", "rotate(0)")
+            .attr("x", sizeX_with_margins/2)
+            .attr("y", sizeY_with_margins)
+            .style("text-anchor", "middle")
+            .style('fill', 'lightgrey')
+            .style("opacity", 0)
+            .text("Year of Creation");
 
 
         // Define scaleY for "circles" viz
@@ -242,6 +252,16 @@ export default function createGraphic(newdata, time_data, treedata2, treedata3, 
             .style("text-anchor", "middle")
             .style('fill', 'lightgrey')
             .text("Millions of Dollars");
+
+        // Label the axes
+        timeline.append("text")
+            .attr("transform", "rotate(0)")
+            .attr("x", sizeX_with_margins / 2)
+            .attr("y", sizeY_with_margins)
+            // .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .style('fill', 'lightgrey')
+            .text("Date");
 
         // Setup for treemap
         for (let i = 0; i < newdata.length; i++) {

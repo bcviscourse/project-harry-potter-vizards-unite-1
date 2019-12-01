@@ -1,7 +1,7 @@
 // Move grey circles to their correct positions
 export default function performStep2(chart, svg, timeline, 
     formatNum, tooltipright, tooltiptop, graphicVisEl, xAxis,
-    x_axis_location, sizeY_with_margins, bottom_margin, translate, minR, scaleX, scaleY) {
+    x_axis_location, sizeY_with_margins, bottom_margin, translate, minR, scaleX, scaleY, sizeX_with_margins) {
     console.log('step  2');
 
     // Remove all unneeded components
@@ -89,9 +89,23 @@ export default function performStep2(chart, svg, timeline,
             let res = d3.select('.tooltip');
             res.html('<strong>' + d.name + '</strong>' +
                 '<br><category>Algorithm:</category> ' + d.algo + '<br><category>Market Cap:</category> ' + formatNum(d.marketcap));
-            res.style('right', tooltipright + "%");
-            res.style('top', tooltiptop + "%");
+            // res.style('right', tooltipright + "%");
+            // res.style('top', tooltiptop + "%");
+            var position = d3.select(this).attr("transform")
+            var translate = position.substring(position.indexOf("(")+1, position.indexOf(")")).split(",")
+            var offset = d3.event.y - translate[1]
+            res.style('right', function(){
+                if (translate[0] > sizeX_with_margins/2)
+                    return 1.05*sizeX_with_margins - d3.event.pageX + "px"; // TOOLTIP TO THE LEFT
+                return 0.7*sizeX_with_margins - d3.event.pageX + "px";
+            })
+            res.style('top', d3.event.y-offset - sizeY_with_margins/10 + "px");
             res.style('opacity', 1)
+
+            // var position = d3.select(this).nodes()[0].cy.animVal.value
+            //     var offset = d3.event.y - position
+            //     res.style('right', 0.87*sizeX_with_margins - d3.event.pageX + "px");
+            //     res.style('top', d3.event.y-offset - sizeY_with_margins/10 + "px");
         })
         .on('mouseout', function () {
             d3.select(this).select('circle').attr('r', minR)

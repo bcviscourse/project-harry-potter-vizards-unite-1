@@ -77,13 +77,18 @@ export default function performStep0(chart, rects, svg, timeline, market_data,
                 res.style('opacity', 1)
                 res.html('<p><category>Total Market Cap:</category> ' + formatNum(d.value)
                     + ' million. <br><category>Date:</category> ' + dateFormat(d.date) + "</p>");
-                res.style('right', tooltipright - 10 + "%");
-                res.style('top', tooltiptop + "%");
+                // res.style('right', tooltipright - 10 + "%");
+                // res.style('top', tooltiptop + "%");
 
-                // var position = d3.select(this).nodes()[0].cy.animVal.value
-                // var offset = d3.event.y - position
-                // res.style('right', 0.87*sizeX_with_margins - d3.event.pageX + "px");
-                // res.style('top', d3.event.y-offset - sizeY_with_margins/10 + "px");
+                var positionX = d3.select(this).nodes()[0].cx.animVal.value
+                var positionY = d3.select(this).nodes()[0].cy.animVal.value
+                var offset = d3.event.y - positionY
+                res.style('right', function(){
+                    if (positionX > sizeX_with_margins/2)
+                        return 1.05*sizeX_with_margins - d3.event.pageX + "px"; // TOOLTIP TO THE LEFT
+                    return 0.8*sizeX_with_margins - d3.event.pageX + "px";
+                })
+                res.style('top', d3.event.y-offset - sizeY_with_margins/10 + "px");
             })
             .on('mouseout', function (d) {
                 d3.select(this).attr('r', lineCircleRMin).style('stroke', "transparent").style('opacity', 0)
