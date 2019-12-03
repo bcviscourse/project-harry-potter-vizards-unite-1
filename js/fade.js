@@ -10,7 +10,7 @@ $(window).on("scroll", function () {
     var pageBottom = pageTop + $(window).height()
 
     //Threshold for sections coming into view.
-    var visibleThreshold = pageBottom - $(window).height() * .9
+    var visibleThreshold = pageBottom - $(window).height() * 1.3
     
     var tags = $("section")
     //Independently check each section
