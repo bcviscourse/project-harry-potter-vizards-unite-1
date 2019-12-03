@@ -30,7 +30,7 @@ import performStep7 from "./step7.js";
 //the treemap: rect and text.
 
 
-export default function createGraphic(newdata, time_data, treedata2, treedata3, parent_height, parent_width) {
+export default function createGraphic(newdata, time_data, treedata1, treedata2, treedata3, parent_height, parent_width) {
     var graphicEl = d3.select('.graphic') // For two below selectors
     var graphicVisEl = graphicEl.select('.graphic__vis') // Accessor for entire vis
     var graphicProseEl = graphicEl.select('.graphic__prose') // Accessor for setting up triggers
@@ -46,7 +46,7 @@ export default function createGraphic(newdata, time_data, treedata2, treedata3, 
     var sumforstep5 = 0; // Used for setting up treemap
     var sumforupdatetree1 = 0;
     var market_data = [];
-    var treedata = { "children": [] };
+    var treedata = treedata1;
     var algos = [];
 
     var rects = d3.selectAll('rect') // Selector for treemap
@@ -56,6 +56,7 @@ export default function createGraphic(newdata, time_data, treedata2, treedata3, 
     var sizeX_with_margins, sizeY_with_margins, scaleX, scaleY, chartSize, marketScale, xAxis
     var x_axis_location, svg, root, timeline, chart, legendSequential, x, y, bitcoinTotal;
     var colorScaleforLegend, colorScaleforTreeMap, root2, root3;
+
 
     // actions to take on each step of our scroll-driven story
     var steps = [
@@ -288,7 +289,7 @@ export default function createGraphic(newdata, time_data, treedata2, treedata3, 
         }
 
         // Our treemap-strucutred data: 
-        treedata = { "children": [] };
+        var useless = { "children": [] };
         for (let i = 0; i < algos.length; i++) {
             let children = [];
             for (let j = 0; j < newdata.length; j++) {
@@ -302,7 +303,7 @@ export default function createGraphic(newdata, time_data, treedata2, treedata3, 
                 }
             }
             let j = { name: algos[i], children: children };
-            treedata['children'].push(j);
+            useless['children'].push(j);
         }
 
         root2 = d3.hierarchy(treedata2).sum(function (d) { return d.marketcap });

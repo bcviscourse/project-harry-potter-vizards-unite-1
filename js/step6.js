@@ -73,38 +73,17 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
             .attr('x', 0)
             .attr('y', 0)
             .merge(rects)
-            .transition().duration(200)
-            .attr('x', function (d) { return d.x0 + side_margin; })
             .attr('y', function (d) { return d.y0; })
-            .attr('width', function (d) { return d.x1 - d.x0; })
             .attr('height', function (d) { return d.y1 - d.y0; })
+            .transition().duration(800)
+            .attr('x', function (d) { return d.x0 + side_margin; })
+            .attr('width', function (d) { return d.x1 - d.x0; })
             .style("stroke", "black")
             .style("fill", function (d) {
                 return colorScaleforTreeMap(d.parent.data.name);
             })
 
         rects.exit().remove()
-        //             // use this information to add rectangles:
-        // d3.selectAll('.treemap').remove()
-        // rects = svg.append('g')
-        //             .classed('treemap', true)
-        //             .attr('transform', 'translate(' + 0 + ',' + 0 + ')')
-        // rects
-        //     .selectAll("rect")
-        //     .attr('class','treemap')
-        //     .data(root.leaves())
-        //     .enter()
-        //     .append("rect")
-        //     .style("stroke", "black")
-        //     .style("fill", function(d){return colorScaleforTreeMap(d.parent.data.name);})
-
-        //     .attr('x', function (d) { 
-        //         return d.x0; })
-        //     .attr('y', function (d) { return d.y0; })
-        //     .attr('width', function (d) { return d.x1 - d.x0; })
-        //     .attr('height', function (d) { return d.y1 - d.y0; })
-        //     .style("opacity", 1)
-
 
         // and to add the text labels
         svg.selectAll('.treemap-text').remove();
@@ -114,10 +93,10 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
             .data(root.leaves())
             .enter()
             .append("text")
+            .transition().duration(800)
             .attr("x", function (d) { return d.x0 + side_margin + 3 })    // +10 to adjust position (more right)
             .attr("y", function (d) { return d.y0 + 20 })    // +20 to adjust position (lower)
             .text(function (d) {
-                if (d.data.name == 'BTC' | d.data.name == 'ETH')
                     return d.data.name
             })
             .attr("font-size", "80%")
@@ -135,17 +114,31 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
             })
             .on('mouseover', function (d) {
                 let n = d.data.name;
+                console.log(d.x0 + d.x1/2);
                 if (n != "ETH" & n != "BTC") {
                     d3.select(this).style('cursor', 'pointer')
                 }
                 d3.select(this).style("fill", "silver")
                 let res = d3.select('.tooltip');
-                res.html('<strong>' + d.data.name + '</strong>' +
-                    '<br><category>Algorithm: </category>' + d.parent.data.name + '<br><category>Market Cap:</category> '
+                res.html(
+                    '<br><category>Algorithm: </category>' + d.parent.data.name+
+                    '<br><strong>Cryptocurrency:</strong> ' + d.data.name
+                    + '<br><category>Market Cap:</category> '
                     + formatNum(d.data.marketcap)
                     + "<br><category> " + ((d.data.marketcap / bitcoinTotal) * 100).toFixed(3) + "%</category> of Bitcoin's Market Cap");
-                res.style('right', tooltipright + "%");
-                res.style('top', tooltiptop + "%");
+                // res.attr('x', d.x0 + d.x1/2)
+                // res.attr('y', d.y0 + d.y1/2)
+                // res.attr('right', tooltipright+'%')
+                // res.attr('top', tooltiptop + "%");
+                // var position = res.attr("transform")
+                // var translate = position.substring(position.indexOf("(")+1, position.indexOf(")")).split(",")
+                // var offset = d3.event.y - translate[1]
+                res.style('right', function(){
+                    // if (translate[0] > sizeX_with_margins/2)
+                    //     return 1.05*sizeX_with_margins - d3.event.pageX + "px"; // TOOLTIP TO THE LEFT
+                    return 0.7*sizeX_with_margins - d3.event.pageX + 500+ "px";
+                })
+                res.style('top', d3.event.y - sizeY_with_margins/3 + "px");
                 res.style('opacity', 1)
             })
             .on('mouseout', function (d) {
@@ -171,7 +164,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
 
         d3.selectAll('rect').attr('class', function (d, i) {
             console.log('i:', i);
-            if (i == 18 | i == 19 | i == 20) return 'remove';
+            if (i>= 14) return 'remove';
             else return 'treemap';
         })
 
@@ -191,6 +184,9 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
         svg = d3.selectAll('svg')
 
         var rects = svg.selectAll('rect')
+        rects.remove()
+
+        console.log('ROOT2:',root2);
 
         svg
             .selectAll("rect")
@@ -201,7 +197,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
             .attr('x', sizeX_with_margins)
             .attr('y', sizeY_with_margins)
             .merge(rects)
-            .transition().duration(1000)
+            .transition().duration(500)
             .attr('x', function (d) { return d.x0 + side_margin; })
             .attr('y', function (d) { return d.y0; })
             .attr('width', function (d) { return d.x1 - d.x0; })
@@ -237,11 +233,11 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
 
         newtext.attr('x', sizeX_with_margins).attr('y', sizeY_with_margins);
 
-        newtext.transition().duration(1000)
+        newtext.transition().duration(500)
             .attr("x", function (d) { return d.x0 + side_margin + 3 })    // +10 to adjust position (more right)
             .attr("y", function (d) { return d.y0 + 20 })    // +20 to adjust position (lower)
             .text(function (d) {
-                if (!['DGB', 'XVG', 'MONA', 'SC', 'LISK'].includes(d.data.name)) return d.data.name
+                return d.data.name
             })
             .attr("font-size", "72%")
             .attr("fill", "white")
@@ -257,36 +253,43 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
 
         svg.selectAll('rect')
             .on("click", function (d, i) {
-                if (i == 18) {
+                if (i == 14) {
                     updateTree1(width, height, margin);
                 }
-                else if (['LISK', 'XVG', 'DGB', 'SC', 'MONA'].includes(d.data.name)) {
+                else if (['Others'].includes(d.data.name)) {
                     updateTree3(width, height, margin);
                 }
             })
             .on('mouseover', function (d, i) {
                 d3.select(this).style("fill", "silver")
-                if (i == 18) {
+                if (i == 14) {
                     d3.select(this).style('cursor', 'pointer')
                 }
-                else if (['LISK', 'XVG', 'DGB', 'SC', 'MONA'].includes(d.data.name)) {
+                else if (['Others'].includes(d.data.name)) {
                     d3.select(this).style('cursor', 'pointer')
                 }
                 else d3.select(this).style('cursor', 'default')
                 let res = d3.select('.tooltip');
-                if (i != 18) {
-                    res.html('<strong>' + d.data.name + '</strong>' +
-                        '<br><category>Algorithm: </category>' + d.parent.data.name + '<br><category>Market Cap:</category> '
-                        + formatNum(d.data.marketcap) + "<br><category> " +
-                        ((d.data.marketcap / bitcoinTotal) * 100).toFixed(3) + "%</category> of Bitcoin's Market Cap");
-                    res.style('right', tooltipright + "%");
-                    res.style('top', tooltiptop + "%");
+                if (i != 14) {
+                    res.html(                    '<br><category>Algorithm: </category>' + d.parent.data.name+
+                    '<br><strong>Cryptocurrency:</strong> ' + d.data.name
+                    + '<br><category>Market Cap:</category> '
+                    + formatNum(d.data.marketcap)
+                    + "<br><category> " + ((d.data.marketcap / bitcoinTotal) * 100).toFixed(3) + "%</category> of Bitcoin's Market Cap");
+                    // res.style('right', tooltipright + "%");
+                    // res.style('top', tooltiptop + "%");
+                    res.style('right', function(){
+                        // if (translate[0] > sizeX_with_margins/2)
+                        //     return 1.05*sizeX_with_margins - d3.event.pageX + "px"; // TOOLTIP TO THE LEFT
+                        return 0.7*sizeX_with_margins - d3.event.pageX + 500+ "px";
+                    })
+                    res.style('top', d3.event.y - sizeY_with_margins/3 + "px");
                     res.style('opacity', 1)
                 }
             })
             .on('mouseout', function (d, i) {
                 console.log(i);
-                if (i == 18) {
+                if (i == 14) {
                     d3.select(this).style('cursor', 'pointer').style("fill", function (d) {
                         return "red"
                     })
@@ -315,7 +318,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
         // Then d3.treemap computes the position of each element of the hierarchy
         d3.selectAll('rect').attr('class', function (d, i) {
             console.log('i:', i);
-            if ((i > 4 & i != 18)) return 'remove';
+            if ((i >=5)) return 'remove';
             else return 'treemap';
         })
 
@@ -330,7 +333,10 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
 
         svg = d3.selectAll('svg')
 
+
+
         var rects = svg.selectAll('rect')
+        rects.remove();
 
         svg
             .selectAll("rect")
@@ -341,7 +347,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
             .attr('x', sizeX_with_margins)
             .attr('y', sizeY_with_margins)
             .merge(rects)
-            .transition().duration(1000)
+            .transition().duration(500)
             .attr('x', function (d) { return d.x0 + side_margin; })
             .attr('y', function (d) { return d.y0; })
             .attr('width', function (d) { return d.x1 - d.x0; })
@@ -365,12 +371,13 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
 
         svg.selectAll('rect')
             .on("click", function (d, i) {
-                if (i == 6) {
+                if (i == 5) {
                     updateTree1(width, height, margin);
                 }
             })
             .on('mouseover', function (d, i) {
-                if (i == 6) {
+                console.log(i)
+                if (i == 5) {
                     d3.select(this).style('cursor', 'pointer').style("fill", function (d) {
                         return "silver"
                     })
@@ -379,17 +386,25 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
                     return "silver"
                 })
                 let res = d3.select('.tooltip');
-                if (i != 6) {
-                    res.html('<strong>' + d.data.name + '</strong>' +
-                        '<br><category>Algorithm:</category> ' + d.parent.data.name + '<br><category>Market Cap:</category> ' + formatNum(d.data.marketcap)
-                        + "<br><category> " + ((d.data.marketcap / bitcoinTotal) * 100).toFixed(3) + "%</category> of Bitcoin's Market Cap");
-                    res.style('right', tooltipright + "%");
-                    res.style('top', tooltiptop + "%");
+                if (i != 5) {
+                    res.html(                    '<br><category>Algorithm: </category>' + d.parent.data.name+
+                    '<br><strong>Cryptocurrency:</strong> ' + d.data.name
+                    + '<br><category>Market Cap:</category> '
+                    + formatNum(d.data.marketcap)
+                    + "<br><category> " + ((d.data.marketcap / bitcoinTotal) * 100).toFixed(3) + "%</category> of Bitcoin's Market Cap");
+                    // res.style('right', tooltipright + "%");
+                    // res.style('top', tooltiptop + "%");
+                    res.style('right', function(){
+                        // if (translate[0] > sizeX_with_margins/2)
+                        //     return 1.05*sizeX_with_margins - d3.event.pageX + "px"; // TOOLTIP TO THE LEFT
+                        return 0.7*sizeX_with_margins - d3.event.pageX + 500+ "px";
+                    })
+                    res.style('top', d3.event.y - sizeY_with_margins/3 + "px");
                     res.style('opacity', 1)
                 }
             })
             .on('mouseout', function (d, i) {
-                if (i == 6) {
+                if (i == 5) {
                     d3.select(this).style('cursor', 'pointer').style("fill", function (d) {
                         return "red"
                     })
@@ -404,12 +419,19 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
 
         svg.selectAll('.treemap-text').remove();
 
+
+
+        //add text labels:
+        var newtext = svg
+        .selectAll(".treemap-text")
+        .data(root3.leaves())
+        .enter()
+        .append("text")
+
+        newtext.attr('x', sizeX_with_margins).attr('y', sizeY_with_margins);
+
         // and to add the text labels
-        svg
-            .selectAll(".treemap-text")
-            .data(root3.leaves())
-            .enter()
-            .append("text")
+        newtext.transition().duration(500)
             .attr("x", function (d) { return d.x0 + side_margin + 3 })    // +10 to adjust position (more right)
             .attr("y", function (d) { return d.y0 + 20 })    // +20 to adjust position (lower)
             .text(function (d) { return d.data.name })

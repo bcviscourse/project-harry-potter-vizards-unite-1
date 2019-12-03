@@ -4,13 +4,15 @@ function scrollstory() {
     Promise.all([
         d3.csv('data/out.csv'),
         d3.csv('data/total-market-cap.csv'),
+        d3.json('data/treedata_first-level.json'),
         d3.json('data/treedata_second-level.json'),
         d3.json('data/treedata_third-level.json')
     ]).then(data => {
         let miningData = data[0]
         let market_cap_time_data = data[1]
-        let treemap_second_level = data[2]
-        let treemap_third_level = data[3]
+        let treemap_first_level = data[2]
+        let treemap_second_level = data[3]
+        let treemap_third_level = data[4]
         console.log(market_cap_time_data);
         var TOTDATA = [];
         let i = 0;
@@ -32,10 +34,10 @@ function scrollstory() {
         }
         // miningData.filter(entry => entry.year != 0 && entry.year != "");
         // let smallMine = miningData.slice(1, 20)
-        setScrollStory(TOTDATA, market_cap_time_data, treemap_second_level, treemap_third_level)
+        setScrollStory(TOTDATA, market_cap_time_data, treemap_first_level, treemap_second_level, treemap_third_level)
     })
 
-    function setScrollStory(data, time_data, tm_secondlevel, tm_thirdlevel) {
+    function setScrollStory(data, time_data, tm_firstlevel, tm_secondlevel, tm_thirdlevel) {
         // select elements using jQuery since it is a dependency
         var $graphicEl = $('.graphic')
         var $graphicVisEl = $graphicEl.find('.graphic__vis')
@@ -50,7 +52,7 @@ function scrollstory() {
 
         // a global function creates and handles all the vis + updates
         console.log(data)
-        var graphic = createGraphic(data, time_data, tm_secondlevel, tm_thirdlevel, svgHeight, window.innerWidth)
+        var graphic = createGraphic(data, time_data, tm_firstlevel, tm_secondlevel, tm_thirdlevel, svgHeight, window.innerWidth)
 
         // handle the fixed/static position of grahpic
         var toggle = function (fixed, bottom) {

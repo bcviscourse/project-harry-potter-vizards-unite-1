@@ -230,6 +230,10 @@ div.tooltip {
     color: black;
 }
 
+.treemap-text{
+  pointer-events: none;
+}
+
 .tooltip #text{
   color: red;
 }

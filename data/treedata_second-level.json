@@ -97,48 +97,13 @@
                 }
             ]
         },
+
         {
-            "name": "Sidechain",
+            "name": "Other",
             "children": [
                 {
-                    "name": "LISK",
-                    "marketcap": 97313663.16
-                }
-            ]
-        },
-        {
-            "name": "SHA-256;Scrypt;Qubit;Skein;Groestl",
-            "children": [
-                {
-                    "name": "DGB",
-                    "marketcap": 87731409.07
-                }
-            ]
-        },
-        {
-            "name": "blake2b",
-            "children": [
-                {
-                    "name": "SC",
-                    "marketcap": 84616061.08
-                }
-            ]
-        },
-        {
-            "name": "Scrypt;X17;Groestl;Blake2s;Lyra2rev2",
-            "children": [
-                {
-                    "name": "XVG",
-                    "marketcap": 74185162.88
-                }
-            ]
-        },
-        {
-            "name": "Lyra2RE",
-            "children": [
-                {
-                    "name": "MONA",
-                    "marketcap": 69801518
+                    "name": "Others",
+                    "marketcap": 413647814
                 }
             ]
         }

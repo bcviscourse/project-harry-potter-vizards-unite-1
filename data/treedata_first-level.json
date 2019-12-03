@@ -1,0 +1,32 @@
+{
+    "children": [
+        {
+            "name": "SHA-256",
+            "children": [
+                {
+                    "name": "BTC",
+                    "marketcap": 1.57E+11
+                }
+            ]
+        },
+        {
+            "name": "Dagger-Hashimoto",
+            "children": [
+                {
+                    "name": "ETH",
+                    "marketcap": 20256946583
+                }
+            ]
+        },
+
+        {
+            "name": "Other",
+            "children": [
+                {
+                    "name": "Others",
+                    "marketcap": 9140813229.589998
+                }
+            ]
+        }
+    ]
+}
