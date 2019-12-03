@@ -269,11 +269,56 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
             if (!algos.includes(newdata[i].algo) && newdata[i].algo != undefined) algos.push(newdata[i].algo);
         }
 
-        colorScaleforLegend = d3.scaleOrdinal(['#000075', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#800000', 'black', '#00FF00'])
-            .domain(algos)
-        algos.push("Other")
-        colorScaleforTreeMap = d3.scaleOrdinal(['#000075', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#800000', 'black', '#00FF00', '#808000'])
+        //Custom colors go here
+        // colorScaleforLegend = d3.scaleOrdinal(['#000075', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#800000', 'black', '#00FF00'])
+        //     .domain(algos)
 
+        colorScaleforLegend = 
+        d3.scaleOrdinal([   
+                            //If we use 8, we cut every other color
+                            '#62BEC1', //lapis lazuli
+                            '#008DD5', //rich electric blue
+                            '#125ACE', //denim
+                            '#4B69ED', //ultramarine blue
+                            '#677DE0', //united nations blue
+                            '#A2BCE0', //pale cerulean
+                            '#E55E84', //blush
+                            '#EF8354', //light red ochre
+                            '#EDAFB8', //Nadeshiko pink
+                            '#9C3848', //smoky topaz
+                            '#71720C', //bronze yellow
+                            '#B75671', //china rose
+                            '#C98986', //puce
+                            '8B575C',  //rose taupe
+                            '#A47FD8', //lavender
+                            '#8253EF', //navy purple
+                        ])
+            .domain(algos)
+
+        algos.push("Other")
+        //colorScaleforTreeMap = d3.scaleOrdinal(['#000075', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4', '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff', '#9a6324', '#800000', 'black', '#00FF00', '#808000'])
+
+        colorScaleforTreeMap = 
+        d3.scaleOrdinal([   
+                            //If we use 8, we cut every other color
+                            '#62BEC1', //lapis lazuli
+                            '#008DD5', //rich electric blue
+                            '#125ACE', //denim
+                            '#4B69ED', //ultramarine blue
+                            '#677DE0', //united nations blue
+                            '#A2BCE0', //pale cerulean
+                            '#E55E84', //blush
+                            '#EF8354', //light red ochre
+                            '#EDAFB8', //Nadeshiko pink
+                            '#9C3848', //smoky topaz
+                            '#71720C', //bronze yellow
+                            '#B75671', //china rose
+                            '#C98986', //puce
+                            '8B575C',  //rose taupe
+                            '#A47FD8', //lavender
+                            '#8253EF', //navy purple
+                        ])
+            .domain(algos)
 
 
         sumforstep5 = 0;

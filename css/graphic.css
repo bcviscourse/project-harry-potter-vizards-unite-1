@@ -7,7 +7,12 @@
 .graphic__prose {
 	width: 24rem;
 	font-family: 'Roboto Slab', serif;
+	font-family: 'Cormorant', serif;
+	/* font-family: 'Julius Sans One', sans-serif; */
+
+
 	color: #000000;
+
 	padding: 20px;
 	text-align: right;
 	font-size: 20px;
@@ -66,8 +71,13 @@
 	font-size: 65%;
 	text-anchor: middle;
 	alignment-baseline: middle;
+
 	text-shadow: 2px 2px black;
+	text-shadow: 2px 2px #c4c0c0;
+
 	font-family: 'Roboto Slab', Arial, Helvetica, sans-serif;
+	font-family: 'Julius Sans One', sans-serif;
+
 	cursor: default;
 }
 

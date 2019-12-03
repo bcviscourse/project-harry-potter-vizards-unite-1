@@ -78,7 +78,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
             .transition().duration(800)
             .attr('x', function (d) { return d.x0 + side_margin; })
             .attr('width', function (d) { return d.x1 - d.x0; })
-            .style("stroke", "black")
+            //.style("stroke", "black")
             .style("fill", function (d) {
                 return colorScaleforTreeMap(d.parent.data.name);
             })
@@ -202,7 +202,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
             .attr('y', function (d) { return d.y0; })
             .attr('width', function (d) { return d.x1 - d.x0; })
             .attr('height', function (d) { return d.y1 - d.y0; })
-            .style("stroke", "black")
+            //.style("stroke", "black")
             .style("fill", function (d) {
                 return colorScaleforTreeMap(d.parent.data.name);
             })

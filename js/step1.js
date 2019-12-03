@@ -61,7 +61,6 @@ export default function performStep1(chart, svg, timeline, chartSize,
         .attr('cy', 0)
         .style('opacity', 1)
 
-
     // Hide x-axis (on scrollup):
     var axis = graphicVisEl.selectAll('.x-axis')
     axis
@@ -87,7 +86,7 @@ export default function performStep1(chart, svg, timeline, chartSize,
 
     // Add the giant circle:
     item.select('circle')
-        .style('fill', 'lightgrey')
+        .style('fill', '#b5b5b5')
         .attr('cx', center_balloon_x)
         .attr('cy', center_balloon_Y)
         .transition(t)

@@ -60,7 +60,7 @@ export default function performStep2(chart, svg, timeline,
             .attr('r', minR) // minR needs to be a more standardized scale....
         item.select('circle')
             .transition().duration(200)
-            .style('fill', 'lightgrey')
+            .style('fill', '#b5b5b5')
             .attr('r', minR) // minR needs to be a more standardized scale....
             .style('opacity', 1)
 
