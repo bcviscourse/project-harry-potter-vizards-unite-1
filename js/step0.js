@@ -16,6 +16,7 @@ export default function performStep0(chart, rects, svg, timeline, market_data,
     rects.style('opacity', 0)
     d3.selectAll('.tooltip').style('opacity', 0)
     svg.selectAll(".legendSequential").remove()
+    d3.selectAll('.treemap-text').remove()
 
 
     // Bring to the front all we want to show
