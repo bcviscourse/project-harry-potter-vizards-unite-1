@@ -10,7 +10,7 @@ $(window).on("scroll", function () {
     var pageBottom = pageTop + $(window).height()
 
     //Threshold for sections coming into view.
-    var visibleThreshold = pageBottom - $(window).height() * 1.35
+    var visibleThreshold = pageBottom - $(window).height() * .9
     
     var tags = $("section")
     //Independently check each section
@@ -18,7 +18,7 @@ $(window).on("scroll", function () {
         var tag = tags[i]
     
         if ($(tag).position().top < visibleThreshold
-            && $(tag).position().top > visibleThreshold - 330
+            && $(tag).position().top > visibleThreshold - 500
         ) {
             $(tag).addClass("visible")
         } else {

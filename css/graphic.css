@@ -1,15 +1,16 @@
 /* GRAPHIC CODE */
 .graphic {
-	width: 100%;
+	width: 50%;
 	position: relative;
 }
 
 .graphic__prose {
-	/* width: 24rem; */
+	width: 24rem;
 	font-family: 'Roboto Slab', serif;
 	color: #000000;
 	padding: 20px;
-	text-align: center;
+	text-align: right;
+	font-size: 20px;
 }
 
 .graphic__prose .trigger {
@@ -23,19 +24,16 @@
 	padding: 20px;
 	position: absolute;
 	top: 0;
-	/* margin-left: 30rem; */
+	margin-left: 23rem;
 	margin-top: 60px;
 	-webkit-transform: translate3d(0, 0, 0);
 	-moz-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
-	height: 100vh;
-
-	display: block;
-    margin-left: auto;
-	margin-right: auto;
-  	/* width: 50%; */
-	align-self: center;
-    text-align: center;
+	height: 80vh;
+	width: 30vh;
+  	width: 50%;
+	align-self: left;
+	text-align: center;
 }
 
 .graphic__vis.is-fixed {
@@ -53,6 +51,7 @@
 	-webkit-transform: translateY(-50%);
 	-moz-transform: translateY(-50%);
 	transform: translateY(-50%);
+	transform: scaleX(50%);
 
 }
 
@@ -75,8 +74,6 @@
 .bigText{
 	font-size: 150% !important;
 }
-
-
 
 /* graph-scroll.js version */
 .graphic__vis.graph-scroll-fixed {

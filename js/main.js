@@ -37,7 +37,7 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
     var side_margin = 20  // Margin for svg, margin must match padding from graphic__vis
     var bottom_margin = 40 // Margin for svg
     var top_margin = 40 // Margin for svg
-    var sizeX = parent_width // Allows the svg to scale to size of browser window
+    var sizeX = parent_width * .72 // Allows the svg to scale to size of browser window
     var sizeY = parent_height // Allows the svg to scale to size of browser window
     var tooltipright = 60; // Percentage of window tooltip appears on screen
     var tooltiptop = 40;
