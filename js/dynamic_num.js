@@ -17,6 +17,8 @@ headers: {
 })
 .then(resp=>resp.json())
 .then(d=>{
-  console.log(d.data.total_cryptocurrencies);
+  num = d.data.total_cryptocurrencies
+  console.log(num);
+  // document.write(num);
   return d.data.total_cryptocurrencies;
 })
