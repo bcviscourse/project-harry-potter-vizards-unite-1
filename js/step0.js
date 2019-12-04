@@ -27,7 +27,9 @@ export default function performStep0(chart, rects, svg, timeline, market_data,
     var path = timeline.append("path")
         .datum(market_data)
         .attr("fill", "none")
-        .attr("stroke", '#8c8888')
+        .attr("stroke", function(d) {
+            return x(d.date < 400) ? 'darkgrey' : 'red';
+        } )
         .attr("stroke-width", 1)
         .attr("d", d3.line()
             .x(function (d) { return x(+d.date) })
@@ -76,8 +78,8 @@ export default function performStep0(chart, rects, svg, timeline, market_data,
                 d3.select(this).style('opacity', 1)
                 let res = d3.selectAll('.tooltip')
                 res.style('opacity', 1)
-                res.html('<p><category>Total Market Cap:</category> ' + formatNum(d.value)
-                    + ' million. <br><category>Date:</category> ' + dateFormat(d.date) + "</p>");
+                res.html(dateFormat(d.date) + "</p>"
+                    + formatNum(d.value / 1000) + ' billion');
                 // res.style('right', tooltipright - 10 + "%");
                 // res.style('top', tooltiptop + "%");
 
@@ -89,7 +91,7 @@ export default function performStep0(chart, rects, svg, timeline, market_data,
                         return 1.05*sizeX_with_margins - d3.event.pageX + "px"; // TOOLTIP TO THE LEFT
                     return 0.8*sizeX_with_margins - d3.event.pageX + "px";
                 })
-                res.style('top', d3.event.y-offset - sizeY_with_margins/10 + "px");
+                res.style('top', d3.event.y-offset - sizeY_with_margins / 10 + "px");
             })
             .on('mouseout', function (d) {
                 d3.select(this).attr('r', lineCircleRMin).style('stroke', "transparent").style('opacity', 0)

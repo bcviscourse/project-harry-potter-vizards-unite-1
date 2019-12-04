@@ -79,7 +79,7 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
                 sizeY_with_margins, bottom_margin, translate, minR, scaleX, scaleY, sizeX_with_margins)
         },
 
-        // Colors the bubbles according to algo.
+        // Colors the bubbles according to algo
         function s3() {
             chart, svg, timeline, xAxis = performStep3(chart, svg, timeline,
                 formatNum, tooltipright, tooltiptop, graphicVisEl, xAxis,
@@ -172,7 +172,7 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
             .attr("x", -1 * top_margin*1.5)
             .attr("y", side_margin)
             .style("text-anchor", "middle")
-            .style('fill', 'lightgrey')
+            .style('fill', 'darkgrey')
             .style("opacity", 0)
             .text("Highest M.C.");
 
@@ -182,7 +182,7 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
             .attr("x", -1 * (sizeY_with_margins-bottom_margin*1.5))
             .attr("y", .8* side_margin)
             .style("text-anchor", "middle")
-            .style('fill', 'lightgrey')
+            .style('fill', 'darkgrey')
             .style("opacity", 0)
             .text("Lowest M.C.");
 
@@ -192,7 +192,7 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
             .attr("x", sizeX_with_margins/2)
             .attr("y", sizeY_with_margins)
             .style("text-anchor", "middle")
-            .style('fill', 'lightgrey')
+            .style('fill', 'darkgrey')
             .style("opacity", 0)
             .text("Year of Creation");
 
@@ -252,8 +252,8 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
             .attr("y", side_margin)
             // .attr("dy", "1em")
             .style("text-anchor", "middle")
-            .style('fill', 'lightgrey')
-            .text("Millions of Dollars");
+            .style('fill', 'darkgrey')
+            .text("$ (billions)");
 
         // Label the axes
         timeline.append("text")
@@ -262,7 +262,7 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
             .attr("y", sizeY_with_margins)
             // .attr("dy", "1em")
             .style("text-anchor", "middle")
-            .style('fill', 'lightgrey')
+            .style('fill', 'darkgrey')
             .text("Date");
 
         // Setup for treemap
