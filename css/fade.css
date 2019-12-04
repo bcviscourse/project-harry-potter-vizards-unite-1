@@ -1,13 +1,27 @@
-/* section {
+intro_section {
     opacity: 0.1;
     transform: translate(0, 0px); 
     transition: all 0.2s;
-} */
+}
     
-/* section.visible {
+intro_section.visible {
     opacity: 1;
     size: 110%;
     transition: all .2s ease-in-out;
     transform: scale(1.1);
     transform: translate(0, 0); 
-} */
+}
+
+/* section {
+    opacity: 0.1;
+    transform: translate(0, 0px); 
+    transition: all 0.2s;
+}
+    
+section.visible {
+    opacity: 1;
+    size: 110%;
+    transition: all .2s ease-in-out;
+    transform: scale(1.1);
+    transform: translate(0, 0);  */
+}
