@@ -265,7 +265,7 @@ div.tooltip {
     font: 80% 'Roboto Slab', serif;
     font-family: 'Cormorant', serif;
     /* font-family: 'Julius Sans One', sans-serif;		 */
-    /* background: #D3D3D3;		 */
+    background: white;		
     border-radius: 25px;
     /* border: 2px solid black;	 */
     pointer-events: none;	
