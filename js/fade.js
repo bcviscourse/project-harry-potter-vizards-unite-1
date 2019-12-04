@@ -105,7 +105,7 @@ $(window).on("scroll", function () {
     for (var i = 0; i < tags.length; i++) {
         var tag = storyTags[i]
 
-        if (!isVisible(tag)){
+        if (isVisible(tag)){
             $(tag).addClass("visible")
         } else {
             $(tag).removeClass("visible")
