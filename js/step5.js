@@ -7,8 +7,8 @@ export default function performStep5(chart, svg, timeline,
     // Remove all unneeded components
     console.log(d3.select(".tooltip"))
     d3.select(".tooltip")
-        .style("background-color", "lightgrey").style("color", "black").
-        transition().duration(300).style("opacity", 0)
+        // .style("background-color", "lightgrey").style("color", "black")
+        .transition().duration(300).style("opacity", 0)
     d3.selectAll('path').remove()
     d3.selectAll('circle').style('opacity', 1)
     svg.selectAll(".legendSequential").transition().style('opacity', 0).remove()

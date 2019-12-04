@@ -31,8 +31,9 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
         d3.selectAll('.x-axis').transition(t).style('opacity', 0)
         d3.selectAll('item text').transition(t).style('opacity', 0)
         d3.selectAll('.tooltip')
-            .style("color", "white")
-            .style("background-color", "grey").transition(t).style('opacity', 0)
+            // .style("color", "white")
+            // .style("background-color", "grey")
+            .transition(t).style('opacity', 0)
 
         // Call the function to draw the treemap
         updateTree1(sizeX_with_margins, sizeY_with_margins, margin_treemap);
@@ -80,6 +81,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
             .attr('width', function (d) { return d.x1 - d.x0; })
             //.style("stroke", "black")
             .style("fill", function (d) {
+                console.log(colorScaleforTreeMap(d.parent.data.name))
                 return colorScaleforTreeMap(d.parent.data.name);
             })
 
@@ -213,10 +215,10 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
 
         svg.append('rect')
             .attr('x', sizeX_with_margins * .025)
-            .attr('y', sizeY_with_margins * .92)
+            .attr('y', sizeY_with_margins * .95)
             .attr('height', sizeY_with_margins * 0.05)
             .attr('width', sizeX_with_margins * .95)
-            .attr('fill', 'red')
+            .attr('fill', 'grey')
             .attr('class', 'treemap')
             .style("stroke", "black")
 
@@ -245,7 +247,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
 
         svg.append('text')
             .attr('x', sizeX_with_margins * .95 / 2)
-            .attr('y', 9.5 * sizeY_with_margins / 10)
+            .attr('y', 9.8 * sizeY_with_margins / 10)
             .attr('class', 'treemap-text')
             .text('Return to Overview')
             .attr("font-size", "90%")
@@ -291,7 +293,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
                 console.log(i);
                 if (i == 14) {
                     d3.select(this).style('cursor', 'pointer').style("fill", function (d) {
-                        return "red"
+                        return "grey"
                     })
                 }
                 else {
@@ -362,10 +364,10 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
 
         svg.append('rect')
             .attr('x', sizeX_with_margins * .025)
-            .attr('y', sizeY_with_margins * .92)
+            .attr('y', sizeY_with_margins * .95)
             .attr('height', sizeY_with_margins * 0.05)
             .attr('width', sizeX_with_margins * .95)
-            .attr('fill', 'red')
+            .attr('fill', 'grey')
             .attr('class', 'treemap')
             .style("stroke", "black")
 
@@ -406,7 +408,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
             .on('mouseout', function (d, i) {
                 if (i == 5) {
                     d3.select(this).style('cursor', 'pointer').style("fill", function (d) {
-                        return "red"
+                        return "grey"
                     })
                 }
                 else {
@@ -442,7 +444,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
 
         svg.append('text')
             .attr('x', sizeX_with_margins * .95 / 2)
-            .attr('y', 9.5 * sizeY_with_margins / 10)
+            .attr('y', 9.8 * sizeY_with_margins / 10)
             .attr('class', 'treemap-text')
             .text('Return to Overview')
             .attr("font-size", "90%")

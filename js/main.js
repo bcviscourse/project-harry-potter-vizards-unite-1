@@ -137,7 +137,7 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
         graphicVisEl.append("div")
             .attr("class", "tooltip")
             .style("opacity", 1)
-            .style("width", 30 + "%")
+            .style("width", 40 + "%")
             .style("height", 15 + "%")
             .style('top', 100 + "%");
 
@@ -317,6 +317,7 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
                             '8B575C',  //rose taupe
                             '#A47FD8', //lavender
                             '#8253EF', //navy purple
+                            'green'
                         ])
             .domain(algos)
 

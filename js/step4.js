@@ -70,16 +70,16 @@ export default function performStep4(chart, svg, timeline,
                 return 0.7 * sizeX_with_margins - d3.event.pageX + "px";
             })
             res.style('top', d3.event.y - offset - 1.2*sizeY_with_margins / 10 + "px");
-            res.style('background-color', colorScaleforLegend(d.algo))
-            if (!['#00FF00', '#ffe119', '#46f0f0', '#bcf60c', '#fabebe', '#e6beff'].includes(colorScaleforLegend(d.algo))) {
-                res.style('color', 'white')
-            }
+            // res.style('background-color', colorScaleforLegend(d.algo))
+            // if (!['#00FF00', '#ffe119', '#46f0f0', '#bcf60c', '#fabebe', '#e6beff'].includes(colorScaleforLegend(d.algo))) {
+            //     res.style('color', 'white')
+            // }
         })
         .on('mouseout', function (d) {
             d3.select(this).select("circle").attr('r', marketScale(d.marketcap))
             let res = d3.selectAll('.tooltip').style('opacity', 0)
-            res.style('color', 'black')
-            res.style('background-color', 'lightgrey')
+            // res.style('color', 'black')
+            // res.style('background-color', 'lightgrey')
         })
 
     // Recalling the legend

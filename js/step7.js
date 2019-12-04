@@ -13,7 +13,7 @@ export default function performStep7(chart, svg, timeline,
         .on("mouseover", function () {
             // Do nothing such that tooltip is removed
         })
-        .transition().duration(800)
+        .transition().duration(400)
         .attr("x", sizeX_with_margins * 1.2)
         .style("opacity", 0).remove()
     d3.selectAll('.treemap-text').remove()

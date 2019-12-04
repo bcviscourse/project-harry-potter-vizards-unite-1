@@ -100,7 +100,7 @@ function scrollstory() {
             throttleType: 'throttle',
             itemfocus: handleItemFocus,
             containerscroll: handleContainerScroll,
-            autoActivateFirstItem: true
+            autoActivateFirstItem: false
         })
     }
 }
