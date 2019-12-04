@@ -13,7 +13,7 @@ function scrollstory() {
         let treemap_first_level = data[2]
         let treemap_second_level = data[3]
         let treemap_third_level = data[4]
-        console.log(market_cap_time_data);
+        // console.log(market_cap_time_data);
         var TOTDATA = [];
         let i = 0;
         //formatting the data:
@@ -41,17 +41,17 @@ function scrollstory() {
         // select elements using jQuery since it is a dependency
         var $graphicEl = $('.graphic')
         var $graphicVisEl = $graphicEl.find('.graphic__vis')
-        console.log($graphicVisEl)
-        console.log(window.innerHeight)
+        // console.log($graphicVisEl)
+        // console.log(window.innerHeight)
 
         // viewport height
         var viewportHeight = window.innerHeight
         var halfViewportHeight = Math.floor(viewportHeight / 2)
         var svgHeight = 9 * Math.floor(viewportHeight / 10)
-        console.log(viewportHeight)
+        // console.log(viewportHeight)
 
         // a global function creates and handles all the vis + updates
-        console.log(data)
+        // console.log(data)
         var graphic = createGraphic(data, time_data, tm_firstlevel, tm_secondlevel, tm_thirdlevel, svgHeight, window.innerWidth)
 
         // handle the fixed/static position of grahpic

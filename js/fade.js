@@ -18,7 +18,7 @@ $(window).on("scroll", function () {
         var tag = tags[i]
     
         if ($(tag).position().top < visibleThreshold
-            && $(tag).position().top > visibleThreshold - 500
+            && $(tag).position().top > visibleThreshold - 800
         ) {
             $(tag).addClass("visible")
         } else {
