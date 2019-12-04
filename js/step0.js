@@ -23,15 +23,62 @@ export default function performStep0(chart, rects, svg, timeline, market_data,
     timeline.transition().style('opacity', 1)
     timeline.raise()
 
+//Gradient hacky hacky
+   var defs = svg.append("defs");
+
+    var gradient = defs.append("linearGradient")
+    .attr("id", "svgGradient")
+    .attr("x1", "0%")
+    .attr("x2", "100%")
+    .attr("y1", "0%")
+    .attr("y2", "0%");
+
+    gradient.append("stop")
+    .attr('class', 'start')
+    .attr("offset", "82.5%")
+    .attr("stop-color", "gray")
+    .attr("stop-opacity", 1);
+
+    gradient.append("stop")
+    .attr('class', 'end')
+    .attr("offset", "82.5%")
+    .attr("stop-color", "red")
+    .attr("stop-opacity", 1);
+
+    gradient.append("stop")
+    .attr('class', 'end')
+    .attr("offset", "92%")
+    .attr("stop-color", "red")
+    .attr("stop-opacity", 1);
+
+    gradient.append("stop")
+    .attr('class', 'end')
+    .attr("offset", "93.5%")
+    .attr("stop-color", "gray")
+    .attr("stop-opacity", 1);
+
+    gradient.append("stop")
+    .attr('class', 'end')
+    .attr("offset", "96%")
+    .attr("stop-color", "gray")
+    .attr("stop-opacity", 1);
+
+    gradient.append("stop")
+    .attr('class', 'end')
+    .attr("offset", "98%")
+    .attr("stop-color", "red")
+    .attr("stop-opacity", 1);
+
     // Create the line for the viz
     var path = timeline.append("path")
         .datum(market_data)
         .attr("fill", "none")
-        .attr("stroke", function (d) {
-            // return (d.x > 50) ? 'red' : 'blue';
-            console.log(d.date);
-            return "black";
-        })
+        // .attr("stroke", function (d) {
+        //     // return (d.x > 50) ? 'red' : 'blue';
+        //     console.log(d.date);
+        //     return "black";
+        // })
+        .attr("stroke", "url(#svgGradient)")
         .attr("stroke-width", 1.5)
         .attr("d", d3.line()
             .x(function (d) { return x(+d.date) })
