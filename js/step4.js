@@ -2,7 +2,7 @@
 export default function performStep4(chart, svg, timeline,
     formatNum, tooltipright, tooltiptop, graphicVisEl, xAxis,
     x_axis_location, sizeX_with_margins, sizeY_with_margins, side_margin, top_margin, colorScaleforLegend,
-    marketScale, newdata) {
+    marketScale, newdata, left_edge) {
     console.log('step  4');
 
     // Remove all unneeded components
@@ -10,6 +10,7 @@ export default function performStep4(chart, svg, timeline,
     d3.selectAll('path').remove()
     d3.selectAll('circle').style('opacity', 1)
     svg.selectAll(".legendSequential").remove()
+    d3.select(".tooltip").style("width", "35%").style("height", "8%")
 
     // Hide timeline:
     d3.selectAll('timeline').transition(t).style('opacity', 0)
@@ -64,22 +65,24 @@ export default function performStep4(chart, svg, timeline,
             var position = d3.select(this).attr("transform")
             var translate = position.substring(position.indexOf("(") + 1, position.indexOf(")")).split(",")
             var offset = d3.event.y - translate[1]
-            res.style('right', function () {
-                if (translate[0] > sizeX_with_margins / 2)
-                    return 1.05 * sizeX_with_margins - d3.event.pageX + "px"; // TOOLTIP TO THE LEFT
-                return 0.7 * sizeX_with_margins - d3.event.pageX + "px";
+            res.style('left', function(){
+                return d3.event.pageX-left_edge-40 + "px"; // TOOLTIP TO THE LEFT
             })
-            res.style('top', d3.event.y - offset - 1.2*sizeY_with_margins / 10 + "px");
-            res.style('background-color', colorScaleforLegend(d.algo))
-            if (!['#00FF00', '#ffe119', '#46f0f0', '#bcf60c', '#fabebe', '#e6beff'].includes(colorScaleforLegend(d.algo))) {
-                res.style('color', 'white')
-            }
+            res.style('top', d3.event.y-offset - 1.2*sizeY_with_margins/10 + "px");
+            // res.style('background-color', colorScaleforLegend(d.algo))
+            // if (!['#00FF00', '#ffe119', '#46f0f0', '#bcf60c', '#fabebe', '#e6beff'].includes(colorScaleforLegend(d.algo))) {
+            //     res.style('color', 'white')
+            // }
+            // res.style('background-color', colorScaleforLegend(d.algo))
+            // if (!['#00FF00', '#ffe119', '#46f0f0', '#bcf60c', '#fabebe', '#e6beff'].includes(colorScaleforLegend(d.algo))) {
+            //     res.style('color', 'white')
+            // }
         })
         .on('mouseout', function (d) {
             d3.select(this).select("circle").attr('r', marketScale(d.marketcap))
             let res = d3.selectAll('.tooltip').style('opacity', 0)
-            res.style('color', 'black')
-            res.style('background-color', 'lightgrey')
+            // res.style('color', 'black')
+            // res.style('background-color', 'lightgrey')
         })
 
     // Recalling the legend

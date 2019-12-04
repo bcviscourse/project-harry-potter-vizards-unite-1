@@ -312,6 +312,7 @@ rect{
 }
 
 .treemap-text{
+  font-family: 'Julius Sans One';
   text-shadow: 2px 2px black;
 }
 
@@ -327,4 +328,8 @@ svg{
   font-family: 'Roboto Slab', serif;
   font-family: 'Julius Sans One', sans-serif;
 
+}
+
+.fast{
+  font-size: 50px;
 }

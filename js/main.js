@@ -40,9 +40,10 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
     var top_margin = 40 // Margin for svg
     var sizeX = parent_width * .72 // Allows the svg to scale to size of browser window
     var sizeY = parent_height // Allows the svg to scale to size of browser window
-    var tooltipright = 60; // Percentage of window tooltip appears on screen
+    var tooltipright = 10; // Percentage of window tooltip appears on screen
     var tooltiptop = 40;
     var minR = sizeX * 0.015 // radius for circles
+    var left_edge = 462 // Used for tooltip positioning
 
     var sumforstep5 = 0; // Used for setting up treemap
     var sumforupdatetree1 = 0;
@@ -69,27 +70,29 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
         // Line chart for history of cryptocurrencies
         function s0() {
             chart, rects, svg, timeline = performStep0(chart, rects, svg, timeline, market_data,
-                x, y, formatNum, tooltipright, tooltiptop, sizeX_with_margins, sizeY_with_margins)
+                x, y, formatNum, tooltipright, tooltiptop, sizeX_with_margins, sizeY_with_margins,
+                graphicVisEl, left_edge)
         },
 
         // Big "balloon" stage
         function s1() {
             chart, svg, timeline, xAxis = performStep1(chart, svg, timeline, chartSize,
-                xAxis, sizeY_with_margins, newdata, translate, graphicVisEl, sizeY)
+                xAxis, sizeY_with_margins, newdata, translate, graphicVisEl, sizeY, left_edge)
         },
 
         // Move grey circles to their correct positions
         function s2() {
             chart, svg, timeline, xAxis, x_axis_location = performStep2(chart, svg, timeline,
                 formatNum, tooltipright, tooltiptop, graphicVisEl, xAxis, x_axis_location,
-                sizeY_with_margins, bottom_margin, translate, minR, scaleX, scaleY, sizeX_with_margins)
+                sizeY_with_margins, bottom_margin, translate, minR, scaleX, scaleY, sizeX_with_margins, left_edge)
         },
 
         // Colors the bubbles according to algo
         function s3() {
             chart, svg, timeline, xAxis = performStep3(chart, svg, timeline,
                 formatNum, tooltipright, tooltiptop, graphicVisEl, xAxis,
-                x_axis_location, sizeX_with_margins, sizeY_with_margins, minR, side_margin, top_margin, colorScaleforLegend, newdata)
+                x_axis_location, sizeX_with_margins, sizeY_with_margins, minR, side_margin, top_margin, colorScaleforLegend, 
+                newdata, left_edge)
         },
 
         // Circle grow in size to represent market cap
@@ -97,14 +100,14 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
             chart, svg, timeline, xAxis = performStep4(chart, svg, timeline,
                 formatNum, tooltipright, tooltiptop, graphicVisEl, xAxis,
                 x_axis_location, sizeX_with_margins,sizeY_with_margins, side_margin, top_margin, colorScaleforLegend,
-                marketScale, newdata)
+                marketScale, newdata, left_edge)
         },
 
         // Circles return to neutral colors:
         function s5() {
             chart, svg, timeline, xAxis = performStep5(chart, svg, timeline,
                 formatNum, tooltipright, tooltiptop, graphicVisEl, marketScale, translate,
-                scaleX, scaleY, xAxis, sizeX_with_margins, sizeY_with_margins)
+                scaleX, scaleY, xAxis, sizeX_with_margins, sizeY_with_margins, left_edge)
         },
 
         // Show the treemap
@@ -150,8 +153,8 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
         graphicVisEl.append("div")
             .attr("class", "tooltip")
             .style("opacity", 1)
-            .style("width", 40 + "%")
-            .style("height", 15 + "%")
+            .style("width", 35 + "%")
+            .style("height", 8 + "%")
             .style('top', 100 + "%");
 
         // Xscale for "circles" vis:
@@ -216,9 +219,8 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
             .range([top_margin, sizeY_with_margins - bottom_margin]);
 
         // Used for step where radius changes depending on market cap
-        var lowestRadius = sizeY_with_margins * .02
-        var highestRadius = sizeY_with_margins * .05
-        var highestRadius = sizeY_with_margins * .5
+        var lowestRadius = sizeY_with_margins * .015
+        var highestRadius = sizeY_with_margins * .2
         marketScale = d3.scaleLinear()
             .domain(d3.extent(newdata, function (d) { return d.marketcap; }))
             .range([lowestRadius, highestRadius]);
@@ -334,6 +336,7 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
                             '8B575C',  //rose taupe
                             '#A47FD8', //lavender
                             '#8253EF', //navy purple
+                            'green'
                         ])
             .domain(algos)
 
