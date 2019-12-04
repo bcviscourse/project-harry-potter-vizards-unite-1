@@ -28,9 +28,17 @@ export default function performStep0(chart, rects, svg, timeline, market_data,
         .datum(market_data)
         .attr("fill", "none")
         .attr("stroke", function(d) {
-            return x(d.date < 400) ? 'darkgrey' : 'red';
+            // if (x(+d.date) < 300) {
+            //     return "darkgrey"
+            // }
+            // else {
+            //     console.log(x(+d.date));
+            //     return "red"
+            // }
+            // console.log(d);
+            return "darkgrey";
         } )
-        .attr("stroke-width", 1)
+        .attr("stroke-width", 1.5)
         .attr("d", d3.line()
             .x(function (d) { return x(+d.date) })
             .y(function (d) { return y(+d.value) })
@@ -75,7 +83,7 @@ export default function performStep0(chart, rects, svg, timeline, market_data,
 
                 d3.select(this).style('cursor', 'pointer')
                 d3.select(this).attr('r', lineCircleRMax).style('fill', 'lightgrey').style('stroke', "black")
-                d3.select(this).style('opacity', 1)
+                d3.select(this).style('opacity', .2)
                 let res = d3.selectAll('.tooltip')
                 res.style('opacity', 1)
                 res.html(dateFormat(d.date) + "</p>"

@@ -6,6 +6,7 @@ import performStep4 from "./step4.js";
 import performStep5 from "./step5.js";
 import performStep6 from "./step6.js";
 import performStep7 from "./step7.js";
+// import performStep8 from "./step8.js";
 
 //next, discuss:
 //treemap tooltip position
@@ -60,6 +61,10 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
 
     // actions to take on each step of our scroll-driven story
     var steps = [
+        // function s_negative1() {
+
+        // },
+
         // Line chart for history of cryptocurrencies
         function s0() {
             chart, rects, svg, timeline = performStep0(chart, rects, svg, timeline, market_data,
@@ -108,11 +113,18 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
                 tooltipright, tooltiptop, root2, root3, side_margin, bottom_margin)
         },
 
+
         // The last step -- final words....
         function s7() {
             svg, chart, timeline = performStep7(chart, svg, timeline,
                 sizeX_with_margins)
         }
+        // ,
+
+        // // dynamic data 
+        // function s8() {
+        //     = performStep8()
+        // }
 
     ]
 
