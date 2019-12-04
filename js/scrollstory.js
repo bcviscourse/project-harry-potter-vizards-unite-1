@@ -1,6 +1,29 @@
 import createGraphic from './main.js';
+import moveText from './dynamic_num.js'
 
 function scrollstory() {
+    var num_cryptos = 0
+    fetch('https://cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/global-metrics/quotes/latest', {
+        // method: "GET",   
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CMC_PRO_API_KEY': '8156fd5c-1e27-4c73-8393-fef3b616fe8d', // put API key
+        },
+        // initialize parameters
+        qs: {
+            'start': '1',
+            'limit': '500',
+            'convert': 'USD'
+        },
+        json: true
+
+    })
+        .then(resp => resp.json())
+        .then(d => {
+            num_cryptos = d.data.total_cryptocurrencies;
+            console.log(num_cryptos)
+        })
+
     Promise.all([
         d3.csv('data/out.csv'),
         d3.csv('data/total-market-cap.csv'),
@@ -35,6 +58,7 @@ function scrollstory() {
         // miningData.filter(entry => entry.year != 0 && entry.year != "");
         // let smallMine = miningData.slice(1, 20)
         setScrollStory(TOTDATA, market_cap_time_data, treemap_first_level, treemap_second_level, treemap_third_level)
+        moveText()
     })
 
     function setScrollStory(data, time_data, tm_firstlevel, tm_secondlevel, tm_thirdlevel) {
