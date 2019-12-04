@@ -4,7 +4,7 @@ var lineCircleRMax = 11;
 
 // Line chart for history of cryptocurrencies
 export default function performStep0(chart, rects, svg, timeline, market_data, 
-    x, y, formatNum, tooltipright, tooltiptop, sizeX_with_margins, sizeY_with_margins, graphicVisEl, left_edge) {
+    x, y, formatNum, tooltipright, tooltiptop, sizeX_with_margins, sizeY_with_margins) {
 
     console.log('step 0, line graph')
 
@@ -14,7 +14,7 @@ export default function performStep0(chart, rects, svg, timeline, market_data,
     d3.selectAll('circle').remove()
     chart.style('opacity', 0)
     rects.style('opacity', 0)
-    d3.selectAll('.tooltip').style("width", "35%").style("height", "8%").style('opacity', 0)
+    d3.selectAll('.tooltip').style('opacity', 0)
     svg.selectAll(".legendSequential").remove()
     d3.selectAll('.treemap-text').remove()
 
@@ -47,25 +47,25 @@ export default function performStep0(chart, rects, svg, timeline, market_data,
 
     gradient.append("stop")
     .attr('class', 'end')
-    .attr("offset", "92%")
+    .attr("offset", "92.75%")
     .attr("stop-color", "red")
     .attr("stop-opacity", 1);
 
     gradient.append("stop")
     .attr('class', 'end')
-    .attr("offset", "93.5%")
+    .attr("offset", "92.75%")
     .attr("stop-color", "gray")
     .attr("stop-opacity", 1);
 
     gradient.append("stop")
     .attr('class', 'end')
-    .attr("offset", "96%")
+    .attr("offset", "96.75%")
     .attr("stop-color", "gray")
     .attr("stop-opacity", 1);
 
     gradient.append("stop")
     .attr('class', 'end')
-    .attr("offset", "98%")
+    .attr("offset", "96.75%")
     .attr("stop-color", "red")
     .attr("stop-opacity", 1);
 
@@ -122,34 +122,25 @@ export default function performStep0(chart, rects, svg, timeline, market_data,
         timeline.selectAll('circle')
             .on('mouseover', function (d, i) {
 
-                // d3.select(this).style('cursor', 'pointer')
+                d3.select(this).style('cursor', 'pointer')
                 d3.select(this).attr('r', lineCircleRMax).style('fill', 'lightgrey').style('stroke', "black")
                 d3.select(this).style('opacity', .2)
                 let res = d3.selectAll('.tooltip')
-                res.style("width")
                 res.style('opacity', 1)
-                var dateString = dateFormat(d.date)
                 res.html(dateFormat(d.date) + "</p>"
                     + formatNum(d.value / 1000) + ' billion');
                 // res.style('right', tooltipright - 10 + "%");
                 // res.style('top', tooltiptop + "%");
+
+                var positionX = d3.select(this).nodes()[0].cx.animVal.value
                 var positionY = d3.select(this).nodes()[0].cy.animVal.value
                 var offset = d3.event.y - positionY
-                res.style('left', function(){
-                    var year = dateString.slice(dateString.length-4, dateString.length)
-                    if (graphicVisEl.nodes()[0].className.includes("is-fixed"))
-                    {
-                        if (year == 2018 || year == 2019)
-                            return d3.event.pageX-left_edge + "px";
-                        return d3.event.pageX-left_edge-120 + "px"; // TOOLTIP TO THE LEFT
-                    }
-                    else{
-                        if (year == 2018 || year == 2019)
-                                return d3.event.pageX-left_edge+80 + "px";
-                        return d3.event.pageX-left_edge-40 + "px"; // TOOLTIP TO THE LEFT
-                    }
+                res.style('right', function(){
+                    if (positionX > sizeX_with_margins/2)
+                        return 1.05*sizeX_with_margins - d3.event.pageX + "px"; // TOOLTIP TO THE LEFT
+                    return 0.8*sizeX_with_margins - d3.event.pageX + "px";
                 })
-                res.style('top', d3.event.y-offset - 1.2*sizeY_with_margins / 10 + "px");
+                res.style('top', d3.event.y-offset - sizeY_with_margins / 10 + "px");
             })
             .on('mouseout', function (d) {
                 d3.select(this).attr('r', lineCircleRMin).style('stroke', "transparent").style('opacity', 0)
