@@ -1,11 +1,11 @@
-section {
+/* section {
     opacity: 0;
     transform: translate(0, 0px); 
     transition: all 0.2s;
-    position: relative;
+    position: absolute;
 }
     
 section.visible {
     opacity: 1;
     transform: translate(0, 0); 
-}
+} */

@@ -27,17 +27,11 @@ export default function performStep0(chart, rects, svg, timeline, market_data,
     var path = timeline.append("path")
         .datum(market_data)
         .attr("fill", "none")
-        .attr("stroke", function(d) {
-            // if (x(+d.date) < 300) {
-            //     return "darkgrey"
-            // }
-            // else {
-            //     console.log(x(+d.date));
-            //     return "red"
-            // }
-            // console.log(d);
-            return "darkgrey";
-        } )
+        .attr("stroke", function (d) {
+            // return (d.x > 50) ? 'red' : 'blue';
+            console.log(d.date);
+            return "black";
+        })
         .attr("stroke-width", 1.5)
         .attr("d", d3.line()
             .x(function (d) { return x(+d.date) })
