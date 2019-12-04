@@ -52,6 +52,7 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
 
     var rects = d3.selectAll('rect') // Selector for treemap
     var formatNum = d3.format('($,.2f'); // Formatting function
+    var formatNum2=d3.format('');
 
     // Various variables -- holds svg, sizes of svg, scales and various other things
     var sizeX_with_margins, sizeY_with_margins, scaleX, scaleY, chartSize, marketScale, xAxis
@@ -235,10 +236,10 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
         }
 
         // Setting up X and Y scales for timeline Viz
+        var date = new Date()
         x = d3.scaleTime()
-            .domain(d3.extent(market_data, function (d) {
-                return +d.date;
-            }))
+            .domain([d3.min(market_data, function(d){
+                return +d.date}), +date+10000000000]) // addding one year
             .range([4 * side_margin, sizeX_with_margins - 4 * side_margin]);
 
         y = d3.scaleLinear()
@@ -247,7 +248,10 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
 
         // Define axes and groups and axes labels:
         var lineXAxis = d3.axisBottom().scale(x);
-        var lineYAxis = d3.axisLeft().scale(y);
+        var lineYAxis = d3.axisLeft().scale(y).tickFormat(function(d){
+            d=d/1000
+            return formatNum2(d)
+        });
 
         // Draw and move axes
         timeline.append('g').call(lineXAxis)
