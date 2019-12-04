@@ -30,6 +30,13 @@ body {
   text-align: center;
 }
 
+.section_header {
+  font-family: 'Julius Sans One', sans-serif;
+  font-size: 30px;
+  color: #3f3f3f;
+  text-align: right;
+}
+
 .names {
   font-family: 'Roboto Slab', serif;
   font-family: 'Cormorant', serif;
@@ -41,6 +48,11 @@ body {
 
   text-align: center;
   /* margin-bottom: 200px; */
+}
+
+.arrow {
+  text-align: center;
+  animation: aggro_float 1s infinite;
 }
 
 .footer {
@@ -67,6 +79,12 @@ body {
     to {background-color: white;} */
 }
 
+/* for the arrow */
+@keyframes aggro_float {
+  50%{
+      transform: translateY(-40%);
+  }
+}
 
 .balloon_container {
   height: 500px;

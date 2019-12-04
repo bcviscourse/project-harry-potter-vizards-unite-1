@@ -205,6 +205,7 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
         // Used for step where radius changes depending on market cap
         var lowestRadius = sizeY_with_margins * .02
         var highestRadius = sizeY_with_margins * .05
+        var highestRadius = sizeY_with_margins * .5
         marketScale = d3.scaleLinear()
             .domain(d3.extent(newdata, function (d) { return d.marketcap; }))
             .range([lowestRadius, highestRadius]);
