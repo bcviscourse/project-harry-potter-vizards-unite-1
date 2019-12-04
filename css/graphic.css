@@ -11,10 +11,11 @@
 	/* height: 100vh; */
 	/* height: 800px; */
 	color: #000000;
+	color: #3f3f3f;
 	padding: 30px;
-	margin-left:150px;
-	margin-right:150px;
-	text-align: center;
+	margin-left:210px;
+	margin-right:210px;
+	text-align: left;
 	font-size: 20px;
 }
 
@@ -25,6 +26,7 @@
 	/* height: 100vh; */
 	/* height: 800px; */
 	color: #000000;
+	color: #3f3f3f;
 	padding: 30px;
 	margin-left:150px;
 	margin-right:150px;
