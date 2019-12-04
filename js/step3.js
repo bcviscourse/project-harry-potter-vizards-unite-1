@@ -1,13 +1,14 @@
 // Colors the bubbles according to algo.
 export default function step3(chart, svg, timeline,
     formatNum, tooltipright, tooltiptop, graphicVisEl, xAxis,
-    x_axis_location, sizeX_with_margins, sizeY_with_margins, minR, side_margin, top_margin, colorScaleforLegend, newdata) {
+    x_axis_location, sizeX_with_margins, sizeY_with_margins, minR, side_margin, top_margin, colorScaleforLegend, newdata, left_edge) {
     console.log('step  3');
 
     // Remove all unneeded components
     d3.selectAll('rect').remove();
     d3.selectAll('path').remove()
     d3.selectAll('circle').style('opacity', 1)
+    d3.select(".tooltip").style("width", "35%").style("height", "8%")
 
     // Hide timeline:
     d3.selectAll('timeline').transition(t).style('opacity', 0)
@@ -107,12 +108,10 @@ export default function step3(chart, svg, timeline,
             var position = d3.select(this).attr("transform")
             var translate = position.substring(position.indexOf("(") + 1, position.indexOf(")")).split(",")
             var offset = d3.event.y - translate[1]
-            res.style('right', function () {
-                if (translate[0] > sizeX_with_margins / 2)
-                    return 1.05 * sizeX_with_margins - d3.event.pageX + "px"; // TOOLTIP TO THE LEFT
-                return 0.7 * sizeX_with_margins - d3.event.pageX + "px";
+            res.style('left', function(){
+                return d3.event.pageX-left_edge-40 + "px"; // TOOLTIP TO THE LEFT
             })
-            res.style('top', d3.event.y-offset - sizeY_with_margins/10 + "px");
+            res.style('top', d3.event.y-offset - 1.2*sizeY_with_margins/10 + "px");
             // res.style('background-color', colorScaleforLegend(d.algo))
             // if (!['#00FF00', '#ffe119', '#46f0f0', '#bcf60c', '#fabebe', '#e6beff'].includes(colorScaleforLegend(d.algo))) {
             //     res.style('color', 'white')

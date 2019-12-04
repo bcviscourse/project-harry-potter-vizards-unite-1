@@ -1,14 +1,16 @@
 // Move grey circles to their correct positions
 export default function performStep2(chart, svg, timeline, 
     formatNum, tooltipright, tooltiptop, graphicVisEl, xAxis,
-    x_axis_location, sizeY_with_margins, bottom_margin, translate, minR, scaleX, scaleY, sizeX_with_margins) {
+    x_axis_location, sizeY_with_margins, bottom_margin, translate, minR, scaleX, scaleY, sizeX_with_margins, left_edge) {
     console.log('step  2');
 
     // Remove all unneeded components
     d3.selectAll('rect').remove();
     d3.selectAll(".circleText").remove();
-    d3.selectAll(".bigText").transition().duration(1000).style('opacity', 0)
+    d3.selectAll(".bigText").transition().duration(1000).style('opacity', 0).transition().duration(1).attr("x", sizeX_with_margins * 1.2 + "px")
+    // d3.selectAll(".bigText").attr("x", sizeX_with_margins * 1.2 + "px")
     svg.selectAll(".legendSequential").transition().style('opacity', 0).remove()
+    d3.select(".tooltip").style("width", "35%").style("height", "8%")
 
     // Hide old tooltip:
     timeline.selectAll('.circle').selectAll('.tooltip').style('opacity', 0)
@@ -94,12 +96,11 @@ export default function performStep2(chart, svg, timeline,
             var position = d3.select(this).attr("transform")
             var translate = position.substring(position.indexOf("(")+1, position.indexOf(")")).split(",")
             var offset = d3.event.y - translate[1]
-            res.style('right', function(){
-                if (translate[0] > sizeX_with_margins/2)
-                    return 1.05*sizeX_with_margins - d3.event.pageX + "px"; // TOOLTIP TO THE LEFT
-                return 0.7*sizeX_with_margins - d3.event.pageX + "px";
+            res.style('left', function(){
+                console.log(d3.event.pageX-left_edge-40)
+                return d3.event.pageX-left_edge-40 + "px"; // TOOLTIP TO THE LEFT
             })
-            res.style('top', d3.event.y-offset - sizeY_with_margins/10 + "px");
+            res.style('top', d3.event.y-offset - 1.2*sizeY_with_margins/10 + "px");
             res.style('opacity', 1)
 
             // var position = d3.select(this).nodes()[0].cy.animVal.value

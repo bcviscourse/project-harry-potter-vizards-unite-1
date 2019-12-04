@@ -10,7 +10,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
     d3.selectAll(".y-axis").transition().duration(1000).style('opacity', 0)
 
     d3.selectAll('circle').transition().duration(500).ease(d3.easeLinear)
-        .attr('cy', sizeY_with_margins + 10)
+        .attr('cy', sizeY_with_margins * 1.2)
         .transition().duration(300)
         .style('fill', 'brown')
     timeline.lower()
@@ -30,7 +30,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
         chart.lower()
         d3.selectAll('.x-axis').transition(t).style('opacity', 0)
         d3.selectAll('item text').transition(t).style('opacity', 0)
-        d3.selectAll('.tooltip')
+        d3.selectAll('.tooltip').style("width", "43%").style("height", "15%")
             // .style("color", "white")
             // .style("background-color", "grey")
             .transition(t).style('opacity', 0)
@@ -135,12 +135,8 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
                 // var position = res.attr("transform")
                 // var translate = position.substring(position.indexOf("(")+1, position.indexOf(")")).split(",")
                 // var offset = d3.event.y - translate[1]
-                res.style('right', function(){
-                    // if (translate[0] > sizeX_with_margins/2)
-                    //     return 1.05*sizeX_with_margins - d3.event.pageX + "px"; // TOOLTIP TO THE LEFT
-                    return 0.7*sizeX_with_margins - d3.event.pageX + 500+ "px";
-                })
-                res.style('top', d3.event.y - sizeY_with_margins/3 + "px");
+                res.style('left', tooltipright+'%')
+                res.style('top', tooltiptop + "%");
                 res.style('opacity', 1)
             })
             .on('mouseout', function (d) {
@@ -278,14 +274,8 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
                     + '<br><category>Market Cap:</category> '
                     + formatNum(d.data.marketcap)
                     + "<br><category> " + ((d.data.marketcap / bitcoinTotal) * 100).toFixed(3) + "%</category> of Bitcoin's Market Cap");
-                    // res.style('right', tooltipright + "%");
-                    // res.style('top', tooltiptop + "%");
-                    res.style('right', function(){
-                        // if (translate[0] > sizeX_with_margins/2)
-                        //     return 1.05*sizeX_with_margins - d3.event.pageX + "px"; // TOOLTIP TO THE LEFT
-                        return 0.7*sizeX_with_margins - d3.event.pageX + 500+ "px";
-                    })
-                    res.style('top', d3.event.y - sizeY_with_margins/3 + "px");
+                    res.style('left', tooltipright+'%')
+                    res.style('top', tooltiptop + "%");
                     res.style('opacity', 1)
                 }
             })
@@ -394,14 +384,8 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
                     + '<br><category>Market Cap:</category> '
                     + formatNum(d.data.marketcap)
                     + "<br><category> " + ((d.data.marketcap / bitcoinTotal) * 100).toFixed(3) + "%</category> of Bitcoin's Market Cap");
-                    // res.style('right', tooltipright + "%");
-                    // res.style('top', tooltiptop + "%");
-                    res.style('right', function(){
-                        // if (translate[0] > sizeX_with_margins/2)
-                        //     return 1.05*sizeX_with_margins - d3.event.pageX + "px"; // TOOLTIP TO THE LEFT
-                        return 0.7*sizeX_with_margins - d3.event.pageX + 500+ "px";
-                    })
-                    res.style('top', d3.event.y - sizeY_with_margins/3 + "px");
+                    res.style('left', tooltipright+'%')
+                    res.style('top', tooltiptop + "%");
                     res.style('opacity', 1)
                 }
             })
