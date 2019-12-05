@@ -11,7 +11,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
     console.log('step 6')
     d3.selectAll('svg.pack').raise()
     d3.selectAll('svg.firstvis').lower()
-    d3.selectAll('.timeline').remove();
+    d3.selectAll('.timeline').lower();
 
     var algos = [];
     for (let i = 0; i < treedata.length; i++) {
