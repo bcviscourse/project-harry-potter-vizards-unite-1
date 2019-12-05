@@ -138,7 +138,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
                                 res.style('left', function(){
                                     return d3.event.pageX-left_edge-100 + "px"; // TOOLTIP TO THE LEFT
                                 })
-                                res.style('top', d3.event.y-offset - 1.2*sizeY_with_margins/6 + "px");
+                                res.style('top', d3.event.y-offset - 1.3*sizeY_with_margins/6 + "px");
                                 res.style('height', '100px')
                             res.style('opacity', 1)
                 }
