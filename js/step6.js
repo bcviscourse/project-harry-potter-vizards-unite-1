@@ -30,7 +30,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
         chart.lower()
         d3.selectAll('.x-axis').transition(t).style('opacity', 0)
         d3.selectAll('item text').transition(t).style('opacity', 0)
-        d3.selectAll('.tooltip').style("width", "43%").style("height", "15%")
+        d3.selectAll('.tooltip').style("width", "43%").style("height", "20%")
             // .style("color", "white")
             // .style("background-color", "grey")
             .transition(t).style('opacity', 0)

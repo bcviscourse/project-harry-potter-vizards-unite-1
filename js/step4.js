@@ -10,7 +10,7 @@ export default function performStep4(chart, svg, timeline,
     d3.selectAll('path').remove()
     d3.selectAll('circle').style('opacity', 1)
     svg.selectAll(".legendSequential").remove()
-    d3.select(".tooltip").style("width", "35%").style("height", "8%")
+    d3.select(".tooltip").style("width", "35%").style("height", "10%")
 
     // Hide timeline:
     d3.selectAll('timeline').transition(t).style('opacity', 0)

@@ -1,0 +1,101 @@
+cmc_rank,id,name,num_market_pairs,market_cap,slug,symbol,algo
+1,1,Bitcoin,7719,1.35E+11,bitcoin,BTC,Proof-of-Work
+2,1027,Ethereum,5335,16310931947,ethereum,ETH,Proof-of-Work
+3,52,XRP,508,9521243490,xrp,XRP,Consensus
+4,825,Tether,3926,4112977884,tether,USDT,Stablecoin
+5,1831,Bitcoin Cash,440,3870456809,bitcoin-cash,BCH,Proof-of-Work
+6,2,Litecoin,557,2930375105,litecoin,LTC,Proof-of-Work
+7,1765,EOS,394,2532452573,eos,EOS,Delegated Proof-of-Stake
+8,1839,Binance Coin,283,2421241044,binance-coin,BNB,Proof-of-Stake
+9,3602,Bitcoin SV,154,1744307163,bitcoin-sv,BSV,Proof-of-Work
+10,512,Stellar,306,1127775512,stellar,XLM,Consensus
+11,2010,Cardano,118,989918095.2,cardano,ADA,Delegated Proof-of-Stake
+12,1958,TRON,300,981789205.2,tron,TRX,Delegated Proof-of-Stake
+13,328,Monero,129,942560170.7,monero,XMR,Proof-of-Work
+14,3957,UNUS SED LEO,26,919684237.4,unus-sed-leo,LEO,Proof-of-Work
+15,2011,Tezos,55,851287450.1,tezos,XTZ,Delegated Proof-of-Stake
+16,1975,Chainlink,120,731083186.3,chainlink,LINK,Proof-of-Stake
+17,3794,Cosmos,99,700500024.4,cosmos,ATOM,Proof-of-Stake
+18,2502,Huobi Token,128,697978576.7,huobi-token,HT,Proof-of-Stake
+19,1376,NEO,226,632584658.4,neo,NEO,Proof-of-Stake
+20,1720,IOTA,48,565223595.1,iota,MIOTA,Proof-of-Work
+21,1518,Maker,70,553309127.8,maker,MKR,Proof-of-Work
+22,131,Dash,271,474612556.8,dash,DASH,Proof-of-Work
+23,3408,USD Coin,182,463219150.1,usd-coin,USDC,Stablecoin
+24,1321,Ethereum Classic,220,442363941.4,ethereum-classic,ETC,Proof-of-Work
+25,3077,VeChain,85,404468059.2,vechain,VET,Proof-of-Authority
+26,2566,Ontology,106,390638346.9,ontology,ONT,Proof-of-Stake
+27,873,NEM,96,326064881.1,nem,XEM,Proof-of-Importance
+28,3635,Crypto.com Coin,38,324190251.7,crypto-com-coin,CRO,Proof-of-Work
+29,74,Dogecoin,287,271647861.7,dogecoin,DOGE,Proof-of-Work
+30,1697,Basic Attention Token,161,252604141.9,basic-attention-token,BAT,Proof-of-Work
+31,3330,Paxos Standard,96,240612098,paxos-standard,PAX,Stablecoin
+32,1437,Zcash,223,219157387.2,zcash,ZEC,Proof-of-Work
+33,3662,HedgeTrade,8,210377287.3,hedgetrade,HEDG,N/A
+34,1168,Decred,47,209474953.3,decred,DCR,Proof-of-Stake
+35,3296,MINDOL,13,207768470.7,mindol,MIN,Proof-of-Work
+36,2586,Synthetix Network Token,7,194430244.4,synthetix-network-token,SNX,N/A
+37,1684,Qtum,178,168422615.5,qtum,QTUM,Proof-of-Stake
+38,2563,TrueUSD,147,157584077.6,trueusd,TUSD,Stablecoin
+39,2585,Centrality,2,145914817.9,centrality,CENNZ,Proof-of-Work/Proof-of-Stake
+40,1896,0x,175,144700067,0x,ZRX,Proof-of-Stake
+41,2577,Ravencoin,45,139748017.2,ravencoin,RVN,Proof-of-Work
+42,4030,Algorand,60,126376491.2,algorand,ALGO,Proof-of-Stake
+43,2682,Holo,62,125894597.2,holo,HOT,Consensus
+44,2830,Seele,14,113795507.1,seele,SEELE,Proof-of-Work
+45,1104,Augur,67,112107443.1,augur,REP,Proof-of-Stake
+46,1567,Nano,50,110411947.5,nano,NANO,Proof-of-Stake
+47,2083,Bitcoin Gold,84,105652742,bitcoin-gold,BTG,Proof-of-Work
+48,1808,OmiseGO,203,104585229.6,omisego,OMG,Proof-of-Stake
+49,3704,V Systems,33,98063005.21,v-systems,VSYS,Proof-of-Stake
+50,3437,ABBC Coin,39,95685150.82,abbc-coin,ABBC,Proof-of-Stake
+51,4195,FTX Token,13,93450876.01,ftx-token,FTT,Proof-of-Work
+52,3351,ZB,10,89909455.19,zb,ZB,Proof-of-Work
+53,109,DigiByte,78,84769741.27,digibyte,DGB,Proof-of-Work
+54,1214,Lisk,61,82469043.69,lisk,LSK,Delegated Proof-of-Stake
+55,1866,Bytom,50,80587497.83,bytom,BTM,Proof-of-Work
+56,3890,Matic Network,31,80580276.8,matic-network,MATIC,Proof-of-Stake
+57,1521,Komodo,23,80532463.85,komodo,KMD,Proof-of-Work
+58,2087,KuCoin Shares,15,79859900.94,kucoin-shares,KCS,Proof-of-Stake
+59,2453,EDUCare,6,77799965.92,educare,EKT,Proof-of-Work
+60,4172,LUNA,10,72616735.06,luna,LUNA,Delegated Proof-of-Stake
+61,4279,Swipe,9,70745363.01,swipe,SXP,Proof-of-Work
+62,2405,IOST,84,69384217.43,iostoken,IOST,Proof-of-Stake
+63,2222,Bitcoin Diamond,25,68810856.79,bitcoin-diamond,BCD,Proof-of-Work
+64,2099,ICON,63,67369062.39,icon,ICX,Proof-of-Stake
+65,3718,BitTorrent,129,65837253.7,bittorrent,BTT,Delegated Proof-of-Stake
+66,2416,THETA,30,65140588.88,theta,THETA,Proof-of-Work
+67,1042,Siacoin,38,64375669.96,siacoin,SC,Proof-of-Work
+68,1776,MCO,57,63977987.97,crypto-com,MCO,Consensus
+69,693,Verge,59,63963898.02,verge,XVG,Proof-of-Work
+70,2441,Molecular Future,11,63186690.62,molecular-future,MOF,N/A
+71,3155,Quant,18,61421686.1,quant,QNT,Proof-of-Work
+72,2130,Enjin Coin,52,60545377.07,enjin-coin,ENJ,Proof-of-Work
+73,2308,Single Collateral DAI ,45,59994147.49,single-collateral-dai,SAI,Stablecoin
+74,213,MonaCoin,14,59248082.13,monacoin,MONA,Proof-of-Work
+75,1274,Waves,142,58583590.46,waves,WAVES,Proof-of-Stake
+76,372,Bytecoin,11,58563526.66,bytecoin-bcn,BCN,Proof-of-Work
+77,3139,DxChain Token,8,57260510.47,dxchain-token,DX,N/A
+78,463,BitShares,85,56351982.06,bitshares,BTS,Delegated Proof-of-Stake
+79,2469,Zilliqa,104,55309113.48,zilliqa,ZIL,Proof-of-Work
+80,291,MaidSafeCoin,6,55121256.55,maidsafecoin,MAID,Consensus
+81,1903,HyperCash,32,54754530.38,hypercash,HC,Proof-of-Stake
+82,2694,Nexo,21,53784804.56,nexo,NEXO,Proof-of-Work
+83,1320,Ardor,26,48544103.58,ardor,ARDR,Proof-of-Stake
+84,1700,Aeternity,51,46957564.28,aeternity,AE,Proof-of-Work/Proof-of-Stake
+85,1637,iExec RLC,17,44282536,rlc,RLC,Proof-of-Work
+86,1230,Steem,33,43493670.57,steem,STEEM,Delegated Proof-of-Stake
+87,1698,Horizen,34,41143310.78,horizen,ZEN,Proof-of-Work
+88,4066,Chiliz,10,40406321.87,chiliz,CHZ,Proof-of-Work
+89,3724,SOLVE,9,39607311.31,solve,SOLVE,N/A
+90,3773,Fetch.ai,28,38788459.09,fetch,FET,Proof-of-Stake
+91,2137,Electroneum,20,38059512.3,electroneum,ETN,Proof-of-Work
+92,1759,Status,86,37978952.23,status,SNT,Proof-of-Work
+93,2603,Pundi X,69,37221848.87,pundi-x,NPXS,Proof-of-Stake
+94,2044,Enigma,27,36791148.38,enigma,ENG,Proof-of-Stake
+95,1455,Golem,98,36440070.61,golem-network-tokens,GNT,Proof-of-Work
+96,3617,ILCoin,26,36214606.42,ilcoin,ILC,Proof-of-Work
+97,2447,Crypterium,9,36075210.6,crpt,CRPT,N/A
+98,2772,Digitex Futures,7,35967337.09,digitex-futures,DGTX,N/A
+99,1229,DigixDAO,27,35909146.59,digixdao,DGD,Proof-of-Provenance
+100,2989,STASIS EURO,29,35235885.35,stasis-euro,EURS,Stablecoin

@@ -5,7 +5,7 @@ export default function performStep5(chart, svg, timeline,
     console.log('step  5');
 
     // Remove all unneeded components
-    d3.select(".tooltip").style("width", "35%").style("height", "8%")
+    d3.select(".tooltip").style("width", "35%").style("height", "10%")
         // .style("background-color", "lightgrey").style("color", "black")
         .transition().duration(300).style("opacity", 0)
     d3.selectAll('path').remove()

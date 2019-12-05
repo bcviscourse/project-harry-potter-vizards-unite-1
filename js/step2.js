@@ -10,7 +10,7 @@ export default function performStep2(chart, svg, timeline,
     d3.selectAll(".bigText").transition().duration(1000).style('opacity', 0).transition().duration(1).attr("x", sizeX_with_margins * 1.2 + "px")
     // d3.selectAll(".bigText").attr("x", sizeX_with_margins * 1.2 + "px")
     svg.selectAll(".legendSequential").transition().style('opacity', 0).remove()
-    d3.select(".tooltip").style("width", "35%").style("height", "8%")
+    d3.select(".tooltip").style("width", "35%").style("height", "10%")
 
     // Hide old tooltip:
     timeline.selectAll('.circle').selectAll('.tooltip').style('opacity', 0)

@@ -1,4 +1,34 @@
 
+// Where element is the DOM element you'd like to test for visibility
+function isHidden(element) {
+    return (element.offsetParent === null)
+}
+
+//IS VISIBLE
+function isVisible(elem) {
+    if (!(elem instanceof Element)) throw Error('DomUtil: elem is not an element.');
+    const style = getComputedStyle(elem);
+    if (style.display === 'none') return false;
+    if (style.visibility !== 'visible') return false;
+    if (style.opacity < 0.1) return false;
+    if (elem.offsetWidth + elem.offsetHeight + elem.getBoundingClientRect().height +
+        elem.getBoundingClientRect().width === 0) {
+        return false;
+    }
+    const elemCenter = {
+        x: elem.getBoundingClientRect().left + elem.offsetWidth / 2,
+        y: elem.getBoundingClientRect().top + elem.offsetHeight / 2
+    };
+    if (elemCenter.x < 0) return false;
+    if (elemCenter.x > (document.documentElement.clientWidth || window.innerWidth)) return false;
+    if (elemCenter.y < 0) return false;
+    if (elemCenter.y > (document.documentElement.clientHeight || window.innerHeight)) return false;
+    let pointContainer = document.elementFromPoint(elemCenter.x, elemCenter.y);
+    do {
+        if (pointContainer === elem) return true;
+    } while (pointContainer = pointContainer.parentNode);
+    return false;
+}
 
 $(window).on("scroll", function () {
     //How far you've scrolled
@@ -74,6 +104,20 @@ $(window).on("scroll", function () {
         // }
     }
 
+    //This works better. Used for the scrollytelling points.
+    var storyTags = $("section")
+    //Independently check each section
+    for (var i = 0; i < tags.length; i++) {
+        var tag = storyTags[i]
+
+        if (isVisible(tag)) {
+            $(tag).addClass("visible")
+        } else {
+            $(tag).removeClass("visible")
+        }
+
+    }
+
     function moveText() {
         var num_cryptos = 4290
         fetch('https://cors-anywhere.herokuapp.com/https://pro-api.coinmarketcap.com/v1/global-metrics/quotes/latest', {
@@ -89,7 +133,7 @@ $(window).on("scroll", function () {
                 'convert': 'USD'
             },
             json: true
-    
+
         })
             .then(resp => resp.json())
             .then(d => {
@@ -98,8 +142,7 @@ $(window).on("scroll", function () {
                 var duration = 1000;
                 console.log(num_cryptos)
                 var end_val = [num_cryptos];
-                if (d3.selectAll(".moving_text").selectAll("svg").nodes().length>0)
-                {
+                if (d3.selectAll(".moving_text").selectAll("svg").nodes().length > 0) {
                     d3.selectAll(".moving_text").selectAll("svg").remove()
                 }
                 var qSVG = d3.select(".moving_text").append("svg").attr("width", 150).attr("height", 60);
@@ -120,21 +163,20 @@ $(window).on("scroll", function () {
                         var i = d3.interpolate(this.textContent, d),
                             prec = (d + "").split("."),
                             round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
-    
+
                         return function (t) {
                             this.textContent = Math.round(i(t) * round) / round;
                         };
                     })
             })
-            .catch(function(){
+            .catch(function () {
                 console.log("FUNCTION FAILED")
                 var num_cryptos = 4890; // EXCEPTION AT TIME OF CREATING PROJECT
                 var start_val = 0;
                 var duration = 1000;
                 console.log(num_cryptos)
                 var end_val = [num_cryptos];
-                if (d3.selectAll(".moving_text").selectAll("svg").nodes().length>0)
-                {
+                if (d3.selectAll(".moving_text").selectAll("svg").nodes().length > 0) {
                     d3.selectAll(".moving_text").selectAll("svg").remove()
                 }
                 var qSVG = d3.select(".moving_text").append("svg").attr("width", 150).attr("height", 60);
@@ -155,16 +197,14 @@ $(window).on("scroll", function () {
                         var i = d3.interpolate(this.textContent, d),
                             prec = (d + "").split("."),
                             round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
-    
+
                         return function (t) {
                             this.textContent = Math.round(i(t) * round) / round;
                         };
                     })
             })
     }
-}
-
-)
+})
 
 // $(document).ready(function() {
 //     $(window).scroll(function(event) {

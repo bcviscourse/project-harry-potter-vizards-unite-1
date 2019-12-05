@@ -14,7 +14,7 @@ export default function performStep0(chart, rects, svg, timeline, market_data,
     d3.selectAll('circle').remove()
     chart.style('opacity', 0)
     rects.style('opacity', 0)
-    d3.selectAll('.tooltip').style('opacity', 0)
+    d3.selectAll('.tooltip').style('opacity', 0).style("width", "35%").style("height", "10%")
     svg.selectAll(".legendSequential").remove()
     d3.selectAll('.treemap-text').remove()
 

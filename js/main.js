@@ -154,7 +154,7 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
             .attr("class", "tooltip")
             .style("opacity", 1)
             .style("width", 35 + "%")
-            .style("height", 8 + "%")
+            .style("height", 10 + "%")
             .style('top', 100 + "%");
 
         // Xscale for "circles" vis:
