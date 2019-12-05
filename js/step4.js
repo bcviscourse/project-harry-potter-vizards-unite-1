@@ -4,6 +4,7 @@ export default function performStep4(chart, svg, timeline,
     x_axis_location, sizeX_with_margins, sizeY_with_margins, side_margin, top_margin, colorScaleforLegend,
     marketScale, newdata, left_edge) {
     console.log('step  4');
+    d3.selectAll('.pack').remove()
 
     // Remove all unneeded components
     d3.selectAll('rect').remove();
