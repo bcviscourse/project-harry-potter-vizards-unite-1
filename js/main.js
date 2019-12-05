@@ -113,8 +113,8 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
         // Show the treemap
         function s6() {
             chart, svg, timeline, rects = performStep6(chart, svg, timeline, rects, sizeY_with_margins,
-                sizeX_with_margins, treedata, colorScaleforTreeMap, formatNum, bitcoinTotal,
-                tooltipright, tooltiptop, root2, root3, side_margin, bottom_margin)
+                sizeX_with_margins, treedata, colorScaleforLegend, formatNum, bitcoinTotal,
+                tooltipright, tooltiptop, root2, root3, side_margin, bottom_margin, left_edge)
         },
 
 
