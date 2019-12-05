@@ -25,7 +25,7 @@ function scrollstory() {
     //     })
 
     Promise.all([
-        d3.csv('data/new_market_cap.csv'),
+        d3.csv('data/out.csv'),
         d3.csv('data/total-market-cap.csv'),
         d3.json('data/treedata_first-level.json'),
         d3.json('data/treedata_second-level.json'),
