@@ -110,6 +110,12 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
                 scaleX, scaleY, xAxis, sizeX_with_margins, sizeY_with_margins, left_edge)
         },
 
+        function s55(){
+            chart, svg, timeline, xAxis = performStep55(chart, svg, timeline,
+                formatNum, tooltipright, tooltiptop, graphicVisEl, marketScale, translate,
+                scaleX, scaleY, xAxis, sizeX_with_margins, sizeY_with_margins, left_edge)
+        },
+
         // Show the treemap
         function s6() {
             chart, svg, timeline, rects = performStep6(chart, svg, timeline, rects, sizeY_with_margins,
