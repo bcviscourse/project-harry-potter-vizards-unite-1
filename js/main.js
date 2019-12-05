@@ -182,25 +182,16 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
             .style("opacity", 0)
 
         // Label of min and max market caps, also year label
-        svg.append("text")
-            .classed("y-axis", true)
-            .attr("transform", "rotate(-90)")
-            .attr("x", -1 * top_margin*1.5)
-            .attr("y", side_margin)
-            .style("text-anchor", "middle")
-            .style('fill', 'darkgrey')
-            .style("opacity", 0)
-            .text("Highest M.C.");
 
         svg.append("text")
             .classed("y-axis", true)
             .attr("transform", "rotate(-90)")
-            .attr("x", -1 * (sizeY_with_margins-bottom_margin*1.5))
+            .attr("x", -1 * (sizeY_with_margins/2))
             .attr("y", .8* side_margin)
             .style("text-anchor", "middle")
             .style('fill', 'darkgrey')
             .style("opacity", 0)
-            .text("Lowest M.C.");
+            .text("Ranking by Market Cap (Highest to Lowest)");
 
         svg.append("text")
             .classed("y-axis", true)
