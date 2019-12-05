@@ -327,23 +327,31 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
         colorScaleforTreeMap = 
         d3.scaleOrdinal([   
                             //If we use 8, we cut every other color
+
                             '#62BEC1', //lapis lazuli
-                            '#008DD5', //rich electric blue
-                            '#125ACE', //denim
-                            '#4B69ED', //ultramarine blue
                             '#677DE0', //united nations blue
-                            '#A2BCE0', //pale cerulean
-                            '#E55E84', //blush
-                            '#EF8354', //light red ochre
                             '#EDAFB8', //Nadeshiko pink
-                            '#9C3848', //smoky topaz
-                            '#71720C', //bronze yellow
                             '#B75671', //china rose
                             '#C98986', //puce
-                            '8B575C',  //rose taupe
                             '#A47FD8', //lavender
-                            '#8253EF', //navy purple
-                            'green'
+
+                            // '#62BEC1', //lapis lazuli
+                            // '#008DD5', //rich electric blue
+                            // '#125ACE', //denim
+                            // '#4B69ED', //ultramarine blue
+                            // '#677DE0', //united nations blue
+                            // '#A2BCE0', //pale cerulean
+                            // '#E55E84', //blush
+                            // '#EF8354', //light red ochre
+                            // '#EDAFB8', //Nadeshiko pink
+                            // '#9C3848', //smoky topaz
+                            // '#71720C', //bronze yellow
+                            // '#B75671', //china rose
+                            // '#C98986', //puce
+                            // '8B575C',  //rose taupe
+                            // '#A47FD8', //lavender
+                            // '#8253EF', //navy purple
+                            // 'green'
                         ])
             .domain(algos)
 
