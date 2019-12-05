@@ -7,6 +7,7 @@ export default function performStep0(chart, rects, svg, timeline, market_data,
     x, y, formatNum, tooltipright, tooltiptop, sizeX_with_margins, sizeY_with_margins, left_edge) {
 
     console.log('step 0, line graph')
+    d3.selectAll('.pack').remove()
 
     // Remove all unneeded components
     d3.selectAll('rect').remove();
