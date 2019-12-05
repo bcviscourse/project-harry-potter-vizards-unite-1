@@ -69,9 +69,9 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
 
         // Line chart for history of cryptocurrencies
         function s0() {
-            chart, rects, svg, timeline = performStep0(chart, rects, svg, timeline, market_data,
-                x, y, formatNum, tooltipright, tooltiptop, sizeX_with_margins, sizeY_with_margins,
-                graphicVisEl, left_edge)
+            chart, rects, svg, timeline = performStep0(chart, rects, svg, timeline, market_data, 
+                x, y, formatNum, tooltipright, tooltiptop, sizeX_with_margins, sizeY_with_margins, 
+                left_edge)
         },
 
         // Big "balloon" stage

@@ -25,7 +25,7 @@ function scrollstory() {
     //     })
 
     Promise.all([
-        d3.csv('data/out.csv'),
+        d3.csv('data/new_market_cap.csv'),
         d3.csv('data/total-market-cap.csv'),
         d3.json('data/treedata_first-level.json'),
         d3.json('data/treedata_second-level.json'),
@@ -49,8 +49,8 @@ function scrollstory() {
                     algo: miningData[i].algo,
                     year: +miningData[i].year,
                     marketcap: +miningData[i].marketcap,
-                    circulatingsupply: + miningData[i].circulatingsupply,
-                    price: +miningData[i].price
+                    // circulatingsupply: + miningData[i].circulatingsupply,
+                    // price: +miningData[i].price
                 };
                 count++;
             }
