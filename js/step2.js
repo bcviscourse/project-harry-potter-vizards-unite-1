@@ -3,6 +3,7 @@ export default function performStep2(chart, svg, timeline,
     formatNum, tooltipright, tooltiptop, graphicVisEl, xAxis,
     x_axis_location, sizeY_with_margins, bottom_margin, translate, minR, scaleX, scaleY, sizeX_with_margins, left_edge) {
     console.log('step  2');
+    d3.selectAll('.pack').remove()
 
     // Remove all unneeded components
     d3.selectAll('rect').remove();
