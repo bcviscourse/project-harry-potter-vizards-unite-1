@@ -87,7 +87,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
             .data(root.children)
             .enter()
             .append('circle')
-            .transition().attr('opacity', 1)
+            .style('opacity',0)
             .attr('cx', function (d) {
                 return d.x;
             })
@@ -96,6 +96,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
             .style('fill', 'none')
             .style('stroke', 'grey')
             .attr('class', 'packedCircles')
+            .transition().style('opacity', 1)
 
 
         svg
@@ -103,7 +104,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
             .data(descendants)
             .enter()
             .append('circle')
-            .transition().attr('opacity', 1)
+            .style('opacity',0)
             .attr('class', 'smallcircle')
             .attr('cx', function (d) {
                 return d.x;
@@ -116,6 +117,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
                 return colorScaleforLegend(d.parent.data.name)
             })
             .style('stroke', 'grey')
+            .transition().style('opacity', 1)
 
 
 
@@ -189,7 +191,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
         // // Hide old tooltip:
         // timeline.selectAll('.circle').selectAll('.tooltip').style('opacity', 0)
 
-    }, 1100);
+    }, 0);
 
     return (chart, svg, timeline, rects)
 
