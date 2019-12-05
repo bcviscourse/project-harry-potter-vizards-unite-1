@@ -25,7 +25,7 @@ function scrollstory() {
     //     })
 
     Promise.all([
-        d3.csv('data/out.csv'),
+        d3.csv('data/final.csv'),
         d3.csv('data/total-market-cap.csv'),
         d3.json('data/treedata_first-level.json'),
         d3.json('data/treedata_second-level.json'),
@@ -41,8 +41,7 @@ function scrollstory() {
         let i = 0;
         //formatting the data:
         let count = 0;
-        for (i = 0; i < miningData.length; i++) {
-            if (miningData[i].name2 != '') {
+        for (i = 0; i < 25; i++) {
                 TOTDATA[count] = {
                     name: miningData[i].name,
                     symbol: miningData[i].symbol,
@@ -52,8 +51,8 @@ function scrollstory() {
                     // circulatingsupply: + miningData[i].circulatingsupply,
                     // price: +miningData[i].price
                 };
+                // alert(TOTDATA[count])
                 count++;
-            }
         }
         // miningData.filter(entry => entry.year != 0 && entry.year != "");
         // let smallMine = miningData.slice(1, 20)

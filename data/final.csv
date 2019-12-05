@@ -1,0 +1,101 @@
+,name,marketcap,symbol,year,algo
+1,Bitcoin,1.35E+11,BTC,2009,Proof-of-Work
+1027,Ethereum,16310931947,ETH,2015,Proof-of-Work
+2,Litecoin,2930375105,LTC,2011,Proof-of-Work
+52,XRP,9521243490,XRP,2013,Consensus
+1042,Siacoin,64375669.96,SC,2015,Proof-of-Work
+1321,Ethereum Classic,442363941.4,ETC,2015,Proof-of-Work
+131,Dash,474612556.8,DASH,2014,Proof-of-Work
+463,BitShares,56351982.06,BTS,2014,Delegated Proof-of-Stake
+328,Monero,942560170.7,XMR,2014,Proof-of-Work
+1104,Augur,112107443.1,REP,2015,Proof-of-Stake
+1437,Zcash,219157387.2,ZEC,2016,Proof-of-Work
+873,NEM,326064881.1,XEM,2015,Proof-of-Importance
+109,DigiByte,84769741.27,DGB,2014,Proof-of-Work
+74,Dogecoin,271647861.7,DOGE,2013,Proof-of-Work
+1168,Decred,209474953.3,DCR,2015,Proof-of-Stake
+1230,Steem,43493670.57,STEEM,2016,Delegated Proof-of-Stake
+291,MaidSafeCoin,55121256.55,MAID,2014,Consensus
+372,Bytecoin,58563526.66,BCN,2012,Proof-of-Work
+3957,UNUS SED LEO,919684237.4,LEO,2014,Proof-of-Work
+1866,Bytom,80587497.83,BTM,2014,Proof-of-Work
+1274,Waves,58583590.46,WAVES,2016,Proof-of-Stake
+213,MonaCoin,59248082.13,MONA,2013,Proof-of-Work
+1697,Basic Attention Token,252604141.9,BAT,2014,Proof-of-Work
+2083,Bitcoin Gold,105652742,BTG,2013,Proof-of-Work
+1229,DigixDAO,35909146.59,DGD,2015,Proof-of-Provenance
+2682,Holo,125894597.2,HOT,2013,Consensus
+1521,Komodo,80532463.85,KMD,2016,Proof-of-Work
+3296,MINDOL,207768470.7,MIN,2014,Proof-of-Work
+512,Stellar,1127775512,XLM,2014,Consensus
+693,Verge,63963898.02,XVG,2014,Proof-of-Work
+825,Tether,4112977884,USDT,2014,Stablecoin
+1831,Bitcoin Cash,3870456809,BCH,2017,Proof-of-Work
+1765,EOS,2532452573,EOS,2018,Delegated Proof-of-Stake
+1839,Binance Coin,2421241044,BNB,2017,Proof-of-Stake
+3602,Bitcoin SV,1744307163,BSV,2017,Proof-of-Work
+2010,Cardano,989918095.2,ADA,2015,Delegated Proof-of-Stake
+1958,TRON,981789205.2,TRX,2017,Delegated Proof-of-Stake
+2011,Tezos,851287450.1,XTZ,2018,Delegated Proof-of-Stake
+1975,Chainlink,731083186.3,LINK,2017,Proof-of-Stake
+3794,Cosmos,700500024.4,ATOM,2019,Proof-of-Stake
+2502,Huobi Token,697978576.7,HT,2018,Proof-of-Stake
+1376,NEO,632584658.4,NEO,2016,Proof-of-Stake
+1720,IOTA,565223595.1,MIOTA,2017,Proof-of-Work
+1518,Maker,553309127.8,MKR,2017,Proof-of-Work
+3408,USD Coin,463219150.1,USDC,2018,Stablecoin
+3077,VeChain,404468059.2,VET,2018,Proof-of-Authority
+2566,Ontology,390638346.9,ONT,2018,Proof-of-Stake
+3635,Crypto.com Coin,324190251.7,CRO,2018,Proof-of-Work
+3330,Paxos Standard,240612098,PAX,2018,Stablecoin
+3662,HedgeTrade,210377287.3,HEDG,2019,
+2586,Synthetix Network Token,194430244.4,SNX,2018,
+1684,Qtum,168422615.5,QTUM,2017,Proof-of-Stake
+2563,TrueUSD,157584077.6,TUSD,2018,Stablecoin
+2585,Centrality,145914817.9,CENNZ,2018,Proof-of-Work/Proof-of-Stake
+1896,0x,144700067,ZRX,2017,Proof-of-Stake
+2577,Ravencoin,139748017.2,RVN,2018,Proof-of-Work
+4030,Algorand,126376491.2,ALGO,2019,Proof-of-Stake
+2830,Seele,113795507.1,SEELE,2018,Proof-of-Work
+1567,Nano,110411947.5,NANO,2017,Proof-of-Stake
+1808,OmiseGO,104585229.6,OMG,2017,Proof-of-Stake
+3704,V Systems,98063005.21,VSYS,2019,Proof-of-Stake
+3437,ABBC Coin,95685150.82,ABBC,2018,Proof-of-Stake
+4195,FTX Token,93450876.01,FTT,2019,Proof-of-Work
+3351,ZB,89909455.19,ZB,2018,Proof-of-Work
+1214,Lisk,82469043.69,LSK,2016,Delegated Proof-of-Stake
+3890,Matic Network,80580276.8,MATIC,2019,Proof-of-Stake
+2087,KuCoin Shares,79859900.94,KCS,2017,Proof-of-Stake
+2453,EDUCare,77799965.92,EKT,2018,Proof-of-Work
+4172,LUNA,72616735.06,LUNA,2019,Delegated Proof-of-Stake
+4279,Swipe,70745363.01,SXP,2019,Proof-of-Work
+2405,IOST,69384217.43,IOST,2018,Proof-of-Stake
+2222,Bitcoin Diamond,68810856.79,BCD,2017,Proof-of-Work
+2099,ICON,67369062.39,ICX,2017,Proof-of-Stake
+3718,BitTorrent,65837253.7,BTT,2019,Delegated Proof-of-Stake
+2416,THETA,65140588.88,THETA,2018,Proof-of-Work
+1776,MCO,63977987.97,MCO,2017,Consensus
+2441,Molecular Future,63186690.62,MOF,2018,
+3155,Quant,61421686.1,QNT,2018,Proof-of-Work
+2130,Enjin Coin,60545377.07,ENJ,2017,Proof-of-Work
+2308,Single Collateral DAI ,59994147.49,SAI,2017,Stablecoin
+3139,DxChain Token,57260510.47,DX,2018,
+2469,Zilliqa,55309113.48,ZIL,2018,Proof-of-Work
+1903,HyperCash,54754530.38,HC,2017,Proof-of-Stake
+2694,Nexo,53784804.56,NEXO,2018,Proof-of-Work
+1320,Ardor,48544103.58,ARDR,2016,Proof-of-Stake
+1700,Aeternity,46957564.28,AE,2017,Proof-of-Work/Proof-of-Stake
+1637,iExec RLC,44282536,RLC,2017,Proof-of-Work
+1698,Horizen,41143310.78,ZEN,2017,Proof-of-Work
+4066,Chiliz,40406321.87,CHZ,2019,Proof-of-Work
+3724,SOLVE,39607311.31,SOLVE,2019,
+3773,Fetch.ai,38788459.09,FET,2019,Proof-of-Stake
+2137,Electroneum,38059512.3,ETN,2017,Proof-of-Work
+1759,Status,37978952.23,SNT,2017,Proof-of-Work
+2603,Pundi X,37221848.87,NPXS,2018,Proof-of-Stake
+2044,Enigma,36791148.38,ENG,2017,Proof-of-Stake
+1455,Golem,36440070.61,GNT,2016,Proof-of-Work
+3617,ILCoin,36214606.42,ILC,2018,Proof-of-Work
+2447,Crypterium,36075210.6,CRPT,2017,
+2772,Digitex Futures,35967337.09,DGTX,2018,
+2989,STASIS EURO,35235885.35,EURS,2018,Stablecoin
