@@ -70,8 +70,7 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
         // Line chart for history of cryptocurrencies
         function s0() {
             chart, rects, svg, timeline = performStep0(chart, rects, svg, timeline, market_data, 
-                x, y, formatNum, tooltipright, tooltiptop, sizeX_with_margins, sizeY_with_margins, 
-                left_edge)
+                x, y, formatNum, tooltipright, tooltiptop, sizeX_with_margins, sizeY_with_margins, left_edge)
         },
 
         // Big "balloon" stage
@@ -112,6 +111,7 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
 
         // Show the treemap
         function s6() {
+            console.log(treedata)
             chart, svg, timeline, rects = performStep6(chart, svg, timeline, rects, sizeY_with_margins,
                 sizeX_with_margins, treedata, colorScaleforTreeMap, formatNum, bitcoinTotal,
                 tooltipright, tooltiptop, root2, root3, side_margin, bottom_margin)
@@ -154,7 +154,7 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
             .attr("class", "tooltip")
             .style("opacity", 1)
             .style("width", 35 + "%")
-            .style("height", 10 + "%")
+            .style("height", 8 + "%")
             .style('top', 100 + "%");
 
         // Xscale for "circles" vis:
@@ -296,28 +296,21 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
         d3.scaleOrdinal([   
                             //If we use 8, we cut every other color
                             '#62BEC1', //lapis lazuli
+                            '#008DD5', //rich electric blue
+                            '#125ACE', //denim
+                            '#4B69ED', //ultramarine blue
                             '#677DE0', //united nations blue
+                            '#A2BCE0', //pale cerulean
+                            '#E55E84', //blush
+                            '#EF8354', //light red ochre
                             '#EDAFB8', //Nadeshiko pink
+                            '#9C3848', //smoky topaz
+                            '#71720C', //bronze yellow
                             '#B75671', //china rose
                             '#C98986', //puce
+                            '8B575C',  //rose taupe
                             '#A47FD8', //lavender
-
-                            // '#62BEC1', //lapis lazuli
-                            // '#008DD5', //rich electric blue
-                            // '#125ACE', //denim
-                            // '#4B69ED', //ultramarine blue
-                            // '#677DE0', //united nations blue
-                            // '#A2BCE0', //pale cerulean
-                            // '#E55E84', //blush
-                            // '#EF8354', //light red ochre
-                            // '#EDAFB8', //Nadeshiko pink
-                            // '#9C3848', //smoky topaz
-                            // '#71720C', //bronze yellow
-                            // '#B75671', //china rose
-                            // '#C98986', //puce
-                            // '8B575C',  //rose taupe
-                            // '#A47FD8', //lavender
-                            // '#8253EF', //navy purple
+                            '#8253EF', //navy purple
                         ])
             .domain(algos)
 
@@ -327,31 +320,23 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
         colorScaleforTreeMap = 
         d3.scaleOrdinal([   
                             //If we use 8, we cut every other color
-
                             '#62BEC1', //lapis lazuli
+                            '#008DD5', //rich electric blue
+                            '#125ACE', //denim
+                            '#4B69ED', //ultramarine blue
                             '#677DE0', //united nations blue
+                            '#A2BCE0', //pale cerulean
+                            '#E55E84', //blush
+                            '#EF8354', //light red ochre
                             '#EDAFB8', //Nadeshiko pink
+                            '#9C3848', //smoky topaz
+                            '#71720C', //bronze yellow
                             '#B75671', //china rose
                             '#C98986', //puce
+                            '8B575C',  //rose taupe
                             '#A47FD8', //lavender
-
-                            // '#62BEC1', //lapis lazuli
-                            // '#008DD5', //rich electric blue
-                            // '#125ACE', //denim
-                            // '#4B69ED', //ultramarine blue
-                            // '#677DE0', //united nations blue
-                            // '#A2BCE0', //pale cerulean
-                            // '#E55E84', //blush
-                            // '#EF8354', //light red ochre
-                            // '#EDAFB8', //Nadeshiko pink
-                            // '#9C3848', //smoky topaz
-                            // '#71720C', //bronze yellow
-                            // '#B75671', //china rose
-                            // '#C98986', //puce
-                            // '8B575C',  //rose taupe
-                            // '#A47FD8', //lavender
-                            // '#8253EF', //navy purple
-                            // 'green'
+                            '#8253EF', //navy purple
+                            'green'
                         ])
             .domain(algos)
 
@@ -375,6 +360,7 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
             for (let j = 0; j < newdata.length; j++) {
                 if (newdata[j].algo == algos[i]) {
                     if (newdata[j].name == 'Bitcoin') {
+                        console.log(newdata[j])
                         children.push({ name: 'BTC', marketcap: newdata[j].marketcap });
                         bitcoinTotal = newdata[j].marketcap
                     }
