@@ -5,14 +5,17 @@
 
 
 // Show the treemap
-export default function performStep6(chart, svg, timeline, rects, sizeY_with_margins, 
-    sizeX_with_margins, treedata, colorScaleforTreeMap, formatNum, bitcoinTotal,
-    tooltipright, tooltiptop, root2, root3, side_margin, bottom_margin) {
+export default function performStep6(chart, svg, timeline, rects, sizeY_with_margins,
+    sizeX_with_margins, treedata, colorScaleforLegend, formatNum, bitcoinTotal,
+    tooltipright, tooltiptop, root2, root3, side_margin, bottom_margin, left_edge) {
     console.log('step 6')
+    d3.selectAll('svg.pack').raise()
+    d3.selectAll('svg.firstvis').lower()
+    d3.selectAll('.timeline').remove();
 
-    var algos =[];
-    for (let i=0;i<treedata.length;i++){
-        if (!algos.includes(treedata[i].algo) ){
+    var algos = [];
+    for (let i = 0; i < treedata.length; i++) {
+        if (!algos.includes(treedata[i].algo)) {
             algos.push(treedata[i].algo);
         }
     }
@@ -22,7 +25,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
         let children = [];
         for (let j = 0; j < treedata.length; j++) {
             if (treedata[j].algo == algos[i]) {
-                children.push({name: treedata[j].name, marketcap: +treedata[j].marketcap});
+                children.push({ name: treedata[j].name, marketcap: +treedata[j].marketcap });
             }
         }
         let j = { name: algos[i], children: children };
@@ -37,7 +40,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
     svg.selectAll(".legendSequential").remove()
     d3.selectAll('path').remove()
     d3.selectAll(".y-axis").transition().duration(400).style('opacity', 0)
-    d3.selectAll('.x-axis').transition().duration(400).style('opacity',0)
+    d3.selectAll('.x-axis').transition().duration(400).style('opacity', 0)
 
     d3.selectAll('circle').transition().duration(400).ease(d3.easeLinear)
         .attr('cy', sizeY_with_margins + 500)
@@ -60,63 +63,115 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
 
         d3.selectAll('firstvis').lower();
 
-        var root = d3.hierarchy(data)    
+        var root = d3.hierarchy(data)
         var packLayout = d3.pack();
         packLayout.size([sizeX_with_margins, sizeY_with_margins]);
-        root.sum(function(d) {
-        return d.marketcap;
+        root.sum(function (d) {
+            return d.marketcap;
         });
         packLayout(root);
 
-        var svg = d3.selectAll('svg').append('svg')
+        var svg = d3.selectAll('svg').append('svg').attr('class', 'pack')
+        console.log('CHILDREN', root.children)
+        var descendants = root.descendants().filter(function (value, index, arr) {
+
+            return index != 5;
+
+        });
+        // console.log('DESC1', root.descendants())
+        // console.log('DESC', descendants)
+
 
         svg
             .selectAll('circle')
             .data(root.children)
             .enter()
             .append('circle')
-            .attr('cx', function(d) { 
-                return d.x; })
-            .attr('cy', function(d) { return d.y; })
-            .attr('r', function(d) { return d.r; })
-            .style('opacity',.5)
-            .style('fill','whitesmoke')
-            .style('stroke','grey')
-            .attr('class','packedCircles')
+            .transition().duration(800).attr('opacity', 1)
+            .attr('cx', function (d) {
+                return d.x;
+            })
+            .attr('cy', function (d) { return d.y; })
+            .attr('r', function (d) { return d.r; })
+            .style('fill', 'none')
+            .style('stroke', 'grey')
+            .attr('class', 'packedCircles')
 
-       svg
+
+        svg
             .selectAll('circle')
-            .data(root.descendants())
+            .data(descendants)
             .enter()
             .append('circle')
-            .attr('class','smallcircle')
-            .attr('cx', function(d) { 
-                return d.x; })
-            .attr('cy', function(d) { return d.y; })
-            .attr('r', function(d) { return d.r; })
-            .style('opacity',1)
-            .style('fill','blue')
-            .on('mouseover',function(d){
-                console.log('yo')
-                d3.select(this).attr('r', d.r*1.2)
+            .transition().duration(800).attr('opacity', 1)
+            .attr('class', 'smallcircle')
+            .attr('cx', function (d) {
+                return d.x;
             })
-            .on('mouseover',function(d){
-                d3.select(this).attr('r', d.r)
+            .attr('cy', function (d) { return d.y; })
+            .attr('r', function (d) { return d.r; })
+            .style('opacity', 1)
+            .style('fill', function (d) {
+                console.log(d.parent.data.name);
+                return colorScaleforLegend(d.parent.data.name)
+            })
+            .style('stroke', 'grey')
+
+
+
+        svg.selectAll('circle')
+            .on('mouseover', function (d) {
+                console.log(d.depth);
+                if (d.depth==2){
+                            d3.select(this).style('stroke', 'grey')
+                            d3.select(this).style('stroke-width', 4)
+                            let res = d3.select('.tooltip');
+                            res.html(
+                                '<br><category>Algorithm: </category>' + d.parent.data.name +
+                                '<br><strong>Cryptocurrency:</strong> ' + d.data.name
+                                + '<br><category>Market Cap:</category> '
+                                + formatNum(d.data.marketcap)
+                                + "<br><category> " + ((d.data.marketcap / bitcoinTotal) * 100).toFixed(3) + "%</category> of Bitcoin's Market Cap");
+                                var positionX = d3.select(this).nodes()[0].cx.animVal.value
+                                var positionY = d3.select(this).nodes()[0].cy.animVal.value
+                                var offset = d3.event.y - positionY
+                                res.style('left', function(){
+                                    return d3.event.pageX-left_edge-100 + "px"; // TOOLTIP TO THE LEFT
+                                })
+                                res.style('top', d3.event.y-offset - 1.2*sizeY_with_margins/6 + "px");
+                                res.style('height', '100px')
+                            res.style('opacity', 1)
+                }
+            })
+            .on('mouseout', function (d) {
+                d3.select(this).style('stroke', 'grey')
+                d3.select(this).style('stroke-width', 1)
+                let res = d3.select('.tooltip');
+                res.style('opacity',0)
             })
 
-            d3.selectAll('.smallcircle').raise()
-          
+        svg.selectAll('.smallcircles').raise()
+        // .on('mouseover',function(d){
+        //     console.log(d);
+        //     d3.select(this).attr('r', d.r*1.05)
+        // })
+        // .on('mouseover',function(d){
+        //     d3.select(this).attr('r', d.r)
+        // })
+
+
+
         //   var svg = d3.select("body").append("svg")
         //       .attr("width", width)
         //       .attr("height", height);
-          
+
         //   svg.data([data]).selectAll(".node")
         //       .data(pack.nodes)
         //     .enter().append("circle")
         //       .attr("class", "node")
         //       .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
         //       .attr("r", function(d) { return d.r; });
-        
+
 
         // rects.transition(t).style('opacity', 1)
 
@@ -401,147 +456,147 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
     //     //HERE ENDS TREE1
     // }
 
-//     // Draws third treemap level
-//     function updateTree3(width, height, margin) {
-//         chart.selectAll('circle').style('opacity', 0)
-//         timeline.transition().style('opacity', 0)
-//         svg.selectAll(".legendSequential").remove()
-//         timeline.lower()
-//         // console.log('descendants',root.descendants());
-//         // console.log('links:', root.links());
-//         // Then d3.treemap computes the position of each element of the hierarchy
-//         d3.selectAll('rect').attr('class', function (d, i) {
-//             console.log('i:', i);
-//             if ((i >=5)) return 'remove';
-//             else return 'treemap';
-//         })
+    //     // Draws third treemap level
+    //     function updateTree3(width, height, margin) {
+    //         chart.selectAll('circle').style('opacity', 0)
+    //         timeline.transition().style('opacity', 0)
+    //         svg.selectAll(".legendSequential").remove()
+    //         timeline.lower()
+    //         // console.log('descendants',root.descendants());
+    //         // console.log('links:', root.links());
+    //         // Then d3.treemap computes the position of each element of the hierarchy
+    //         d3.selectAll('rect').attr('class', function (d, i) {
+    //             console.log('i:', i);
+    //             if ((i >=5)) return 'remove';
+    //             else return 'treemap';
+    //         })
 
-//         // console.log('to remove:', d3.selectAll('rect.remove'))
-//         d3.selectAll('rect.remove').remove();
-
-
-//         d3.treemap()
-//             .size([width - 2 * side_margin, height-bottom_margin])
-//             .padding(3)
-//             (root3)
-
-//         svg = d3.selectAll('svg')
+    //         // console.log('to remove:', d3.selectAll('rect.remove'))
+    //         d3.selectAll('rect.remove').remove();
 
 
+    //         d3.treemap()
+    //             .size([width - 2 * side_margin, height-bottom_margin])
+    //             .padding(3)
+    //             (root3)
 
-//         var rects = svg.selectAll('rect')
-//         rects.remove();
-
-//         svg
-//             .selectAll("rect")
-//             .attr('class', 'treemap')
-//             .data(root3.leaves())
-//             .enter()
-//             .append("rect")
-//             .attr('x', sizeX_with_margins)
-//             .attr('y', sizeY_with_margins)
-//             .merge(rects)
-//             .transition().duration(500)
-//             .attr('x', function (d) { return d.x0 + side_margin; })
-//             .attr('y', function (d) { return d.y0; })
-//             .attr('width', function (d) { return d.x1 - d.x0; })
-//             .attr('height', function (d) { return d.y1 - d.y0; })
-//             .style("stroke", "black")
-//             .style("fill", function (d) {
-//                 return colorScaleforTreeMap(d.parent.data.name);
-//             })
-
-//         rects.exit().remove()
-
-
-//         svg.append('rect')
-//             .attr('x', sizeX_with_margins * .025)
-//             .attr('y', sizeY_with_margins * .92)
-//             .attr('height', sizeY_with_margins * 0.05)
-//             .attr('width', sizeX_with_margins * .95)
-//             .attr('fill', 'red')
-//             .attr('class', 'treemap')
-//             .style("stroke", "black")
-
-//         svg.selectAll('rect')
-//             .on("click", function (d, i) {
-//                 if (i == 5) {
-//                     updateTree1(width, height, margin);
-//                 }
-//             })
-//             .on('mouseover', function (d, i) {
-//                 console.log(i)
-//                 if (i == 5) {
-//                     d3.select(this).style('cursor', 'pointer').style("fill", function (d) {
-//                         return "silver"
-//                     })
-//                 }
-//                 else d3.select(this).style('cursor', 'default').style("fill", function (d) {
-//                     return "silver"
-//                 })
-//                 let res = d3.select('.tooltip');
-//                 if (i != 5) {
-//                     res.html(                    '<br><category>Algorithm: </category>' + d.parent.data.name+
-//                     '<br><strong>Cryptocurrency:</strong> ' + d.data.name
-//                     + '<br><category>Market Cap:</category> '
-//                     + formatNum(d.data.marketcap)
-//                     + "<br><category> " + ((d.data.marketcap / bitcoinTotal) * 100).toFixed(3) + "%</category> of Bitcoin's Market Cap");
-//                     // res.style('right', tooltipright + "%");
-//                     // res.style('top', tooltiptop + "%");
-//                     res.style('right', function(){
-//                         // if (translate[0] > sizeX_with_margins/2)
-//                         //     return 1.05*sizeX_with_margins - d3.event.pageX + "px"; // TOOLTIP TO THE LEFT
-//                         return 0.7*sizeX_with_margins - d3.event.pageX + 500+ "px";
-//                     })
-//                     res.style('top', d3.event.y - sizeY_with_margins/3 + "px");
-//                     res.style('opacity', 1)
-//                 }
-//             })
-//             .on('mouseout', function (d, i) {
-//                 if (i == 5) {
-//                     d3.select(this).style('cursor', 'pointer').style("fill", function (d) {
-//                         return "red"
-//                     })
-//                 }
-//                 else {
-//                     d3.select(this).style("fill", function (d) {
-//                         return colorScaleforTreeMap(d.parent.data.name)
-//                     })
-//                 }
-//             })
-
-
-//         svg.selectAll('.treemap-text').remove();
+    //         svg = d3.selectAll('svg')
 
 
 
-//         //add text labels:
-//         var newtext = svg
-//         .selectAll(".treemap-text")
-//         .data(root3.leaves())
-//         .enter()
-//         .append("text")
+    //         var rects = svg.selectAll('rect')
+    //         rects.remove();
 
-//         newtext.attr('x', sizeX_with_margins).attr('y', sizeY_with_margins);
+    //         svg
+    //             .selectAll("rect")
+    //             .attr('class', 'treemap')
+    //             .data(root3.leaves())
+    //             .enter()
+    //             .append("rect")
+    //             .attr('x', sizeX_with_margins)
+    //             .attr('y', sizeY_with_margins)
+    //             .merge(rects)
+    //             .transition().duration(500)
+    //             .attr('x', function (d) { return d.x0 + side_margin; })
+    //             .attr('y', function (d) { return d.y0; })
+    //             .attr('width', function (d) { return d.x1 - d.x0; })
+    //             .attr('height', function (d) { return d.y1 - d.y0; })
+    //             .style("stroke", "black")
+    //             .style("fill", function (d) {
+    //                 return colorScaleforTreeMap(d.parent.data.name);
+    //             })
 
-//         // and to add the text labels
-//         newtext.transition().duration(500)
-//             .attr("x", function (d) { return d.x0 + side_margin + 3 })    // +10 to adjust position (more right)
-//             .attr("y", function (d) { return d.y0 + 20 })    // +20 to adjust position (lower)
-//             .text(function (d) { return d.data.name })
-//             .attr("font-size", "75%")
-//             .attr("fill", "white")
-//             .attr('class', 'treemap-text')
+    //         rects.exit().remove()
 
 
-//         svg.append('text')
-//             .attr('x', sizeX_with_margins * .95 / 2)
-//             .attr('y', 9.5 * sizeY_with_margins / 10)
-//             .attr('class', 'treemap-text')
-//             .text('Return to Overview')
-//             .attr("font-size", "90%")
-//             .attr("fill", "white")
+    //         svg.append('rect')
+    //             .attr('x', sizeX_with_margins * .025)
+    //             .attr('y', sizeY_with_margins * .92)
+    //             .attr('height', sizeY_with_margins * 0.05)
+    //             .attr('width', sizeX_with_margins * .95)
+    //             .attr('fill', 'red')
+    //             .attr('class', 'treemap')
+    //             .style("stroke", "black")
 
-//         svg.selectAll(".legendSequential").remove()
-//     }
+    //         svg.selectAll('rect')
+    //             .on("click", function (d, i) {
+    //                 if (i == 5) {
+    //                     updateTree1(width, height, margin);
+    //                 }
+    //             })
+    //             .on('mouseover', function (d, i) {
+    //                 console.log(i)
+    //                 if (i == 5) {
+    //                     d3.select(this).style('cursor', 'pointer').style("fill", function (d) {
+    //                         return "silver"
+    //                     })
+    //                 }
+    //                 else d3.select(this).style('cursor', 'default').style("fill", function (d) {
+    //                     return "silver"
+    //                 })
+    //                 let res = d3.select('.tooltip');
+    //                 if (i != 5) {
+    //                     res.html(                    '<br><category>Algorithm: </category>' + d.parent.data.name+
+    //                     '<br><strong>Cryptocurrency:</strong> ' + d.data.name
+    //                     + '<br><category>Market Cap:</category> '
+    //                     + formatNum(d.data.marketcap)
+    //                     + "<br><category> " + ((d.data.marketcap / bitcoinTotal) * 100).toFixed(3) + "%</category> of Bitcoin's Market Cap");
+    //                     // res.style('right', tooltipright + "%");
+    //                     // res.style('top', tooltiptop + "%");
+    //                     res.style('right', function(){
+    //                         // if (translate[0] > sizeX_with_margins/2)
+    //                         //     return 1.05*sizeX_with_margins - d3.event.pageX + "px"; // TOOLTIP TO THE LEFT
+    //                         return 0.7*sizeX_with_margins - d3.event.pageX + 500+ "px";
+    //                     })
+    //                     res.style('top', d3.event.y - sizeY_with_margins/3 + "px");
+    //                     res.style('opacity', 1)
+    //                 }
+    //             })
+    //             .on('mouseout', function (d, i) {
+    //                 if (i == 5) {
+    //                     d3.select(this).style('cursor', 'pointer').style("fill", function (d) {
+    //                         return "red"
+    //                     })
+    //                 }
+    //                 else {
+    //                     d3.select(this).style("fill", function (d) {
+    //                         return colorScaleforTreeMap(d.parent.data.name)
+    //                     })
+    //                 }
+    //             })
+
+
+    //         svg.selectAll('.treemap-text').remove();
+
+
+
+    //         //add text labels:
+    //         var newtext = svg
+    //         .selectAll(".treemap-text")
+    //         .data(root3.leaves())
+    //         .enter()
+    //         .append("text")
+
+    //         newtext.attr('x', sizeX_with_margins).attr('y', sizeY_with_margins);
+
+    //         // and to add the text labels
+    //         newtext.transition().duration(500)
+    //             .attr("x", function (d) { return d.x0 + side_margin + 3 })    // +10 to adjust position (more right)
+    //             .attr("y", function (d) { return d.y0 + 20 })    // +20 to adjust position (lower)
+    //             .text(function (d) { return d.data.name })
+    //             .attr("font-size", "75%")
+    //             .attr("fill", "white")
+    //             .attr('class', 'treemap-text')
+
+
+    //         svg.append('text')
+    //             .attr('x', sizeX_with_margins * .95 / 2)
+    //             .attr('y', 9.5 * sizeY_with_margins / 10)
+    //             .attr('class', 'treemap-text')
+    //             .text('Return to Overview')
+    //             .attr("font-size", "90%")
+    //             .attr("fill", "white")
+
+    //         svg.selectAll(".legendSequential").remove()
+    //     }
 }
