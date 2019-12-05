@@ -87,7 +87,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
             .data(root.children)
             .enter()
             .append('circle')
-            .transition().duration(800).attr('opacity', 1)
+            .transition().duration(400).attr('opacity', 1)
             .attr('cx', function (d) {
                 return d.x;
             })
@@ -103,7 +103,7 @@ export default function performStep6(chart, svg, timeline, rects, sizeY_with_mar
             .data(descendants)
             .enter()
             .append('circle')
-            .transition().duration(800).attr('opacity', 1)
+            .transition().duration(400).attr('opacity', 1)
             .attr('class', 'smallcircle')
             .attr('cx', function (d) {
                 return d.x;
