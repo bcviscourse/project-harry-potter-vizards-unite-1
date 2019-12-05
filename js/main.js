@@ -295,12 +295,13 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
         colorScaleforLegend = 
         d3.scaleOrdinal([   
                             //If we use 8, we cut every other color
-                            '#62BEC1', //lapis lazuli
                             '#677DE0', //united nations blue
-                            '#EDAFB8', //Nadeshiko pink
+                            '#62BEC1', //lapis lazuli
+                            '#eaa819', //gold
                             '#B75671', //china rose
                             '#C98986', //puce
                             '#A47FD8', //lavender
+                            '#8253EF', //navy purple
 
                             // '#62BEC1', //lapis lazuli
                             // '#008DD5', //rich electric blue
@@ -328,12 +329,13 @@ export default function createGraphic(newdata, time_data, treedata1, treedata2, 
         d3.scaleOrdinal([   
                             //If we use 8, we cut every other color
 
-                            '#62BEC1', //lapis lazuli
-                            '#677DE0', //united nations blue
-                            '#EDAFB8', //Nadeshiko pink
-                            '#B75671', //china rose
-                            '#C98986', //puce
-                            '#A47FD8', //lavender
+                            // '#62BEC1', //lapis lazuli
+                            // '#677DE0', //united nations blue
+                            // '#EDAFB8', //Nadeshiko pink
+                            // '#B75671', //china rose
+                            // '#71720C', //bronze yellow
+                            // '#C98986', //puce
+                            // '#A47FD8', //lavender
 
                             // '#62BEC1', //lapis lazuli
                             // '#008DD5', //rich electric blue
