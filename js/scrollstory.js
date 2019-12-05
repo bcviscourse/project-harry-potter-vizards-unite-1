@@ -54,6 +54,10 @@ function scrollstory() {
                 // alert(TOTDATA[count])
                 count++;
         }
+        TOTDATA.sort(function(a,b)
+        {
+            return b.marketcap - a.marketcap
+        })
         // miningData.filter(entry => entry.year != 0 && entry.year != "");
         // let smallMine = miningData.slice(1, 20)
         setScrollStory(TOTDATA, market_cap_time_data, treemap_first_level, treemap_second_level, treemap_third_level)
