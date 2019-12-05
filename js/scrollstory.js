@@ -49,8 +49,8 @@ function scrollstory() {
                     algo: miningData[i].algo,
                     year: +miningData[i].year,
                     marketcap: +miningData[i].marketcap,
-                    circulatingsupply: + miningData[i].circulatingsupply,
-                    price: +miningData[i].price
+                    // circulatingsupply: + miningData[i].circulatingsupply,
+                    // price: +miningData[i].price
                 };
                 count++;
             }
