@@ -1,6 +1,7 @@
 intro_section {
     opacity: 0.1;
     transform: translate(0, 0px); 
+    font-size: 15.5px;
     transition: all 0.2s;
 }
     
@@ -8,6 +9,7 @@ intro_section.visible {
     opacity: 1;
     size: 110%;
     transition: all .2s ease-in-out;
+    font-size: 16px;
     transform: scale(1.1);
     transform: translate(0, 0); 
 }
