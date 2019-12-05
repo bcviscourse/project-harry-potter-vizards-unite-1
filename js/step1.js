@@ -2,6 +2,7 @@
 export default function performStep1(chart, svg, timeline, chartSize, 
     xAxis, sizeY_with_margins, newdata, translate, graphicVisEl, sizeY) {
     console.log('step  1, giant balloon');
+    d3.selectAll('.pack').remove()
 
     // Remove all unneeded components
     d3.selectAll('rect').remove();
