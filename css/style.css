@@ -64,7 +64,11 @@ body {
   font-size: 22px;
   padding: 20px;
   margin: 0px;
+  margin-left: 180px;
+  margin-right: 180px;
   color: black;
+  color: #3f3f3f;
+
   text-align: center;
 }
 
