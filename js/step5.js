@@ -3,6 +3,7 @@ export default function performStep5(chart, svg, timeline,
     formatNum, tooltipright, tooltiptop, graphicVisEl, marketScale, translate,
     scaleX, scaleY, xAxis, sizeX_with_margins, sizeY_with_margins, left_edge) {
     console.log('step  5');
+    d3.selectAll('.pack').remove()
 
     // Remove all unneeded components
     d3.select(".tooltip").style("width", "35%").style("height", "10%")
