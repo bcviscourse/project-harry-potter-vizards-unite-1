@@ -89,6 +89,7 @@ export default function performStep1(chart, svg, timeline, chartSize,
         .style('fill', '#b5b5b5')
         .attr('cx', center_balloon_x)
         .attr('cy', center_balloon_Y)
+        // .style("stroke-width", "");
         .transition(t)
         .attr('r', function () {
             return center_balloon_Y / 1.3
@@ -102,7 +103,7 @@ export default function performStep1(chart, svg, timeline, chartSize,
     var circleText = d3.selectAll(".item").append("text")
         .attr("class", "bigText")
         .style('fill', 'white')
-        .html("Coins")
+        .html("crypto bubble")
         .style('opacity', 1)
         .attr("x", center_balloon_x)
         .attr("y", center_balloon_Y);

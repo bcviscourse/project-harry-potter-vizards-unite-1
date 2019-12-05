@@ -63,11 +63,11 @@ export default function performStep0(chart, rects, svg, timeline, market_data,
     .attr("stop-color", "gray")
     .attr("stop-opacity", 1);
 
-    gradient.append("stop")
-    .attr('class', 'end')
-    .attr("offset", "96.75%")
-    .attr("stop-color", "red")
-    .attr("stop-opacity", 1);
+//     gradient.append("stop")
+//     .attr('class', 'end')
+//     .attr("offset", "96.75%")
+//     .attr("stop-color", "red")
+//     .attr("stop-opacity", 1);
 
     // Create the line for the viz
     var path = timeline.append("path")
