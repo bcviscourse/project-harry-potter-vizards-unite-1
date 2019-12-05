@@ -1,0 +1,25 @@
+name,marketcap,num_market_pairs,,slug,symbol,algo,,id
+Bitcoin,1.35E+11,7719,,bitcoin,BTC,Proof-of-Work,,1
+Ethereum,16310931947,5335,,ethereum,ETH,Proof-of-Work,,1027
+XRP,9521243490,508,,xrp,XRP,Consensus,,52
+Tether,4112977884,3926,,tether,USDT,Stablecoin,,825
+Bitcoin Cash,3870456809,440,,bitcoin-cash,BCH,Proof-of-Work,,1831
+Litecoin,2930375105,557,,litecoin,LTC,Proof-of-Work,,2
+EOS,2532452573,394,,eos,EOS,Delegated Proof-of-Stake,,1765
+Binance Coin,2421241044,283,,binance-coin,BNB,Proof-of-Stake,,1839
+Bitcoin SV,1744307163,154,,bitcoin-sv,BSV,Proof-of-Work,,3602
+Stellar,1127775512,306,,stellar,XLM,Consensus,,512
+Cardano,989918095.2,118,,cardano,ADA,Delegated Proof-of-Stake,,2010
+TRON,981789205.2,300,,tron,TRX,Delegated Proof-of-Stake,,1958
+Monero,942560170.7,129,,monero,XMR,Proof-of-Work,,328
+UNUS SED LEO,919684237.4,26,,unus-sed-leo,LEO,Proof-of-Work,,3957
+Tezos,851287450.1,55,,tezos,XTZ,Delegated Proof-of-Stake,,2011
+Chainlink,731083186.3,120,,chainlink,LINK,Proof-of-Stake,,1975
+Cosmos,700500024.4,99,,cosmos,ATOM,Proof-of-Stake,,3794
+Huobi Token,697978576.7,128,,huobi-token,HT,Proof-of-Stake,,2502
+NEO,632584658.4,226,,neo,NEO,Proof-of-Stake,,1376
+IOTA,565223595.1,48,,iota,MIOTA,Proof-of-Work,,1720
+Maker,553309127.8,70,,maker,MKR,Proof-of-Work,,1518
+Dash,474612556.8,271,,dash,DASH,Proof-of-Work,,131
+USD Coin,463219150.1,182,,usd-coin,USDC,Stablecoin,,3408
+Ethereum Classic,442363941.4,220,,ethereum-classic,ETC,Proof-of-Work,,1321
