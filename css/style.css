@@ -56,10 +56,12 @@ body {
 }
 
 .footer {
-  font-family: 'Roboto Slab', serif;
+  
   font-family: 'Julius Sans One', sans-serif;
+  font-family: 'Cormorant', serif;
+  /* font-family: 'Julius Sans One', sans-serif; */
 
-  font-size: 30px;
+  font-size: 22px;
   padding: 20px;
   margin: 0px;
   color: black;
@@ -178,7 +180,6 @@ body {
   fieldset,
   figcaption,
   figure,
-  footer,
   form,
   h1,
   h2,

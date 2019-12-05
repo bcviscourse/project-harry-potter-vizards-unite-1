@@ -106,10 +106,14 @@ $(window).on("scroll", function () {
 
     //This works better. Used for the scrollytelling points.
     var storyTags = $("section")
+    console.log(storyTags.length)
     //Independently check each section
+    // var string = elem.textContent.toString()
+    // console.log(string)
     for (var i = 0; i < tags.length; i++) {
         var tag = storyTags[i]
-
+        var string = tag.textContent.toString()
+        // console.log(string)
         if (isVisible(tag)) {
             $(tag).addClass("visible")
         } else {
